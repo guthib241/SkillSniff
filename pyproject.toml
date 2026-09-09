@@ -51,6 +51,12 @@ skillsniff = "skillsniff.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+# Without this exclusion setuptools sweeps the .py files out of the benchmark
+# corpus and ships them as if they were modules, dropping deliberately-malicious
+# sample code into every site-packages directory — where the user's own scanners
+# will find it. The corpus is source-tree-only by design; `skillsniff benchmark`
+# says so and points at a checkout.
+exclude = ["skillsniff.bench.corpus*"]
 
 [tool.setuptools.package-data]
 skillsniff = ["py.typed", "data/*.json"]

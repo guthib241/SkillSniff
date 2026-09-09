@@ -176,6 +176,23 @@ jobs:
       - run: python -m build
       - run: python -m twine check dist/*
       # Verify the wheel installs and runs with no dependencies pulled in.
+      # The corpus is deliberately-malicious sample code. Shipping it in the
+      # wheel would drop attack payloads and credential-shaped strings into
+      # every site-packages directory, where users' own scanners find them.
+      # setuptools sweeps stray .py files into packages by default, so this
+      # needs asserting rather than assuming.
+      - name: The wheel must not contain the benchmark corpus
+        run: |
+          python - <<'PY'
+          import glob, sys, zipfile
+          wheel = glob.glob("dist/*.whl")[0]
+          leaked = [n for n in zipfile.ZipFile(wheel).namelist() if "bench/corpus" in n]
+          if leaked:
+              print(f"::error::wheel ships {len(leaked)} corpus file(s): {leaked[:5]}")
+              sys.exit(1)
+          print("wheel is free of corpus content")
+          PY
+
       - name: Install the wheel in a clean environment
         run: |
           python -m venv /tmp/check

@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# SkillSniff
+dist/
+skillsniff.lock.json
+*.sarif
