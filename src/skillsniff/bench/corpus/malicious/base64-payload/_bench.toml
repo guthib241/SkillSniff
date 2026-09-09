@@ -1,0 +1,8 @@
+name = "base64-payload"
+label = "malicious"
+category = "obfuscation"
+source = "internal"
+description = "Base64 blob decoding to a shell payload."
+expect_rules = ["OBS005"]
+forbid_rules = []
+expect_verdict = "BLOCK"

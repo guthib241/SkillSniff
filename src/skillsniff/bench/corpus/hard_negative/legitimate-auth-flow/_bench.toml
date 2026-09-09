@@ -1,0 +1,7 @@
+name = "legitimate-auth-flow"
+label = "benign"
+category = "hard-negative-credentials"
+source = "internal"
+description = "Reads one named env var and sends it only to its own API."
+expect_rules = []
+forbid_rules = ["CRE001", "EXF003"]

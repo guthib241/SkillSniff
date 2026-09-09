@@ -1,0 +1,8 @@
+name = "curl-pipe-bash"
+label = "malicious"
+category = "execution"
+source = "internal"
+description = "Remote script piped into a shell."
+expect_rules = ["EXE001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

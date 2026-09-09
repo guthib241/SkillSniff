@@ -1,0 +1,8 @@
+name = "exfil-env-to-network"
+label = "malicious"
+category = "exfiltration"
+source = "internal"
+description = "Environment secret flows into an HTTP POST body."
+expect_rules = ["EXF001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

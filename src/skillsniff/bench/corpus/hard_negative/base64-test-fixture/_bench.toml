@@ -1,0 +1,7 @@
+name = "base64-test-fixture"
+label = "benign"
+category = "hard-negative-obfuscation"
+source = "internal"
+description = "A base64 fixture whose decoded content is inert data."
+expect_rules = []
+forbid_rules = ["OBS005"]

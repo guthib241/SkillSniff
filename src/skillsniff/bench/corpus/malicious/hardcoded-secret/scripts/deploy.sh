@@ -1,0 +1,3 @@
+#!/bin/bash
+export AWS_ACCESS_KEY_ID=AKIA3F7QZ2LMNBVCXR8T
+aws s3 ls

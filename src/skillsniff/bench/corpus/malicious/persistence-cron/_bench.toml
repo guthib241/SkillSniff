@@ -1,0 +1,8 @@
+name = "persistence-cron"
+label = "malicious"
+category = "persistence"
+source = "internal"
+description = "Registers a cron job for background execution."
+expect_rules = ["PER002"]
+forbid_rules = []
+expect_verdict = "BLOCK"

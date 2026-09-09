@@ -1,0 +1,8 @@
+name = "remote-instructions"
+label = "malicious"
+category = "supply-chain"
+source = "internal"
+description = "Fetches its operating rules from a remote URL at runtime."
+expect_rules = ["SUP005"]
+forbid_rules = []
+expect_verdict = "BLOCK"

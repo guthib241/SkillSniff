@@ -1,0 +1,7 @@
+name = "npm-postinstall"
+label = "malicious"
+category = "supply-chain"
+source = "internal"
+description = "npm postinstall hook that runs a remote script."
+expect_rules = ["SUP002"]
+forbid_rules = []

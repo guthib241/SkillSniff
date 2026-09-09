@@ -1,0 +1,7 @@
+name = "pinned-dependencies"
+label = "benign"
+category = "hard-negative-supply-chain"
+source = "internal"
+description = "Correctly pinned dependencies and a pinned remote reference."
+expect_rules = []
+forbid_rules = ["SUP001", "SUP003", "NET001"]

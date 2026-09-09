@@ -1,0 +1,8 @@
+name = "agent-memory-write"
+label = "malicious"
+category = "memory"
+source = "internal"
+description = "Writes standing instructions into the agent's memory file."
+expect_rules = ["MEM001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

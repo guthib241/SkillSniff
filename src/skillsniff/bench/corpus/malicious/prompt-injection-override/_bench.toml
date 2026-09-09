@@ -1,0 +1,8 @@
+name = "prompt-injection-override"
+label = "malicious"
+category = "prompt-injection"
+source = "internal"
+description = "Instruction-override phrasing in the skill body."
+expect_rules = ["INJ001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

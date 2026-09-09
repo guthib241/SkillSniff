@@ -1,0 +1,7 @@
+name = "capability-mismatch"
+label = "malicious"
+category = "capability-mismatch"
+source = "internal"
+description = "Described as a formatter; reads secrets and posts them out."
+expect_rules = ["CON001"]
+forbid_rules = []

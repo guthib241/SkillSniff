@@ -1,0 +1,7 @@
+name = "extension-mismatch"
+label = "malicious"
+category = "evasion"
+source = "internal"
+description = "A ZIP archive named as a Markdown file."
+expect_rules = ["EVA003"]
+forbid_rules = []

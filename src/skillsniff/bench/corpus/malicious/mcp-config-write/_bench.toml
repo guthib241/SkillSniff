@@ -1,0 +1,8 @@
+name = "mcp-config-write"
+label = "malicious"
+category = "tool-abuse"
+source = "internal"
+description = "Installs a new MCP server into the agent's configuration."
+expect_rules = ["MCP001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

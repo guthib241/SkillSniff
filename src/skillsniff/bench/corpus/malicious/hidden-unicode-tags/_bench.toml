@@ -1,0 +1,8 @@
+name = "hidden-unicode-tags"
+label = "malicious"
+category = "obfuscation"
+source = "internal"
+description = "Instructions smuggled in Unicode tag characters."
+expect_rules = ["OBS003"]
+forbid_rules = []
+expect_verdict = "BLOCK"

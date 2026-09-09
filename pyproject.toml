@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skillsniff"
+version = "0.2.0"
+description = "Security, trust, and capability analysis for AI agent skills."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "SkillSniff contributors" }]
+keywords = [
+    "agent-skills", "skill-md", "security", "static-analysis",
+    "supply-chain", "prompt-injection", "sarif", "llm",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+]
+# Deliberately empty. SkillSniff must run on a bare python:3.11 image with no
+# install step, because a security gate that is awkward to install does not get
+# run. Optional extras below only ever *improve* analysis; nothing requires them.
+dependencies = []
+
+[project.optional-dependencies]
+yaml = ["PyYAML>=6.0"]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "build>=1.2",
+    "PyYAML>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/guthib241/SkillSniff"
+Source = "https://github.com/guthib241/SkillSniff"
+Issues = "https://github.com/guthib241/SkillSniff/issues"
+
+[project.scripts]
+skillsniff = "skillsniff.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+skillsniff = ["py.typed", "data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+    "slow: tests that take more than a second",
+    "network: tests that require network access (skipped by default)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM", "RUF", "S"]
+ignore = [
+    "E501",    # line length is handled by the formatter
+    "S101",    # assert is fine in tests
+    "SIM108",  # ternaries are not always clearer
+    "RUF001",  # ambiguous unicode is the *subject matter* of this project
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "E402"]
+# The rule modules necessarily contain attack-pattern strings.
+"src/skillsniff/rules/*" = ["S105", "S106", "S107"]
+"src/skillsniff/bench/*" = ["S105", "S106", "S107"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/skillsniff"]
+warn_unused_configs = true
+warn_redundant_casts = true
+no_implicit_optional = true
+strict_equality = true

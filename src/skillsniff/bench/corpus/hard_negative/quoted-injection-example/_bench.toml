@@ -1,0 +1,7 @@
+name = "quoted-injection-example"
+label = "benign"
+category = "hard-negative-injection"
+source = "internal"
+description = "Quotes an injection string inside a fenced block as an example."
+expect_rules = []
+forbid_rules = ["INJ004"]

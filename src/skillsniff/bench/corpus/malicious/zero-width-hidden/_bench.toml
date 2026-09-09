@@ -1,0 +1,7 @@
+name = "zero-width-hidden"
+label = "malicious"
+category = "obfuscation"
+source = "internal"
+description = "Zero-width characters splitting a keyword to evade matching."
+expect_rules = ["OBS001"]
+forbid_rules = []
