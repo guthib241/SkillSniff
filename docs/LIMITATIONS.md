@@ -14,8 +14,10 @@ tool is chosen to say exactly that and nothing stronger.
 
 **It does not execute anything.** SkillSniff is a static analyser. It cannot tell
 you what a skill does at runtime, what a remote endpoint returns, or what a model
-will actually do when it reads the instructions. A behavioural sandbox is
-designed but not implemented; see [ROADMAP.md](ROADMAP.md).
+will actually do when it reads the instructions. The behavioural-analysis
+contract exists in `skillsniff.sandbox`, but no runner is implemented and the
+default refuses; see [ROADMAP.md](ROADMAP.md) for why an approximation would be
+worse than nothing.
 
 **It cannot judge whether the procedure is correct.** A skill can be structurally
 perfect, security-clean, and encode a procedure that is simply wrong.
@@ -128,6 +130,25 @@ mean something, and it does not exist yet. See [BENCHMARK.md](BENCHMARK.md).
 
 ## Performance
 
+Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs.
+
+| Input shape | Median | Files |
+| --- | --- | --- |
+| Minimal skill (1 file) | 1.8 ms | 1 |
+| Typical skill (10 files, references + script) | 43 ms | 11 |
+| Large skill (70 files, ~2 MB) | 1.2 s | 71 |
+| Archive with 200 entries | 417 ms | 2 |
+| One 1 MB line (padding / minified) | 1.7 s | 2 |
+| 100 encoded regions | 5 ms | 2 |
+| Whole 41-case benchmark corpus | 4.0 ms per skill | — |
+
+Peak RSS across all of the above: ~111 MB.
+
+Cost scales with total *bytes of text*, not file count: the dominant work is
+Unicode normalisation and pattern matching over each file's projections. A 1 MB
+single line is the worst realistic shape, and it is also what an attacker would
+choose, which is why it is measured and regression-tested rather than assumed.
+
 Default budgets: 5 MB per file, 100 MB total, 2,000 files, 60 seconds per skill.
 Hitting any of them is recorded as a coverage gap and downgrades confidence
 rather than failing silently. A skill large enough to exhaust the budget will
@@ -137,8 +158,11 @@ return `INCONCLUSIVE`, which is the correct answer.
 
 Named honestly, because a roadmap item described in the present tense is a lie:
 
-- **Semantic / LLM analysis** — interfaces designed, no implementation
-- **Behavioural sandbox** — architecture specified, no implementation
+- **Semantic / LLM analysis** — contract implemented and tested in
+  `skillsniff.semantic`; **no provider exists**, and the default returns nothing
+- **Behavioural sandbox** — contract implemented and tested in
+  `skillsniff.sandbox`; **no runner exists**, and the default refuses rather
+  than returning an empty report
 - **Live external resolution** — deliberately absent (local-first, offline)
 - **Cross-platform behavioural differences** between agent ecosystems — not modelled
 - **Non-Python AST analysis** — not implemented

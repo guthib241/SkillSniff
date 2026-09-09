@@ -295,8 +295,9 @@ perfectly.
 - **Python-only dataflow.** The taint analysis behind EXF001 is intraprocedural
   and Python-only. JavaScript, Ruby and shell get weaker, pattern-based coverage.
 - **No network, no model.** External references are classified structurally, not
-  fetched. There is no LLM in the loop; the semantic layer is designed but not
-  implemented (see [ROADMAP.md](docs/ROADMAP.md)).
+  fetched. There is no LLM in the loop: the optional semantic and behavioural
+  layers exist as tested *contracts* with no provider and no runner behind them
+  (see [ROADMAP.md](docs/ROADMAP.md)).
 - **Binaries are not analysed.** A bundled `.so` or `.pyc` is reported as an
   unreviewable artifact, not decompiled.
 - **Trust is not transitive.** A `CLEAR` verdict says the artifact looks

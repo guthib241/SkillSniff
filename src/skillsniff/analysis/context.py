@@ -45,6 +45,11 @@ class FileContext:
     shell: ShellAnalysis | None = None
     urls: list[ExternalResource] = field(default_factory=list)
     dependencies: list[Dependency] = field(default_factory=list)
+    #: Memoised (scannable, normalised) projections, filled lazily by the rule
+    #: scanner. Held here rather than in a module-level cache because a
+    #: module-level one is keyed by display path, which collides between scans
+    #: of different skills that share a relative filename.
+    _projections: tuple[str, str] | None = field(default=None, repr=False)
 
     @property
     def path(self) -> str:

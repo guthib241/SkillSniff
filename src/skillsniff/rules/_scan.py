@@ -80,18 +80,37 @@ def _line_at(text: str, offset: int) -> int:
 _SHELL_SUFFIXES = frozenset({".sh", ".bash", ".zsh", ".ksh", ".fish"})
 
 
-def _scannable_text(file: FileContext, view) -> str:
-    """The projection of a file that pattern rules should see.
+def _projections(file: FileContext, view) -> tuple[str, str]:
+    """Return (scannable_raw, scannable_normalised) for one file, memoised.
 
-    For shell scripts, comments are blanked out (preserving offsets so line
-    numbers stay correct). A commented-out ``rm -rf $HOME`` in a script that
-    warns against it is documentation, and reporting it as a destructive
-    operation is the single noisiest false positive this tool can produce.
+    Every rule asks for the same two strings. Recomputing them per rule made
+    ``normalize()`` run once per rule over the same megabyte, which dominated
+    the profile on a large file — and a large file is exactly the shape an
+    attacker would choose. The memo lives on the FileContext so it is scoped to
+    one scan; a module-level cache keyed by display path collides between skills
+    that share a relative filename.
     """
+    if file._projections is not None:
+        return file._projections
+
+    from skillsniff.core.text import normalize
+
     raw = view.raw[:MAX_SCAN_BYTES]
-    if file.scanned.suffix not in _SHELL_SUFFIXES and not raw.startswith("#!"):
-        return raw
-    return _blank_shell_comments(raw)
+    # For shell scripts, comments are blanked out (offsets preserved so line
+    # numbers stay correct). A commented-out `rm -rf $HOME` in a script that
+    # warns against it is documentation, and reporting it as a destructive
+    # operation is the single noisiest false positive this tool can produce.
+    if file.scanned.suffix in _SHELL_SUFFIXES or raw.startswith("#!"):
+        raw = _blank_shell_comments(raw)
+
+    result = (raw, normalize(raw)[:MAX_SCAN_BYTES])
+    file._projections = result
+    return result
+
+
+def _scannable_text(file: FileContext, view) -> str:
+    """The raw projection of a file that pattern rules should see."""
+    return _projections(file, view)[0]
 
 
 def _blank_shell_comments(text: str) -> str:
@@ -125,7 +144,7 @@ def scan_file(
     if view is None:
         return
 
-    raw = _scannable_text(file, view)
+    raw, normalized_text = _projections(file, view)
     seen_spans: set[tuple[int, int]] = set()
     count = 0
 
@@ -145,11 +164,10 @@ def scan_file(
         )
 
     if include_normalized:
-        # Normalise the *scannable* projection, not the untouched raw text —
-        # otherwise blanked shell comments come straight back through this pass.
-        from skillsniff.core.text import normalize
-
-        normalized = normalize(raw)[:MAX_SCAN_BYTES]
+        # The normalised view is of the *scannable* projection, not the untouched
+        # raw text — otherwise blanked shell comments come straight back through
+        # this pass.
+        normalized = normalized_text
         if normalized != raw:
             for match in pattern.finditer(normalized):
                 if count >= limit:

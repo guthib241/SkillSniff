@@ -72,6 +72,19 @@ formats all change; treat this as a new tool rather than an upgrade.
 - No symlink, path-traversal, archive, or resource limits existed.
 - An invalid `--fail-on` value crashed with a traceback instead of a usage error.
 
+### Performance
+
+- Text projections (normalised view, comment-blanked view) are memoised per file
+  for the life of a scan. They had been recomputed once per rule, which on a
+  1 MB file meant normalising the same megabyte 45 times.
+- Homoglyph folding and invisible-character stripping use `str.translate`
+  rather than per-character generators, removing ~22 million Python-level
+  iterations on a 1 MB input.
+
+Together these are a 2–6× improvement depending on input shape; the benchmark
+corpus went from 9.2 to 4.0 ms per skill. Measurements and regression tests are
+in `docs/LIMITATIONS.md` and `tests/integration/test_performance.py`.
+
 ### Security
 
 - The scanner performs no subprocess execution and no dynamic evaluation, both
