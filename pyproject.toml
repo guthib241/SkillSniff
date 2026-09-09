@@ -67,6 +67,9 @@ markers = [
 line-length = 100
 target-version = "py311"
 src = ["src", "tests"]
+# The benchmark corpus is deliberately malicious sample code. Linting it would
+# report every attack it is built to contain.
+extend-exclude = ["src/skillsniff/bench/corpus"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM", "RUF", "S"]
@@ -74,9 +77,17 @@ ignore = [
     "E501",    # line length is handled by the formatter
     "S101",    # assert is fine in tests
     "SIM108",  # ternaries are not always clearer
+    # Every site flagged here is a guard condition followed by a specific test,
+    # where the comment explaining the inner test belongs to the outer guard.
+    # Collapsing them would move the explanation away from what it explains.
+    "SIM102",
     "RUF001",  # ambiguous unicode is the *subject matter* of this project
     "RUF002",
     "RUF003",
+    # `class X(str, Enum)` is deliberate: it keeps `X.VALUE == "value"` true for
+    # dict lookups and JSON round-trips throughout the model. StrEnum changes
+    # __str__ and __format__, which would alter serialised output.
+    "UP042",
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -88,6 +99,8 @@ ignore = [
 [tool.mypy]
 python_version = "3.11"
 files = ["src/skillsniff"]
+# The benchmark corpus is sample data, not part of the package.
+exclude = "^src/skillsniff/bench/corpus/"
 warn_unused_configs = true
 warn_redundant_casts = true
 no_implicit_optional = true

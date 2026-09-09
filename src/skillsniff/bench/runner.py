@@ -260,7 +260,7 @@ def run_case(case: Case, config: Config | None = None) -> CaseResult:
     started = time.perf_counter()
     try:
         result = scan(case.path, config)
-    except Exception as exc:  # noqa: BLE001 - a crashing case is a benchmark result
+    except Exception as exc:
         return CaseResult(
             case=case,
             verdict=Verdict.INCONCLUSIVE,

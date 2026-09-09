@@ -69,7 +69,7 @@ def run_rules(context: AnalysisContext) -> tuple[list[Finding], list[str], int]:
     for rule_id, rule in registry.callables().items():
         if not any(
             context.config.is_enabled(candidate)
-            for candidate, func in registry._rules.items()  # noqa: SLF001 - same module family
+            for candidate, func in registry._rules.items()
             if func is rule
         ):
             continue
@@ -78,7 +78,7 @@ def run_rules(context: AnalysisContext) -> tuple[list[Finding], list[str], int]:
             break
         try:
             produced = list(rule(context))
-        except Exception as exc:  # noqa: BLE001 - isolation is the point
+        except Exception as exc:
             errors.append(f"rule {rule_id} raised {type(exc).__name__}: {exc}")
             if context.config.strict:
                 errors.append(traceback.format_exc(limit=3))

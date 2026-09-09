@@ -21,7 +21,6 @@ from typing import Any
 from skillsniff.analysis.context import AnalysisContext
 from skillsniff.analysis.external import TrustLevel
 from skillsniff.core.fs import FileKind
-from skillsniff.model.capability import Capability
 
 
 class NodeKind(str, Enum):
@@ -78,7 +77,7 @@ class Node:
     attributes: dict[str, Any] = field(default_factory=dict)
 
     def as_dict(self) -> dict[str, Any]:
-        payload = {
+        payload: dict[str, Any] = {
             "id": self.id,
             "kind": self.kind.value,
             "label": self.label,

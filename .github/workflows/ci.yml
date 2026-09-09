@@ -1,0 +1,195 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: tests (py${{ matrix.python }}${{ matrix.yaml && ', pyyaml' || ', stdlib only' }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+        yaml: [true, false]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      # SkillSniff must behave identically with and without PyYAML, because
+      # otherwise a security result depends on whether an optional extra
+      # happened to be installed.
+      - name: Remove PyYAML
+        if: ${{ !matrix.yaml }}
+        run: python -m pip uninstall -y PyYAML types-PyYAML
+      - name: Confirm backend
+        run: |
+          python -c "from skillsniff.parse.frontmatter import HAVE_PYYAML; print('pyyaml:', HAVE_PYYAML)"
+      - name: Run tests
+        run: python -m pytest -q
+
+  no-dependencies:
+    name: runs with zero dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # No install step at all. This is the property that lets the gate run
+      # anywhere, and it is easy to lose by accident.
+      - name: Import and run from source
+        run: |
+          PYTHONPATH=src python -c "import skillsniff.cli, skillsniff.engine; print('stdlib only: ok')"
+          PYTHONPATH=src python -m skillsniff --version
+          PYTHONPATH=src python -m skillsniff rules >/dev/null
+          PYTHONPATH=src python -m skillsniff scan src/skillsniff/bench/corpus/benign/markdown-formatter --no-color
+
+  lint:
+    name: lint and types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e ".[dev]" types-PyYAML
+      - run: python -m ruff check src tests
+      - run: python -m mypy
+
+  docs:
+    name: generated docs are current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e ".[dev]"
+      # docs/RULES.md is generated from the registry. If it drifts, the
+      # catalogue is lying about what the tool actually runs.
+      - name: Regenerate and diff
+        run: |
+          python scripts/gen_rules_doc.py
+          git diff --exit-code docs/RULES.md \
+            || { echo "::error::docs/RULES.md is stale; run scripts/gen_rules_doc.py"; exit 1; }
+
+  benchmark:
+    name: SkillSniffBench
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e ".[dev]"
+      - name: Run the corpus
+        run: python -m skillsniff benchmark --format json -o benchmark.json
+      - name: Fail on any regression
+        run: |
+          python - <<'PY'
+          import json, sys
+          report = json.load(open("benchmark.json"))
+          overall = report["overall"]
+          failures = report["expectation_failures"]
+          print(f"precision {overall['precision']}  recall {overall['recall']}  F1 {overall['f1']}")
+          print(f"TP {overall['true_positive']}  FP {overall['false_positive']}  "
+                f"TN {overall['true_negative']}  FN {overall['false_negative']}")
+          problems = []
+          if overall["false_negative"]:
+              problems.append(f"{overall['false_negative']} missed malicious case(s)")
+          if overall["false_positive"]:
+              problems.append(f"{overall['false_positive']} false positive(s)")
+          if failures:
+              problems.append(f"{len(failures)} expectation failure(s): "
+                              + ", ".join(f["case"] for f in failures))
+          if problems:
+              print("::error::" + "; ".join(problems))
+              sys.exit(1)
+          print("benchmark clean")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-results
+          path: benchmark.json
+
+  self-scan:
+    name: self-scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e ".[dev]"
+      # The corpus is deliberately malicious, so it is excluded here; the
+      # benchmark job is what verifies it.
+      - name: Scan this repository's own skills
+        run: |
+          if find . -name SKILL.md -not -path "./src/skillsniff/bench/corpus/*" \
+                  -not -path "./.git/*" | grep -q .; then
+            python -m skillsniff scan . \
+              --exclude 'src/skillsniff/bench/corpus/*' \
+              --format sarif -o skillsniff.sarif
+            python -m skillsniff scan . \
+              --exclude 'src/skillsniff/bench/corpus/*' \
+              --no-color --fail-on high
+          else
+            echo "no skills outside the benchmark corpus; nothing to scan"
+            echo '{"version":"2.1.0","runs":[]}' > skillsniff.sarif
+          fi
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        continue-on-error: true
+        with:
+          sarif_file: skillsniff.sarif
+          category: skillsniff-self-scan
+
+  package:
+    name: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install build twine
+      - run: python -m build
+      - run: python -m twine check dist/*
+      # Verify the wheel installs and runs with no dependencies pulled in.
+      - name: Install the wheel in a clean environment
+        run: |
+          python -m venv /tmp/check
+          /tmp/check/bin/pip install --quiet dist/*.whl
+          installed=$(/tmp/check/bin/pip list --format=freeze | grep -viE '^(pip|setuptools|wheel)=' || true)
+          echo "installed: $installed"
+          if [ "$installed" != "skillsniff==$(/tmp/check/bin/python -c 'import skillsniff; print(skillsniff.__version__)')" ]; then
+            echo "::error::the wheel pulled in runtime dependencies"
+            exit 1
+          fi
+          /tmp/check/bin/skillsniff --version
+          /tmp/check/bin/skillsniff rules > /dev/null
+          /tmp/check/bin/skillsniff scan src/skillsniff/bench/corpus/benign/code-reviewer --no-color
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/

@@ -8,6 +8,8 @@ otherwise the security result depends on the environment.
 
 from __future__ import annotations
 
+from typing import ClassVar
+
 import pytest
 
 from skillsniff.parse import frontmatter as fm
@@ -134,7 +136,7 @@ class TestHardening:
 class TestBackendParity:
     """The two backends must agree on every document a skill can contain."""
 
-    DOCUMENTS = [
+    DOCUMENTS: ClassVar[list[str]] = [
         DOCUMENT,
         "---\nname: a\ndescription: plain\n---\nbody\n",
         "---\nname: a\ndescription: 'single quoted'\n---\n",

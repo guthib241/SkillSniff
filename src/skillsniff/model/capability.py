@@ -36,7 +36,7 @@ class Capability(str, Enum):
     CODE_EVAL = "process.eval"
     ENV_READ = "environment.read"
     ENV_WRITE = "environment.write"
-    SECRET_ACCESS = "secret.access"
+    SECRET_ACCESS = "secret.access"  # noqa: S105 - a capability name, not a credential
     CREDENTIAL_HANDLING = "secret.handling"
     PKG_INSTALL = "supply.install"
     REMOTE_INSTRUCTIONS = "supply.remote-instructions"

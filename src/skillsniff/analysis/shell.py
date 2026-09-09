@@ -233,13 +233,22 @@ def _analyse_pipeline(
         excerpt = command.raw[:160]
         args = command.args
 
-        def observe(capability: Capability, detail: str, confidence: Confidence = Confidence.HIGH) -> None:
+        def observe(
+            capability: Capability,
+            detail: str,
+            confidence: Confidence = Confidence.HIGH,
+            # Bound as defaults rather than captured: the closure is only called
+            # within this iteration today, but a late-bound `excerpt` would
+            # silently attach the wrong command to the evidence if that changed.
+            _excerpt: str = excerpt,
+            _line: int = line_no,
+        ) -> None:
             analysis.observations.append(
                 Observation(
                     capability=capability,
                     source=Source.CODE,
                     confidence=confidence,
-                    evidence=Evidence(path=analysis.path, line=line_no, excerpt=excerpt),
+                    evidence=Evidence(path=analysis.path, line=_line, excerpt=_excerpt),
                     detail=detail,
                 )
             )

@@ -19,9 +19,9 @@ from typing import TextIO
 from skillsniff.analysis.context import AnalysisContext
 from skillsniff.analysis.external import TrustLevel
 from skillsniff.analysis.graph import TrustGraph, render_tree
-from skillsniff.model.capability import Capability, Source
+from skillsniff.model.capability import Capability
 from skillsniff.model.finding import Severity
-from skillsniff.model.result import RiskBand, SkillResult
+from skillsniff.model.result import SkillResult
 from skillsniff.report.style import Style, truncate, width, wrap
 
 _CAPABILITY_ORDER = [

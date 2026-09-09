@@ -472,8 +472,8 @@ class _Visitor(ast.NodeVisitor):
         is_sink = (
             dotted in NETWORK_SINKS
             or suffix2 in NETWORK_SINKS
-            or any(dotted.endswith(f".{s.split('.')[-1]}") for s in ("requests.post", "requests.put"))
-            and segments[-1] in ("post", "put", "send", "sendall")
+            or (any(dotted.endswith(f".{s.split('.')[-1]}") for s in ("requests.post", "requests.put"))
+            and segments[-1] in ("post", "put", "send", "sendall"))
         )
         if not is_sink:
             return

@@ -16,6 +16,7 @@ Lockfiles contain no secrets and no absolute paths, so they are safe to commit.
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import json
 from datetime import UTC, datetime
@@ -63,12 +64,14 @@ def build_lock(path: Path, config: Config | None = None) -> dict[str, Any]:
     # Only on-disk files are locked. Archive members are derived content: their
     # hashes change with the archive's, and locking both would report one edit
     # twice.
-    files = [
+    files: list[dict[str, Any]] = [
         {"path": f.relpath, "sha256": f.sha256, "bytes": f.size}
         for f in skill.files
         if not f.container and f.sha256
     ]
-    file_pairs = [(f["path"], f["sha256"]) for f in files]
+    file_pairs: list[tuple[str, str]] = [
+        (str(f["path"]), str(f["sha256"])) for f in files
+    ]
 
     capabilities = sorted(
         {
@@ -181,10 +184,8 @@ def _provenance(path: Path) -> dict[str, Any]:
                         url = f"{scheme}://{rest.rsplit('@', 1)[-1]}"
                     provenance["repository"] = url
                     break
-        try:
+        with contextlib.suppress(ValueError):
             provenance["relative_path"] = path.resolve().relative_to(parent.resolve()).as_posix()
-        except ValueError:
-            pass
         break
     return provenance
 

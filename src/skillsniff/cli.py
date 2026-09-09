@@ -338,7 +338,7 @@ def cmd_rules(args: argparse.Namespace) -> int:
     import json
 
     from skillsniff.engine import load_rules
-    from skillsniff.report.style import Style, wrap
+    from skillsniff.report.style import Style
     from skillsniff.rules.base import Family, registry
 
     load_rules()
@@ -606,13 +606,26 @@ def cmd_policy_validate(args: argparse.Namespace) -> int:
 def cmd_benchmark(args: argparse.Namespace) -> int:
     import json
 
-    from skillsniff.bench.runner import default_corpus_path, run_benchmark
+    from skillsniff.bench.runner import default_corpus_path, load_cases, run_benchmark
     from skillsniff.report import bench_report
 
     corpus = args.corpus or default_corpus_path()
-    if not corpus.exists():
-        print(f"skillsniff: no corpus at {corpus}", file=sys.stderr)
-        print("  the benchmark corpus ships with the source tree, not the wheel", file=sys.stderr)
+    cases = load_cases(corpus) if corpus.is_dir() else []
+    if not cases:
+        # The corpus is deliberately-malicious sample content. It is kept out of
+        # the wheel on purpose: installing a security tool should not drop files
+        # containing credential-shaped strings and attack payloads into every
+        # site-packages directory, where the user's own scanners will find them.
+        print(f"skillsniff: no benchmark cases found under {corpus}", file=sys.stderr)
+        print(
+            "  SkillSniffBench ships with the source tree, not the installed wheel,\n"
+            "  because it contains deliberately-malicious sample skills.\n"
+            "  Run it from a checkout:\n"
+            "    git clone https://github.com/guthib241/SkillSniff && cd SkillSniff\n"
+            "    python -m skillsniff benchmark\n"
+            "  Or point at your own corpus with --corpus PATH.",
+            file=sys.stderr,
+        )
         return EXIT_USAGE
 
     report = run_benchmark(corpus)

@@ -15,7 +15,7 @@ import sys
 from typing import TextIO
 
 from skillsniff.model.finding import Confidence, Finding, Severity
-from skillsniff.model.result import RiskBand, ScanResult, SkillResult, Verdict
+from skillsniff.model.result import RiskBand, ScanResult, SkillResult
 from skillsniff.report.style import Style, truncate, width, wrap
 
 _SEVERITY_GLYPH = {

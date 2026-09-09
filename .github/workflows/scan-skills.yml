@@ -1,0 +1,88 @@
+# A reusable workflow: point it at a directory of skills and it gates the PR.
+#
+# Copy this into your own repository to run SkillSniff on your skills. It needs
+# no secrets — SkillSniff makes no network calls and uses no model.
+name: skillsniff
+
+on:
+  workflow_call:
+    inputs:
+      path:
+        description: Directory containing skills
+        type: string
+        default: ./skills
+      fail-on:
+        description: Severity at which the job fails
+        type: string
+        default: high
+      policy:
+        description: Optional path to a policy file
+        type: string
+        default: ""
+  workflow_dispatch:
+    inputs:
+      path:
+        type: string
+        default: ./skills
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Fetch the base commit too, so the capability diff below has
+          # something to compare against.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: python -m pip install skillsniff
+
+      - name: Scan
+        id: scan
+        run: |
+          skillsniff scan "${{ inputs.path || './skills' }}" \
+            --format sarif -o skillsniff.sarif || true
+          skillsniff scan "${{ inputs.path || './skills' }}" \
+            --format markdown >> "$GITHUB_STEP_SUMMARY"
+          skillsniff scan "${{ inputs.path || './skills' }}" \
+            --no-color --fail-on "${{ inputs.fail-on || 'high' }}"
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: skillsniff.sarif
+          category: skillsniff
+
+      - name: Policy check
+        if: inputs.policy != ''
+        run: skillsniff policy check "${{ inputs.path }}" --policy "${{ inputs.policy }}"
+
+      # On a pull request, report what changed about each skill's *behaviour*,
+      # which is the question a reviewer actually has.
+      - name: Capability diff
+        if: github.event_name == 'pull_request'
+        run: |
+          base=$(mktemp -d)
+          git worktree add -q "$base" "${{ github.event.pull_request.base.sha }}"
+          changed=0
+          for skill in $(find "${{ inputs.path || './skills' }}" -name SKILL.md -exec dirname {} \;); do
+            old="$base/${skill#./}"
+            [ -f "$old/SKILL.md" ] || continue
+            if ! skillsniff diff "$old" "$skill" --format markdown >> "$GITHUB_STEP_SUMMARY"; then
+              changed=1
+            fi
+          done
+          git worktree remove -q "$base" || true
+          exit $changed

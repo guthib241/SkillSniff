@@ -109,8 +109,8 @@ class TestSelfScan:
     def test_repository_has_no_actionable_findings(self):
         """SkillSniff's own tree, excluding the deliberately-malicious corpus."""
         from skillsniff.core.config import Config as _Config
-        from skillsniff.model.skill import discover_skills
         from skillsniff.core.limits import Budget
+        from skillsniff.model.skill import discover_skills
 
         config = _Config(
             exclude=(*Config().exclude, "bench/corpus/*", "*/bench/corpus/*", "tests/*", "*/tests/*")

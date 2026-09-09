@@ -256,13 +256,13 @@ def _collect_capabilities(context: AnalysisContext) -> None:
 
     for resource in context.externals:
         if resource.kind in (ResourceKind.REMOTE_SCRIPT, ResourceKind.RAW_FILE):
-            evidence = resource.evidence
-            if evidence is not None and evidence.line is not None:
+            located = resource.evidence
+            if located is not None and located.line is not None:
                 origin = next(
-                    (f for f in context.files if f.path == evidence.path and f.scanned.is_text),
+                    (f for f in context.files if f.path == located.path and f.scanned.is_text),
                     None,
                 )
-                if origin is not None and _framed(origin.text, evidence.line):
+                if origin is not None and _framed(origin.text, located.line):
                     continue
             surface.add(
                 Observation(

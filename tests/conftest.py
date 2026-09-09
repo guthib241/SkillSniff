@@ -16,10 +16,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from skillsniff.core.config import Config  # noqa: E402
-from skillsniff.core.limits import Budget  # noqa: E402
-from skillsniff.engine import load_rules, scan  # noqa: E402
-from skillsniff.model.finding import Severity  # noqa: E402
+from skillsniff.core.config import Config
+from skillsniff.core.limits import Budget
+from skillsniff.engine import load_rules, scan
+from skillsniff.model.finding import Severity
 
 CLEAN_FRONTMATTER = """---
 name: {name}

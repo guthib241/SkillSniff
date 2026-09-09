@@ -14,14 +14,14 @@ from typing import Any
 
 from skillsniff.core.fs import (
     DEFAULT_EXCLUDES,
-    FileKind,
     ScannedFile,
     read_file,
     walk_files,
 )
 from skillsniff.core.limits import Budget
 from skillsniff.core.text import TextView
-from skillsniff.parse.frontmatter import Frontmatter, parse as parse_frontmatter
+from skillsniff.parse.frontmatter import Frontmatter
+from skillsniff.parse.frontmatter import parse as parse_frontmatter
 
 SKILL_FILENAMES = ("SKILL.md", "skill.md", "Skill.md")
 
