@@ -1238,7 +1238,9 @@ contribute to the security verdict.
 
 **Cannot detect.** This is a lexical proxy. A description can state a trigger in phrasing this rule does not recognise, and can contain the phrase 'use when' while saying nothing useful.
 
-**References.** [1](https://agentskills.io/specification)
+**Taxonomy.** `CSD`
+
+**References.** [1](https://agentskills.io/specification), [2](https://arxiv.org/abs/2607.01456)
 
 ### `SPEC010` — Referenced file does not exist
 

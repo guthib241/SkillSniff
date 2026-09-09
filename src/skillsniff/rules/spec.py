@@ -188,7 +188,12 @@ registry.define_all(
                 "rule does not recognise, and can contain the phrase 'use when' while saying "
                 "nothing useful."
             ),
-            references=(SPEC_URL,),
+            references=(SPEC_URL, "https://arxiv.org/abs/2607.01456"),
+            # Carried from the authoring-smell taxonomy as CSD
+            # ("Confusing Skill Description"). It lives in SPEC rather than QUA
+            # because a description with no trigger condition is a routing
+            # failure, not a style preference: the skill does not load.
+            taxonomy=("CSD",),
         ),
         RuleMeta(
             id="SPEC010",
