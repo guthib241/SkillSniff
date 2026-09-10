@@ -44,15 +44,35 @@ $ skillsniff scan ./skills/md-formatter
 That EXF001 is not a pattern match. It is a dataflow observed in the Python AST,
 from an environment read to an HTTP sink, through two intermediate variables.
 
-## Get it running in 30 seconds
+> **Not released yet.** There is no PyPI package and no `v0.2.0` tag, so
+> `pip install skillsniff` and `uses: …@v0.2.0` do not resolve. Install from
+> source (below) until the first release lands. Everything else on this page
+> works today.
 
-**In CI** — one step, no secrets, no API key:
+## Get it running
+
+**Locally, from source** — no install step, no dependencies:
+
+```bash
+git clone https://github.com/guthib241/SkillSniff && cd SkillSniff
+PYTHONPATH=src python -m skillsniff scan ./examples/skills
+```
+
+Or install it properly:
+
+```bash
+pip install -e .          # from a checkout
+skillsniff scan ./skills
+```
+
+**In CI** — one step, no secrets, no API key. Pin to a commit until there is a
+tag:
 
 ```yaml
 - uses: actions/checkout@v4
   with: { fetch-depth: 0 }        # lets it diff against the base commit
 
-- uses: guthib241/SkillSniff@v0.2.0
+- uses: guthib241/SkillSniff@main    # or a commit SHA; @v0.2.0 once released
   with:
     path: ./skills
     fail-on: high
@@ -61,21 +81,14 @@ from an environment read to an HTTP sink, through two intermediate variables.
 It uploads SARIF to code scanning and comments the capability diff on pull
 requests. Outputs `verdict`, `findings` and `critical` for downstream steps.
 
-**Locally:**
-
-```bash
-pip install skillsniff
-skillsniff scan ./skills
-```
-
 **As a pre-commit hook:**
 
 ```yaml
 repos:
   - repo: https://github.com/guthib241/SkillSniff
-    rev: v0.2.0
+    rev: main               # or a commit SHA; a tag once released
     hooks:
-      - id: skillsniff        # scans only the skills your commit touched
+      - id: skillsniff      # scans only the skills your commit touched
 ```
 
 **Scaffold everything at once** — config, policy and a CI workflow, pointed at
@@ -102,10 +115,6 @@ baselined and a third appears, the third is reported. Every report states how
 many findings were suppressed, and you cannot baseline away a coverage gap.
 
 ## Install
-
-```bash
-pip install skillsniff
-```
 
 No runtime dependencies. It runs on a bare `python:3.11` image with no install
 step at all if you prefer:
@@ -449,7 +458,7 @@ properties of a skill, and none of them can be evaluated from a single file.
 ### Plain CLI
 
 ```bash
-pip install skillsniff
+pip install -e .        # or `pip install skillsniff` once released
 skillsniff scan ./skills --format sarif -o skillsniff.sarif
 skillsniff scan ./skills --fail-on high
 ```

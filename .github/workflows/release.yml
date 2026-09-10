@@ -40,15 +40,22 @@ jobs:
             exit 1
           fi
           echo "tag and package agree on $pkg"
-      - name: The action must pin the version being released
+      # Once a release exists, the action should install that published version
+      # by default rather than building from a git ref. An empty default is
+      # correct only while nothing has been published.
+      - name: The action's default version must match the release
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
           pkg=$(python -c "import skillsniff; print(skillsniff.__version__)")
-          if ! grep -q "default: \"$pkg\"" action.yml; then
-            echo "::error::action.yml does not default to skillsniff==$pkg"
+          if grep -q 'default: ""' action.yml; then
+            echo "::warning::action.yml still installs from git by default; set" \
+                 "the version input default to \"$pkg\" now that $pkg is published"
+          elif ! grep -q "default: \"$pkg\"" action.yml; then
+            echo "::error::action.yml defaults to a version other than $pkg"
             exit 1
+          else
+            echo "action.yml defaults to $pkg"
           fi
-          echo "action.yml pins $pkg"
       - name: The changelog must mention this version
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
