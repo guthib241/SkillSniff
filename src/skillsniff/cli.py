@@ -604,7 +604,8 @@ jobs:
           # The capability diff compares against the base commit.
           fetch-depth: 0
 
-      - uses: guthib241/SkillSniff@v0.2.0
+      # Pin to a tag once one is released; @main works today.
+      - uses: guthib241/SkillSniff@main
         with:
           path: {path}
           fail-on: {fail_on}

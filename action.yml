@@ -49,9 +49,12 @@ inputs:
     required: false
     default: "true"
   version:
-    description: SkillSniff version to install. Defaults to the pinned release.
+    description: >-
+      SkillSniff version to install from PyPI. Until the first release exists
+      there is no published package, so the default installs from this
+      repository instead; set an explicit version once one is published.
     required: false
-    default: "0.2.0"
+    default: ""
   python-version:
     description: Python version used to run SkillSniff.
     required: false
@@ -82,8 +85,16 @@ runs:
     - name: Install SkillSniff
       shell: bash
       run: |
-        python -m pip install --quiet --disable-pip-version-check \
-          "skillsniff==${{ inputs.version }}"
+        if [ -n "${{ inputs.version }}" ]; then
+          python -m pip install --quiet --disable-pip-version-check \
+            "skillsniff==${{ inputs.version }}"
+        else
+          # No published release yet. Install from the action's own checkout so
+          # the action works today rather than failing on a version that does
+          # not exist.
+          python -m pip install --quiet --disable-pip-version-check \
+            "git+https://github.com/guthib241/SkillSniff@${{ github.action_ref || 'main' }}"
+        fi
         skillsniff --version
 
     - name: Scan

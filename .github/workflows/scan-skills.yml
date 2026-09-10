@@ -46,7 +46,9 @@ jobs:
         with:
           python-version: "3.11"
 
-      - run: python -m pip install skillsniff
+      # No published release yet, so install from the repository. Switch to
+      # `pip install skillsniff==<version>` once one exists.
+      - run: python -m pip install "git+https://github.com/guthib241/SkillSniff@main"
 
       - name: Scan
         id: scan
