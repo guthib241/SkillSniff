@@ -414,7 +414,7 @@ permissions:
 steps:
   - uses: actions/checkout@v4
     with: { fetch-depth: 0 }
-  - uses: guthib241/SkillSniff@v0.2.0
+  - uses: guthib241/SkillSniff@main             # pin a tag or SHA once released
     with:
       path: ./skills
       fail-on: high                            # critical|high|medium|low|info
@@ -433,7 +433,7 @@ steps:
 | `ignore` | — | Rule ids or family prefixes |
 | `sarif` | `true` | Upload to code scanning |
 | `comment` | `true` | Comment the capability diff on PRs |
-| `version` | `0.2.0` | SkillSniff version to install |
+| `version` | — | PyPI version to install; empty installs from the action's ref |
 
 Outputs: `verdict`, `findings`, `critical`, `sarif-file`.
 
