@@ -1,0 +1,149 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Build and verify without publishing.
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  # A release must not ship a build that has not passed the same gate as a
+  # pull request. Running the checks here rather than trusting that CI passed
+  # on the commit means a tag pushed to an unverified commit cannot publish.
+  verify:
+    name: verify the tagged commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pytest -q
+      - run: python -m ruff check src tests
+      - run: python -m mypy
+      - run: python -m skillsniff benchmark
+      - name: The version must match the tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg=$(python -c "import skillsniff; print(skillsniff.__version__)")
+          if [ "$tag" != "$pkg" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match package version $pkg"
+            exit 1
+          fi
+          echo "tag and package agree on $pkg"
+      - name: The action must pin the version being released
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          pkg=$(python -c "import skillsniff; print(skillsniff.__version__)")
+          if ! grep -q "default: \"$pkg\"" action.yml; then
+            echo "::error::action.yml does not default to skillsniff==$pkg"
+            exit 1
+          fi
+          echo "action.yml pins $pkg"
+      - name: The changelog must mention this version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          pkg=$(python -c "import skillsniff; print(skillsniff.__version__)")
+          grep -q "\[$pkg\]" CHANGELOG.md || {
+            echo "::error::CHANGELOG.md has no entry for $pkg"
+            exit 1
+          }
+
+  build:
+    name: build
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install build twine
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - name: The wheel must not contain the benchmark corpus
+        run: |
+          python - <<'PY'
+          import glob, sys, zipfile
+          leaked = [n for n in zipfile.ZipFile(glob.glob("dist/*.whl")[0]).namelist()
+                    if "bench/corpus" in n]
+          if leaked:
+              print(f"::error::wheel ships {len(leaked)} corpus file(s)")
+              sys.exit(1)
+          print("wheel is free of corpus content")
+          PY
+      - name: The wheel must install with no runtime dependencies
+        run: |
+          python -m venv /tmp/check
+          /tmp/check/bin/pip install --quiet dist/*.whl
+          installed=$(/tmp/check/bin/pip list --format=freeze \
+            | grep -viE '^(pip|setuptools|wheel)=' || true)
+          version=$(/tmp/check/bin/python -c "import skillsniff; print(skillsniff.__version__)")
+          if [ "$installed" != "skillsniff==$version" ]; then
+            echo "::error::wheel pulled in runtime dependencies: $installed"
+            exit 1
+          fi
+          /tmp/check/bin/skillsniff --version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: publish to PyPI
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') && !inputs.dry-run
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      # Trusted publishing: no API token is stored anywhere. Configure the
+      # publisher once at https://pypi.org/manage/project/skillsniff/settings/publishing/
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: GitHub release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Extract this version's changelog section
+        id: notes
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          python - "$version" > notes.md <<'PY'
+          import re, sys
+          version = sys.argv[1]
+          text = open("CHANGELOG.md", encoding="utf-8").read()
+          match = re.search(
+              rf"^## \[{re.escape(version)}\].*?$(.*?)(?=^## \[|\Z)",
+              text, re.MULTILINE | re.DOTALL,
+          )
+          print((match.group(1).strip() if match else f"See CHANGELOG.md for {version}."))
+          PY
+      - uses: softprops/action-gh-release@v2
+        with:
+          body_path: notes.md
+          files: dist/*
+          generate_release_notes: false

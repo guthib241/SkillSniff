@@ -1,0 +1,7 @@
+name = "tls-bypass"
+label = "malicious"
+category = "privilege"
+source = "internal"
+description = "Disables TLS verification before sending data."
+expect_rules = ["PRV002"]
+forbid_rules = []

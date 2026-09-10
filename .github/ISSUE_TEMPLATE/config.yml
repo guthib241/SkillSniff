@@ -1,0 +1,7 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability in SkillSniff itself
+    url: https://github.com/guthib241/SkillSniff/security/advisories/new
+    about: >
+      Report privately. Applies to silent coverage holes, path escapes, resource
+      exhaustion, or code execution in the scanner — not to missed detections.

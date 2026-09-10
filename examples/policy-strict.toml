@@ -1,0 +1,31 @@
+# A restrictive policy suitable for skills that run unattended in CI.
+[policy]
+name = "strict-ci"
+description = "No credential access, no unpinned dependencies, no undeclared capabilities."
+
+# Any finding at or above this severity denies the skill.
+max_risk = "high"
+
+# Capabilities that are never permitted.
+deny = [
+    "credential_access",
+    "remote_instructions",
+]
+
+# Capabilities permitted only with a human sign-off.
+require_approval = [
+    "shell",
+    "external_upload",
+    "package_install",
+    "persistence",
+]
+
+# Findings that deny outright, by rule id or family prefix.
+deny_rules = ["INJ", "EXF", "OBS003"]
+
+require_pinned_dependencies = true
+require_declared_capabilities = true
+allow_unpinned_external = false
+
+# A decision made on an incompletely-analysed artifact is not a decision.
+min_coverage = "MEDIUM"

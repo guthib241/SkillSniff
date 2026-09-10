@@ -1,0 +1,8 @@
+name = "permission-bypass"
+label = "malicious"
+category = "privilege"
+source = "internal"
+description = "Instructs the agent to disable its permission prompts."
+expect_rules = ["PRV001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

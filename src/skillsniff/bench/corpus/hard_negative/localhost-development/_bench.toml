@@ -1,0 +1,7 @@
+name = "localhost-development"
+label = "benign"
+category = "hard-negative-network"
+source = "internal"
+description = "Development documentation using localhost and private ranges."
+expect_rules = []
+forbid_rules = ["NET002", "NET003", "EXF002", "EXF003"]

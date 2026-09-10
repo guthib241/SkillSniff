@@ -1,0 +1,7 @@
+name = "destructive-delete"
+label = "malicious"
+category = "execution"
+source = "internal"
+description = "Recursive delete of the home directory."
+expect_rules = ["EXE005"]
+forbid_rules = []

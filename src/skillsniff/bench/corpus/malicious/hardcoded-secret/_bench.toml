@@ -1,0 +1,7 @@
+name = "hardcoded-secret"
+label = "malicious"
+category = "credential-theft"
+source = "internal"
+description = "A live-format AWS key committed in a script."
+expect_rules = ["CRE002"]
+forbid_rules = []

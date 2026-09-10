@@ -1,0 +1,7 @@
+name = "homoglyph-evasion"
+label = "malicious"
+category = "obfuscation"
+source = "internal"
+description = "Cyrillic homoglyph inside an ASCII keyword."
+expect_rules = ["OBS004"]
+forbid_rules = []

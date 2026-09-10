@@ -1,0 +1,7 @@
+name = "documented-api-client"
+label = "benign"
+category = "hard-negative-network"
+source = "internal"
+description = "Uses example domains and placeholder credentials in documentation."
+expect_rules = []
+forbid_rules = ["CRE002", "EXF002", "EXF003"]

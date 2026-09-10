@@ -1,0 +1,7 @@
+name = "dynamic-eval"
+label = "malicious"
+category = "execution"
+source = "internal"
+description = "eval() on a value fetched at runtime."
+expect_rules = ["EXE004"]
+forbid_rules = []

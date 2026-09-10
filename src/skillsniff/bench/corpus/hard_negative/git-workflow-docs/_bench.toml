@@ -1,0 +1,7 @@
+name = "git-workflow-docs"
+label = "benign"
+category = "hard-negative-documentation"
+source = "internal"
+description = "Documentation mentioning sudo, git push and force flags."
+expect_rules = []
+forbid_rules = ["EXE005", "PRV003"]

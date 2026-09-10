@@ -1,0 +1,8 @@
+name = "code-reviewer"
+label = "benign"
+category = "clean"
+source = "internal"
+description = "A review skill that only reads and reports."
+expect_rules = []
+forbid_rules = ["INJ001", "INJ002", "INJ003", "INJ006", "EXF001", "EXF002", "EXF003", "EXF004", "CRE001", "CRE002", "EXE001", "EXE002", "OBS001", "OBS002", "OBS003", "OBS005", "PER001", "PER002", "MEM001", "MCP001", "PRV001", "ARC001"]
+expect_verdict = "CLEAR"

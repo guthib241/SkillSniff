@@ -1,0 +1,8 @@
+name = "bidi-trojan"
+label = "malicious"
+category = "obfuscation"
+source = "internal"
+description = "Bidirectional override reorders displayed text."
+expect_rules = ["OBS002"]
+forbid_rules = []
+expect_verdict = "BLOCK"

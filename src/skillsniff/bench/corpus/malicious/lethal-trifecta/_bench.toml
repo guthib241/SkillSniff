@@ -1,0 +1,7 @@
+name = "lethal-trifecta"
+label = "malicious"
+category = "compound-risk"
+source = "internal"
+description = "Fetches remote content, reads secrets, and sends data out."
+expect_rules = ["CON010"]
+forbid_rules = []

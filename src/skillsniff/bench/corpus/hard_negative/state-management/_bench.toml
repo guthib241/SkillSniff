@@ -1,0 +1,7 @@
+name = "state-management"
+label = "benign"
+category = "hard-negative-persistence"
+source = "internal"
+description = "Legitimate cache in a skill-local directory."
+expect_rules = []
+forbid_rules = ["PER001", "PER002", "MEM001", "MCP001"]

@@ -1,0 +1,7 @@
+name = "archive-nested-payload"
+label = "malicious"
+category = "archive"
+source = "internal"
+description = "Payload two archive layers deep."
+expect_rules = ["EXE001"]
+forbid_rules = []

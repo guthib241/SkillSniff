@@ -1,0 +1,116 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skillsniff"
+version = "0.2.0"
+description = "Security, trust, and capability analysis for AI agent skills."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "SkillSniff contributors" }]
+keywords = [
+    "agent-skills", "skill-md", "security", "static-analysis",
+    "supply-chain", "prompt-injection", "sarif", "llm",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+]
+# Deliberately empty. SkillSniff must run on a bare python:3.11 image with no
+# install step, because a security gate that is awkward to install does not get
+# run. Optional extras below only ever *improve* analysis; nothing requires them.
+dependencies = []
+
+[project.optional-dependencies]
+yaml = ["PyYAML>=6.0"]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "build>=1.2",
+    "PyYAML>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/guthib241/SkillSniff"
+Source = "https://github.com/guthib241/SkillSniff"
+Issues = "https://github.com/guthib241/SkillSniff/issues"
+
+[project.scripts]
+skillsniff = "skillsniff.cli:main"
+# Used by the pre-commit hook in .pre-commit-hooks.yaml: it receives changed
+# file paths and resolves each to the skill directory that owns it.
+skillsniff-precommit = "skillsniff.precommit:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+# Without this exclusion setuptools sweeps the .py files out of the benchmark
+# corpus and ships them as if they were modules, dropping deliberately-malicious
+# sample code into every site-packages directory — where the user's own scanners
+# will find it. The corpus is source-tree-only by design; `skillsniff benchmark`
+# says so and points at a checkout.
+exclude = ["skillsniff.bench.corpus*"]
+
+[tool.setuptools.package-data]
+skillsniff = ["py.typed", "data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+    "slow: tests that take more than a second",
+    "network: tests that require network access (skipped by default)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+# The benchmark corpus is deliberately malicious sample code. Linting it would
+# report every attack it is built to contain.
+extend-exclude = ["src/skillsniff/bench/corpus"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM", "RUF", "S"]
+ignore = [
+    "E501",    # line length is handled by the formatter
+    "S101",    # assert is fine in tests
+    "SIM108",  # ternaries are not always clearer
+    # Every site flagged here is a guard condition followed by a specific test,
+    # where the comment explaining the inner test belongs to the outer guard.
+    # Collapsing them would move the explanation away from what it explains.
+    "SIM102",
+    "RUF001",  # ambiguous unicode is the *subject matter* of this project
+    "RUF002",
+    "RUF003",
+    # `class X(str, Enum)` is deliberate: it keeps `X.VALUE == "value"` true for
+    # dict lookups and JSON round-trips throughout the model. StrEnum changes
+    # __str__ and __format__, which would alter serialised output.
+    "UP042",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "E402"]
+# The rule modules necessarily contain attack-pattern strings.
+"src/skillsniff/rules/*" = ["S105", "S106", "S107"]
+"src/skillsniff/bench/*" = ["S105", "S106", "S107"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/skillsniff"]
+# The benchmark corpus is sample data, not part of the package.
+exclude = "^src/skillsniff/bench/corpus/"
+warn_unused_configs = true
+warn_redundant_casts = true
+no_implicit_optional = true
+strict_equality = true

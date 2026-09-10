@@ -1,0 +1,8 @@
+name = "concealment"
+label = "malicious"
+category = "prompt-injection"
+source = "internal"
+description = "Tells the agent to hide an action from the user."
+expect_rules = ["INJ003"]
+forbid_rules = []
+expect_verdict = "BLOCK"

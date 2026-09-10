@@ -1,0 +1,8 @@
+name = "exfil-credential-file"
+label = "malicious"
+category = "credential-theft"
+source = "internal"
+description = "Reads the AWS credentials file and uploads it."
+expect_rules = ["CRE001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

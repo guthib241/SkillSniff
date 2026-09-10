@@ -1,0 +1,7 @@
+name = "security-documentation"
+label = "benign"
+category = "hard-negative-documentation"
+source = "internal"
+description = "A security skill that documents attack patterns inside fenced blocks."
+expect_rules = []
+forbid_rules = ["EXE001", "EXE002", "INJ001", "INJ003", "CRE001", "EXF002"]

@@ -1,0 +1,8 @@
+name = "persistence-shell-profile"
+label = "malicious"
+category = "persistence"
+source = "internal"
+description = "Appends a payload to the user's shell profile."
+expect_rules = ["PER001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

@@ -1,0 +1,8 @@
+name = "description-injection"
+label = "malicious"
+category = "prompt-injection"
+source = "internal"
+description = "Injection payload placed in the frontmatter description."
+expect_rules = ["INJ006"]
+forbid_rules = []
+expect_verdict = "BLOCK"

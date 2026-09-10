@@ -1,0 +1,8 @@
+name = "archive-traversal"
+label = "malicious"
+category = "archive"
+source = "internal"
+description = "Archive member escaping the extraction directory (Zip Slip)."
+expect_rules = ["ARC001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

@@ -1,0 +1,7 @@
+name = "commented-dangerous-commands"
+label = "benign"
+category = "hard-negative-shell"
+source = "internal"
+description = "A shell script whose dangerous commands are commented out."
+expect_rules = []
+forbid_rules = ["EXE001", "EXE005", "CRE001"]
