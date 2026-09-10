@@ -3,6 +3,41 @@
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); this
 project uses [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **Baseline suppression** (`skillsniff baseline`, `scan --baseline`). The
+  practical barrier to adopting any analyser on an existing repository is that
+  day one it reports everything at once, and a team that cannot reach zero in
+  one sitting turns the gate off permanently. A baseline records what exists
+  today so the gate can be enabled immediately and enforce only what happens
+  next. Findings are fingerprinted by rule, file and normalised evidence rather
+  than by line number, so reformatting does not resurrect suppressed findings
+  and moving code does not mask new ones; recorded counts are respected, so a
+  third occurrence of a twice-baselined finding is still reported. Suppression
+  is stated in every report, verdicts are re-derived after it, and a coverage
+  gap cannot be baselined away.
+- **GitHub Action** (`action.yml`). Composite action needing no secrets:
+  scans, uploads SARIF, comments the capability diff against the pull request
+  base, optionally evaluates a policy, and exposes `verdict`, `findings` and
+  `critical` as outputs. SARIF and the job summary are published before the
+  threshold is enforced, so a failing gate still leaves the full report.
+- **Pre-commit hooks** (`.pre-commit-hooks.yaml`). `skillsniff` scans only the
+  skills the commit touched; `skillsniff-all` scans the tree. Each changed file
+  is resolved up to the skill directory that owns it and that skill is scanned
+  whole, because capability mismatch and the compound-risk rules are properties
+  of a skill and cannot be evaluated from one file.
+- **`skillsniff init`**. Scaffolds a config, a policy and a CI workflow, with
+  three profiles (balanced, strict, advisory), pointed at wherever the
+  repository's skills actually are rather than assuming `./skills`. Everything
+  it writes is asserted to load back into the tool.
+- **Release workflow.** Re-runs the full gate on the tagged commit rather than
+  trusting that CI passed, checks that the tag, the package version, the version
+  `action.yml` pins and the changelog entry all agree, verifies the wheel ships
+  no corpus content and no runtime dependency, then publishes via PyPI trusted
+  publishing (no stored token).
+
 ## [0.2.0] — 2026-09-09
 
 Rebuild of the project from a SKILL.md linter into a security, trust and

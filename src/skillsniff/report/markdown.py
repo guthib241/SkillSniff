@@ -84,6 +84,18 @@ def render(result: ScanResult, stream: TextIO | None = None, *, max_findings: in
         emit("</details>")
         emit()
 
+    if result.baseline_path:
+        emit(
+            f"> **{result.baseline_suppressed} finding(s) suppressed** by "
+            f"`{result.baseline_path}`."
+            + (
+                f" {result.baseline_stale} baseline entry/entries no longer match anything."
+                if result.baseline_stale
+                else ""
+            )
+        )
+        emit()
+
     emit("---")
     emit(
         "<sub>A clean result means no issues were detected by the enabled checks. "

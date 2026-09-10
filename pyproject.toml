@@ -48,6 +48,9 @@ Issues = "https://github.com/guthib241/SkillSniff/issues"
 
 [project.scripts]
 skillsniff = "skillsniff.cli:main"
+# Used by the pre-commit hook in .pre-commit-hooks.yaml: it receives changed
+# file paths and resolves each to the skill directory that owns it.
+skillsniff-precommit = "skillsniff.precommit:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

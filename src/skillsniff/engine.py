@@ -163,5 +163,33 @@ def scan(path: Path, config: Config | None = None) -> ScanResult:
         rules_run = max(rules_run, executed)
 
     result.rules_run = rules_run
+
+    if config.baseline is not None:
+        _apply_baseline(result, config.baseline)
+
     result.skills.sort(key=lambda s: (s.risk.verdict.rank, s.name))
     return result
+
+
+def _apply_baseline(result: ScanResult, baseline_path: Path) -> None:
+    """Suppress baselined findings and re-derive each verdict.
+
+    Re-assessment matters: a skill whose only critical finding is baselined must
+    stop reporting BLOCK, or the verdict contradicts the finding list. Coverage
+    is untouched, so a baseline can never turn an INCONCLUSIVE scan into a clean
+    one — you cannot baseline away the fact that a file could not be read.
+    """
+    from skillsniff.provenance.baseline import Baseline, apply
+
+    baseline = Baseline.read(baseline_path)
+    result.baseline_path = str(baseline_path)
+
+    stale = set(baseline.counts)
+    for skill in result.skills:
+        applied = apply(baseline, skill.findings)
+        result.baseline_suppressed += applied.suppressed
+        skill.findings = applied.kept
+        skill.risk = assess(applied.kept, skill.coverage)
+        stale &= set(applied.stale)
+
+    result.baseline_stale = len(stale)

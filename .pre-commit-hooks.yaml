@@ -1,0 +1,30 @@
+# Use SkillSniff as a pre-commit hook:
+#
+#   repos:
+#     - repo: https://github.com/guthib241/SkillSniff
+#       rev: v0.2.0
+#       hooks:
+#         - id: skillsniff
+#
+# The default hook scans only the skills touched by the commit, which keeps it
+# fast enough to run on every commit. Use `skillsniff-all` when you want the
+# whole tree checked regardless of what changed.
+- id: skillsniff
+  name: SkillSniff (changed skills)
+  description: Security, trust and capability analysis for the agent skills in this commit.
+  entry: skillsniff-precommit
+  language: python
+  # Any file inside a skill directory can change its analysis, so the hook
+  # triggers broadly and then resolves each path to its owning skill.
+  files: '(^|/)(SKILL\.md|skill\.md)$|(^|/)(references|scripts|assets|templates)/'
+  pass_filenames: true
+  require_serial: false
+
+- id: skillsniff-all
+  name: SkillSniff (whole tree)
+  description: Scan every skill in the repository, not only the ones that changed.
+  entry: skillsniff
+  args: ["scan", ".", "--no-color", "--fail-on", "high"]
+  language: python
+  pass_filenames: false
+  always_run: true

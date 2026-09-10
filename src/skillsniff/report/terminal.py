@@ -191,6 +191,21 @@ def _render_summary(result: ScanResult, emit, style: Style, line_width: int, *, 
     verdict = result.verdict
     emit(f"  Overall: {style.verdict(verdict, verdict.value)} — {verdict.summary}")
 
+    if result.baseline_path:
+        emit(
+            f"  {style('baseline:', 'dim')} {result.baseline_suppressed} finding(s) suppressed "
+            f"by {result.baseline_path}"
+        )
+        if result.baseline_stale:
+            emit(
+                style(
+                    f"    {result.baseline_stale} baseline entr"
+                    f"{'y' if result.baseline_stale == 1 else 'ies'} no longer match anything — "
+                    "those findings are fixed and can be removed",
+                    "dim",
+                )
+            )
+
     if not quiet:
         emit()
         emit(

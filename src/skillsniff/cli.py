@@ -61,6 +61,10 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
         "--min-severity", metavar="SEVERITY", help="hide findings below this severity",
     )
     parser.add_argument("--strict", action="store_true", help="fail on any finding, including low")
+    parser.add_argument(
+        "--baseline", type=Path, metavar="PATH",
+        help="suppress findings recorded in this baseline file (see 'skillsniff baseline')",
+    )
     parser.add_argument("--no-archives", action="store_true", help="do not inspect inside archives")
     parser.add_argument("--timeout", type=float, metavar="SECONDS", help="analysis time budget per skill")
     parser.add_argument("--max-file-size", type=int, metavar="BYTES", help="skip files larger than this")
@@ -110,6 +114,33 @@ def build_parser() -> argparse.ArgumentParser:
     explain.add_argument("--no-color", action="store_true")
     explain.add_argument("--color", action="store_true")
     explain.set_defaults(func=cmd_explain)
+
+    init = sub.add_parser(
+        "init",
+        help="scaffold a config, a policy and a CI workflow for this repository",
+    )
+    init.add_argument("path", nargs="?", default=".", type=Path)
+    init.add_argument("--force", action="store_true", help="overwrite existing files")
+    init.add_argument(
+        "--profile", choices=("balanced", "strict", "advisory"), default="balanced",
+        help="how much the generated config gates (default: balanced)",
+    )
+    init.add_argument("--no-workflow", action="store_true", help="skip the CI workflow")
+    init.add_argument("--no-color", action="store_true")
+    init.add_argument("--color", action="store_true")
+    init.set_defaults(func=cmd_init)
+
+    baseline = sub.add_parser(
+        "baseline",
+        help="record today's findings so a gate can enforce only what happens next",
+    )
+    baseline.add_argument("path", nargs="?", default=".", type=Path)
+    baseline.add_argument(
+        "-o", "--output", type=Path,
+        help="baseline path (default: ./skillsniff-baseline.json)",
+    )
+    _add_common(baseline)
+    baseline.set_defaults(func=cmd_baseline)
 
     lock = sub.add_parser("lock", help="write a lockfile recording the skill's current state")
     lock.add_argument("path", type=Path)
@@ -187,6 +218,13 @@ def resolve_config(args: argparse.Namespace) -> Config:
         config.fail_on = Severity.LOW
     if getattr(args, "no_archives", False):
         config.expand_archives = False
+    if getattr(args, "baseline", None):
+        config.baseline = args.baseline
+    if config.baseline is not None and not config.baseline.is_file():
+        raise UsageError(
+            f"no baseline at {config.baseline}; create one with "
+            f"'skillsniff baseline <path> -o {config.baseline}'"
+        )
 
     limits = config.limits
     changes: dict[str, Any] = {}
@@ -467,6 +505,233 @@ def cmd_explain(args: argparse.Namespace) -> int:
         for reference in meta.references:
             print(f"    {reference}")
     print()
+    return EXIT_OK
+
+
+#: Generated config per profile. Written with comments, because a config file
+#: nobody understands gets copied between repositories and never adjusted.
+_INIT_PROFILES: dict[str, str] = {
+    "balanced": """# SkillSniff configuration — https://github.com/guthib241/SkillSniff
+#
+# Profile: balanced. Security findings gate; authoring-quality findings are
+# reported but do not fail the build.
+[skillsniff]
+fail_on = "high"
+
+# Authoring quality is useful feedback but is not a security signal, and mixing
+# the two is how a gate gets switched off. Drop this line to enforce it too.
+ignore = ["QUA"]
+""",
+    "strict": """# SkillSniff configuration — https://github.com/guthib241/SkillSniff
+#
+# Profile: strict. Everything gates, including authoring quality and
+# specification compliance. Suitable for a curated skill collection.
+[skillsniff]
+fail_on = "medium"
+strict = false
+
+[skillsniff.limits]
+# A skill that cannot be analysed inside this budget returns INCONCLUSIVE
+# rather than CLEAR, which is the correct answer.
+time_budget_seconds = 60
+""",
+    "advisory": """# SkillSniff configuration — https://github.com/guthib241/SkillSniff
+#
+# Profile: advisory. Nothing fails the build; findings are reported for humans
+# to act on. Use this to introduce the tool, then tighten `fail_on`.
+[skillsniff]
+fail_on = "critical"
+ignore = ["QUA", "SPEC"]
+""",
+}
+
+_INIT_POLICY = """# SkillSniff policy — evaluated by `skillsniff policy check`.
+#
+# Configuration decides what this repository lints. Policy decides what this
+# organisation permits. They are separate because they usually have different
+# owners.
+[policy]
+name = "default"
+description = "Starting point. Tighten the deny list as you learn your skills."
+
+# Any finding at or above this severity denies the skill.
+max_risk = "critical"
+
+# Capabilities that are never acceptable here.
+deny = [
+    "remote_instructions",   # a skill whose real behaviour lives at a URL
+]
+
+# Capabilities acceptable only with a human sign-off.
+require_approval = [
+    "credential_access",
+    "shell",
+    "external_upload",
+    "persistence",
+]
+
+# A decision made on an incompletely-analysed artifact is not a decision.
+min_coverage = "MEDIUM"
+
+# Turn these on once your skills are pinned; they are the strongest controls
+# here and also the noisiest to adopt cold.
+# require_pinned_dependencies = true
+# require_declared_capabilities = true
+"""
+
+_INIT_WORKFLOW = """name: skillsniff
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: scan skills
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write   # upload SARIF to code scanning
+      pull-requests: write     # comment the capability diff
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The capability diff compares against the base commit.
+          fetch-depth: 0
+
+      - uses: guthib241/SkillSniff@v0.2.0
+        with:
+          path: {path}
+          fail-on: {fail_on}
+          # Adopting on an existing repository? Record today's findings first:
+          #   skillsniff baseline {path} -o skillsniff-baseline.json
+          # then uncomment the next line so the gate enforces only new work.
+          # baseline: skillsniff-baseline.json
+          policy: {policy}
+"""
+
+
+def cmd_init(args: argparse.Namespace) -> int:
+    from skillsniff.model.skill import discover_skills
+    from skillsniff.report.style import Style
+
+    root = args.path.resolve()
+    if not root.is_dir():
+        print(f"skillsniff: not a directory: {root}", file=sys.stderr)
+        return EXIT_USAGE
+
+    style = Style(_color_enabled(args, sys.stdout))
+
+    # Point the generated files at wherever the skills actually are, rather than
+    # assuming ./skills and producing a workflow that scans nothing.
+    from skillsniff.core.limits import Budget
+
+    skills = discover_skills(root, Budget())
+    if skills:
+        parents = {s.root.parent for s in skills}
+        if len(parents) == 1:
+            relative = next(iter(parents)).relative_to(root)
+            scan_path = f"./{relative.as_posix()}" if relative.parts else "."
+        else:
+            scan_path = "."
+    else:
+        scan_path = "./skills"
+
+    planned: list[tuple[Path, str]] = [
+        (root / ".skillsniff.toml", _INIT_PROFILES[args.profile]),
+        (root / "skillsniff-policy.toml", _INIT_POLICY),
+    ]
+    if not args.no_workflow:
+        planned.append(
+            (
+                root / ".github" / "workflows" / "skillsniff.yml",
+                _INIT_WORKFLOW.format(
+                    path=scan_path,
+                    fail_on={"balanced": "high", "strict": "medium", "advisory": "critical"}[
+                        args.profile
+                    ],
+                    policy="skillsniff-policy.toml",
+                ),
+            )
+        )
+
+    written: list[Path] = []
+    skipped: list[Path] = []
+    for target, content in planned:
+        if target.exists() and not args.force:
+            skipped.append(target)
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+        written.append(target)
+
+    print()
+    print(f"  {style('SkillSniff', 'bold')} · {args.profile} profile")
+    print()
+    if skills:
+        print(f"  found {len(skills)} skill(s); generated files target {scan_path}")
+    else:
+        print(f"  no skills found under {root}; generated files assume {scan_path}")
+    print()
+    for target in written:
+        print(f"    {style('created', 'ok')}  {target.relative_to(root)}")
+    for target in skipped:
+        print(f"    {style('exists', 'dim')}   {target.relative_to(root)}  (use --force to overwrite)")
+
+    print()
+    print(f"  {style('Next:', 'bold')}")
+    print(f"    skillsniff scan {scan_path}")
+    if skills:
+        print(f"    skillsniff inspect {skills[0].root.relative_to(root).as_posix()}")
+    print()
+    print(style("  Adopting on an existing repository with findings already present?", "dim"))
+    print(style(f"    skillsniff baseline {scan_path} -o skillsniff-baseline.json", "dim"))
+    print(style("    then pass --baseline so the gate enforces only new work.", "dim"))
+    print()
+    return EXIT_OK
+
+
+def cmd_baseline(args: argparse.Namespace) -> int:
+    from collections import Counter
+
+    from skillsniff.engine import scan
+    from skillsniff.provenance.baseline import DEFAULT_BASELINE_NAME, Baseline
+
+    # Generating a baseline must never itself read a baseline.
+    args.baseline = None
+    config = resolve_config(args)
+    config.baseline = None
+
+    result = scan(args.path.resolve(), config)
+    if not result.skills:
+        for error in result.errors:
+            print(f"skillsniff: {error}", file=sys.stderr)
+        return EXIT_USAGE
+
+    findings = result.all_findings
+    output = args.output or Path(DEFAULT_BASELINE_NAME)
+    Baseline.from_findings(findings).write(output)
+
+    print(f"skillsniff: wrote {output}")
+    print(f"  {len(findings)} finding(s) recorded across {len(result.skills)} skill(s)")
+    by_severity = Counter(f.severity.value for f in findings)
+    for severity in ("critical", "high", "medium", "low", "info"):
+        if by_severity.get(severity):
+            print(f"    {by_severity[severity]:>4} {severity}")
+    print()
+    print("  Scans using --baseline will now report only findings not listed here.")
+    if by_severity.get("critical") or by_severity.get("high"):
+        print(
+            "  Note: this baseline accepts "
+            f"{by_severity.get('critical', 0) + by_severity.get('high', 0)} finding(s) at high "
+            "severity or above. Review it before committing — a baseline is a record of "
+            "accepted risk, not a fix."
+        )
     return EXIT_OK
 
 

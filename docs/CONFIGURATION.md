@@ -62,6 +62,7 @@ valid set.
 | `--fail-on SEVERITY` | Exit-code threshold |
 | `--min-severity SEVERITY` | Display threshold |
 | `--strict` | Fail on any finding, including low |
+| `--baseline PATH` | Suppress findings recorded in a baseline file |
 | `--no-archives` | Do not inspect inside archives |
 | `--timeout SECONDS` | Per-skill analysis budget |
 | `--max-file-size BYTES` | Per-file read limit |
@@ -83,6 +84,35 @@ valid set.
 
 `1` and `3` are kept distinct on purpose. "The gate caught something" and "the
 gate did not run" must not look alike in CI.
+
+### Baselines
+
+```bash
+skillsniff baseline ./skills -o skillsniff-baseline.json
+skillsniff scan ./skills --baseline skillsniff-baseline.json
+```
+
+`baseline = "skillsniff-baseline.json"` in the config file does the same thing
+persistently.
+
+A baseline is a record of **accepted risk, not a fix**, and the tool says so when
+generating one that contains high-severity findings. Three properties keep it
+honest:
+
+- Findings are identified by rule, file and normalised evidence — never by line
+  number. Reformatting a file does not resurrect everything below the change,
+  and moving code does not let a new finding inherit an old suppression.
+- Recorded counts are respected. Two baselined `EXE003` findings in a file do
+  not suppress a third.
+- Suppression is always reported, in every output format, and verdicts are
+  re-derived afterwards so the verdict never contradicts the finding list.
+
+What a baseline **cannot** do is hide a coverage gap. If a file could not be
+read, the scan still returns `INCONCLUSIVE`: you can accept a finding, but you
+cannot accept not having looked.
+
+Entries that stop matching anything are reported as stale, so a baseline shrinks
+as findings get fixed rather than silently accumulating.
 
 ### Limits and coverage
 

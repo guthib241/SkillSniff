@@ -44,6 +44,63 @@ $ skillsniff scan ./skills/md-formatter
 That EXF001 is not a pattern match. It is a dataflow observed in the Python AST,
 from an environment read to an HTTP sink, through two intermediate variables.
 
+## Get it running in 30 seconds
+
+**In CI** — one step, no secrets, no API key:
+
+```yaml
+- uses: actions/checkout@v4
+  with: { fetch-depth: 0 }        # lets it diff against the base commit
+
+- uses: guthib241/SkillSniff@v0.2.0
+  with:
+    path: ./skills
+    fail-on: high
+```
+
+It uploads SARIF to code scanning and comments the capability diff on pull
+requests. Outputs `verdict`, `findings` and `critical` for downstream steps.
+
+**Locally:**
+
+```bash
+pip install skillsniff
+skillsniff scan ./skills
+```
+
+**As a pre-commit hook:**
+
+```yaml
+repos:
+  - repo: https://github.com/guthib241/SkillSniff
+    rev: v0.2.0
+    hooks:
+      - id: skillsniff        # scans only the skills your commit touched
+```
+
+**Scaffold everything at once** — config, policy and a CI workflow, pointed at
+wherever your skills actually live:
+
+```bash
+skillsniff init                 # or --profile strict | advisory
+```
+
+### Already have findings? Start the gate anyway
+
+The reason new analysers get switched off is that day one they report everything
+at once. Record what exists today and enforce only what happens next:
+
+```bash
+skillsniff baseline ./skills -o skillsniff-baseline.json
+skillsniff scan ./skills --baseline skillsniff-baseline.json   # exits 0
+```
+
+A baseline fingerprints findings by rule, file and evidence — **not** line
+number — so reformatting a file does not resurrect everything, and moving code
+does not mask anything new. Counts are respected: if two `EXE003` findings are
+baselined and a third appears, the third is reported. Every report states how
+many findings were suppressed, and you cannot baseline away a coverage gap.
+
 ## Install
 
 ```bash
@@ -66,7 +123,9 @@ against PyYAML on every document shape a skill can contain.
 
 | Command | What it does |
 | --- | --- |
+| `skillsniff init` | Scaffold config, policy and a CI workflow for this repo |
 | `skillsniff scan PATH` | Analyse a skill, or every skill under a directory |
+| `skillsniff baseline PATH` | Record today's findings so the gate enforces only new work |
 | `skillsniff inspect PATH` | Full trust report: purpose, capabilities, trust graph, coverage |
 | `skillsniff rules` | List the 87-rule catalogue |
 | `skillsniff explain RULE` | What a rule detects, why it matters, and what it cannot see |
@@ -305,22 +364,72 @@ perfectly.
 
 Full detail in [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 
-## Using it in CI
+## Integrations
+
+### GitHub Action
 
 ```yaml
-- name: Scan skills
-  run: |
-    pip install skillsniff
-    skillsniff scan ./skills --format sarif -o skillsniff.sarif
-    skillsniff scan ./skills --fail-on high
+permissions:
+  contents: read
+  security-events: write    # upload SARIF
+  pull-requests: write      # comment the capability diff
 
-- uses: github/codeql-action/upload-sarif@v3
-  with:
-    sarif_file: skillsniff.sarif
+steps:
+  - uses: actions/checkout@v4
+    with: { fetch-depth: 0 }
+  - uses: guthib241/SkillSniff@v0.2.0
+    with:
+      path: ./skills
+      fail-on: high                            # critical|high|medium|low|info
+      baseline: skillsniff-baseline.json       # optional
+      policy: skillsniff-policy.toml           # optional
+      ignore: QUA                              # optional
 ```
 
-See [`.github/workflows/`](.github/workflows/) for the workflows this repository
-runs on itself, including a self-scan and the benchmark.
+| Input | Default | |
+| --- | --- | --- |
+| `path` | `.` | Skill, or directory of skills |
+| `fail-on` | `high` | Severity that fails the job |
+| `baseline` | — | Suppress recorded findings |
+| `policy` | — | Also evaluate a policy |
+| `config` | — | Explicit `.skillsniff.toml` |
+| `ignore` | — | Rule ids or family prefixes |
+| `sarif` | `true` | Upload to code scanning |
+| `comment` | `true` | Comment the capability diff on PRs |
+| `version` | `0.2.0` | SkillSniff version to install |
+
+Outputs: `verdict`, `findings`, `critical`, `sarif-file`.
+
+SARIF and the job summary are published **before** the threshold is enforced, so
+a failing gate still leaves you the full report.
+
+### Pre-commit
+
+```yaml
+repos:
+  - repo: https://github.com/guthib241/SkillSniff
+    rev: v0.2.0
+    hooks:
+      - id: skillsniff            # only the skills this commit touched
+      # - id: skillsniff-all      # the whole tree, every time
+```
+
+The hook resolves each changed file up to the skill directory that owns it and
+scans that skill whole — capability mismatch and the compound-risk rules are
+properties of a skill, and none of them can be evaluated from a single file.
+
+### Plain CLI
+
+```bash
+pip install skillsniff
+skillsniff scan ./skills --format sarif -o skillsniff.sarif
+skillsniff scan ./skills --fail-on high
+```
+
+See [`.github/workflows/`](.github/workflows/) for what this repository runs on
+itself: tests across three Python versions with and without PyYAML, a
+zero-dependency import check, the benchmark, a self-scan, and a packaging job
+that fails if the wheel gains a runtime dependency.
 
 ## Documentation
 

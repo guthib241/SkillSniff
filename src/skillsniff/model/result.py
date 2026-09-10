@@ -337,6 +337,12 @@ class ScanResult:
     scanned_path: str = ""
     rules_run: int = 0
     errors: list[str] = field(default_factory=list)
+    #: Findings hidden by a baseline. Always reported: a baseline whose effect is
+    #: invisible is indistinguishable from a scanner that found nothing.
+    baseline_suppressed: int = 0
+    baseline_path: str = ""
+    #: Baseline entries that matched nothing — findings since fixed.
+    baseline_stale: int = 0
 
     @property
     def all_findings(self) -> list[Finding]:
@@ -371,4 +377,15 @@ class ScanResult:
             "counts": self.counts(),
             "skills": [s.as_dict() for s in self.skills],
             "errors": list(self.errors),
+            **(
+                {
+                    "baseline": {
+                        "path": self.baseline_path,
+                        "suppressed": self.baseline_suppressed,
+                        "stale_entries": self.baseline_stale,
+                    }
+                }
+                if self.baseline_path
+                else {}
+            ),
         }

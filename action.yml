@@ -1,0 +1,187 @@
+name: SkillSniff
+description: >-
+  Security, trust, and capability analysis for AI agent skills. Scans SKILL.md
+  and everything bundled beside it, uploads SARIF, and comments the capability
+  diff on pull requests. No secrets or API keys required.
+author: SkillSniff contributors
+
+branding:
+  icon: shield
+  color: purple
+
+inputs:
+  path:
+    description: Skill directory, or a directory containing skills.
+    required: false
+    default: "."
+  fail-on:
+    description: >-
+      Severity at which the action fails: critical, high, medium, low, or info.
+    required: false
+    default: high
+  baseline:
+    description: >-
+      Path to a baseline file. Findings recorded in it are suppressed, so an
+      existing repository can adopt the gate without fixing everything first.
+      Create one with `skillsniff baseline <path>`.
+    required: false
+    default: ""
+  policy:
+    description: Path to a policy file to evaluate in addition to the scan.
+    required: false
+    default: ""
+  config:
+    description: Path to a .skillsniff.toml. Discovered automatically if omitted.
+    required: false
+    default: ""
+  ignore:
+    description: Comma-separated rule ids or family prefixes to suppress.
+    required: false
+    default: ""
+  sarif:
+    description: Upload SARIF to GitHub code scanning. Needs security-events:write.
+    required: false
+    default: "true"
+  comment:
+    description: >-
+      Post the capability diff as a pull-request comment. Needs
+      pull-requests:write. Falls back to the job summary when it cannot.
+    required: false
+    default: "true"
+  version:
+    description: SkillSniff version to install. Defaults to the pinned release.
+    required: false
+    default: "0.2.0"
+  python-version:
+    description: Python version used to run SkillSniff.
+    required: false
+    default: "3.11"
+
+outputs:
+  verdict:
+    description: BLOCK, REVIEW, CAUTION, CLEAR, or INCONCLUSIVE.
+    value: ${{ steps.scan.outputs.verdict }}
+  findings:
+    description: Total number of findings reported.
+    value: ${{ steps.scan.outputs.findings }}
+  critical:
+    description: Number of critical findings.
+    value: ${{ steps.scan.outputs.critical }}
+  sarif-file:
+    description: Path to the generated SARIF file.
+    value: ${{ steps.scan.outputs.sarif-file }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install SkillSniff
+      shell: bash
+      run: |
+        python -m pip install --quiet --disable-pip-version-check \
+          "skillsniff==${{ inputs.version }}"
+        skillsniff --version
+
+    - name: Scan
+      id: scan
+      shell: bash
+      run: |
+        set -uo pipefail
+        args=("${{ inputs.path }}")
+        [ -n "${{ inputs.config }}" ]   && args+=(--config "${{ inputs.config }}")
+        [ -n "${{ inputs.baseline }}" ] && args+=(--baseline "${{ inputs.baseline }}")
+        [ -n "${{ inputs.ignore }}" ]   && args+=(--ignore "${{ inputs.ignore }}")
+
+        # JSON first: it is the machine-readable source for the outputs below,
+        # and it must be produced even when the gate is going to fail.
+        skillsniff scan "${args[@]}" --format json -o skillsniff.json || true
+        skillsniff scan "${args[@]}" --format sarif -o skillsniff.sarif || true
+
+        if [ ! -s skillsniff.json ]; then
+          echo "::error::SkillSniff produced no output; the scan did not run"
+          exit 1
+        fi
+
+        python - <<'PY' >> "$GITHUB_OUTPUT"
+        import json, os
+        with open("skillsniff.json") as handle:
+            report = json.load(handle)
+        counts = report.get("counts", {})
+        total = sum(counts.values())
+        print(f"verdict={report.get('verdict', 'UNKNOWN')}")
+        print(f"findings={total}")
+        print(f"critical={counts.get('critical', 0)}")
+        print("sarif-file=skillsniff.sarif")
+        PY
+
+        {
+          echo "## SkillSniff"
+          echo
+          skillsniff scan "${args[@]}" --format markdown || true
+        } >> "$GITHUB_STEP_SUMMARY"
+
+    - name: Upload SARIF
+      if: ${{ inputs.sarif == 'true' }}
+      continue-on-error: true
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: skillsniff.sarif
+        category: skillsniff
+
+    # The behavioural delta is the question a reviewer actually has: not "does
+    # this skill have findings" but "can it now do something it could not do
+    # before". Failure here never fails the job — it is commentary.
+    - name: Capability diff against the base branch
+      if: ${{ github.event_name == 'pull_request' && inputs.comment == 'true' }}
+      continue-on-error: true
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+      run: |
+        set -uo pipefail
+        base=$(mktemp -d)
+        git worktree add -q --detach "$base" "$BASE_SHA" 2>/dev/null || {
+          echo "base commit unavailable (try actions/checkout with fetch-depth: 0)"
+          exit 0
+        }
+
+        body=$(mktemp)
+        changed=0
+        while IFS= read -r skill; do
+          old="$base/${skill#./}"
+          [ -f "$old/SKILL.md" ] || continue
+          if ! skillsniff diff "$old" "$skill" --format markdown >> "$body" 2>/dev/null; then
+            changed=1
+          fi
+        done < <(find "${{ inputs.path }}" -name SKILL.md -not -path '*/.git/*' -exec dirname {} \;)
+
+        git worktree remove -q --force "$base" 2>/dev/null || true
+
+        if [ "$changed" = "1" ] && [ -s "$body" ]; then
+          cat "$body" >> "$GITHUB_STEP_SUMMARY"
+          gh pr comment "$PR_NUMBER" --body-file "$body" 2>/dev/null \
+            || echo "could not comment (needs pull-requests: write); diff is in the job summary"
+        else
+          echo "no behavioural change detected in any skill" >> "$GITHUB_STEP_SUMMARY"
+        fi
+
+    - name: Policy check
+      if: ${{ inputs.policy != '' }}
+      shell: bash
+      run: skillsniff policy check "${{ inputs.path }}" --policy "${{ inputs.policy }}"
+
+    # Last, so SARIF and the summary are published even when the gate fails.
+    - name: Enforce the threshold
+      shell: bash
+      run: |
+        args=("${{ inputs.path }}")
+        [ -n "${{ inputs.config }}" ]   && args+=(--config "${{ inputs.config }}")
+        [ -n "${{ inputs.baseline }}" ] && args+=(--baseline "${{ inputs.baseline }}")
+        [ -n "${{ inputs.ignore }}" ]   && args+=(--ignore "${{ inputs.ignore }}")
+        skillsniff scan "${args[@]}" --no-color --fail-on "${{ inputs.fail-on }}"

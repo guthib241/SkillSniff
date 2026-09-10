@@ -37,6 +37,10 @@ Working, tested, and covered by the benchmark corpus.
 - **Output** — terminal, JSON, SARIF 2.1.0, Markdown, trust report
 - **Configuration** — file discovery, rule selection, severity thresholds, limits
 - **Scanner hardening** — no subprocess, no eval, no extraction, resource budgets
+- **Baseline suppression** — line-independent fingerprints, count-aware, always
+  reported, and unable to suppress a coverage gap
+- **Adoption paths** — GitHub Action, pre-commit hooks, `skillsniff init`
+  scaffolding, and a release workflow with trusted publishing
 
 ---
 
@@ -48,8 +52,6 @@ Designed and intended, not yet built.
   the second most common bundled language. Currently pattern-only.
 - **Interprocedural dataflow** — the taint analysis stops at function
   boundaries; call-graph propagation would materially raise `EXF001` recall.
-- **Baseline files** — accept a recorded set of known findings so a repository
-  can adopt SkillSniff without fixing everything first.
 - **Attestation** — sign a lockfile so a verified skill can be proven verified.
   The lockfile format already carries the fields this needs.
 - **`.mcp.json` and tool-manifest parsing** — currently detected as a written
