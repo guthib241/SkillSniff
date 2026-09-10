@@ -342,6 +342,34 @@ credentials, and an API client that legitimately sends a token in an
 `Authorization` header. Without those, firing on everything would score
 perfectly.
 
+## Reference skills
+
+Four skills that pass the gate under `--strict` live in
+[`examples/skills/`](examples/skills/). They show what a well-formed skill looks
+like, and the repository's own CI scans them, so the tool is continuously
+applied to something other than its own fixtures.
+
+```bash
+skillsniff scan ./examples/skills
+skillsniff inspect ./examples/skills/threat-model-review
+```
+
+They matter for one more reason. They were written for this project's
+predecessor, against a different rule set, before any current rule existed —
+the only content here not authored alongside the rules that judge it. Scanning
+them immediately found a real false positive: `INJ003` fired on
+
+> A spec written **without asking** the user anything mostly restates the request.
+
+which is advice *advocating* asking the user. The rule was conflating
+concealment (hiding what was done) with permission (failing to ask). The
+concealment pattern no longer matches `without asking`; instruction-level
+permission bypass moved to `PRV001` behind a pattern requiring an actual
+imperative. Both directions have regression tests.
+
+One false positive from four skills is not a statistic. It is worth recording
+because it is exactly what a self-authored corpus structurally cannot surface.
+
 ## Honest limits
 
 - **A clean result is not a safety guarantee.** It means no issues were detected

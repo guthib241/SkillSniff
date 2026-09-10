@@ -141,22 +141,32 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install -e ".[dev]"
-      # The corpus is deliberately malicious, so it is excluded here; the
-      # benchmark job is what verifies it.
-      - name: Scan this repository's own skills
+      # The reference skills in examples/ were written for this project's
+      # predecessor, against a different rule set, before any current rule
+      # existed. They are the only skills here not authored alongside the rules
+      # that judge them, which makes this job worth more than a formality — it
+      # already caught one real false positive.
+      #
+      # The benchmark corpus is excluded because it is deliberately malicious;
+      # the SkillSniffBench job is what verifies that.
+      - name: The self-scan must have something to scan
         run: |
-          if find . -name SKILL.md -not -path "./src/skillsniff/bench/corpus/*" \
-                  -not -path "./.git/*" | grep -q .; then
-            python -m skillsniff scan . \
-              --exclude 'src/skillsniff/bench/corpus/*' \
-              --format sarif -o skillsniff.sarif
-            python -m skillsniff scan . \
-              --exclude 'src/skillsniff/bench/corpus/*' \
-              --no-color --fail-on high
-          else
-            echo "no skills outside the benchmark corpus; nothing to scan"
-            echo '{"version":"2.1.0","runs":[]}' > skillsniff.sarif
+          count=$(find ./examples/skills -name SKILL.md | wc -l)
+          echo "reference skills: $count"
+          if [ "$count" -lt 1 ]; then
+            echo "::error::self-scan found no skills; this job would pass vacuously"
+            exit 1
           fi
+
+      - name: Scan the reference skills
+        run: |
+          python -m skillsniff scan ./examples/skills --format sarif -o skillsniff.sarif
+          python -m skillsniff scan ./examples/skills --no-color --fail-on high
+
+      # Anything the repository ships as an example must clear the strictest
+      # bar, not merely the default one.
+      - name: Reference skills must be clean under --strict
+        run: python -m skillsniff scan ./examples/skills --no-color --strict
       - uses: github/codeql-action/upload-sarif@v3
         if: always()
         continue-on-error: true

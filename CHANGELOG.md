@@ -5,6 +5,18 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `INJ003` (concealment) fired on the phrase "without asking" in ordinary
+  authoring advice — "a spec written without asking the user anything restates
+  the request" is advocating asking, not concealing. The rule was conflating two
+  different concerns: concealment is about hiding what was done, while failing
+  to ask is about permission. `without asking` no longer matches concealment,
+  and instruction-level permission bypass moved to `PRV001` behind a pattern
+  requiring an actual imperative verb. Found by scanning skills written for the
+  predecessor tool, which is the kind of input the internal corpus cannot
+  provide.
+
 ### Added
 
 - **Baseline suppression** (`skillsniff baseline`, `scan --baseline`). The
@@ -32,6 +44,10 @@ project uses [Semantic Versioning](https://semver.org/).
   three profiles (balanced, strict, advisory), pointed at wherever the
   repository's skills actually are rather than assuming `./skills`. Everything
   it writes is asserted to load back into the tool.
+- **Reference skills** in `examples/skills/`, scanned by CI under `--strict` on
+  every commit. Written for this project's predecessor before any current rule
+  existed, so they are the only content not authored alongside the rules that
+  judge it.
 - **Release workflow.** Re-runs the full gate on the tagged commit rather than
   trusting that CI passed, checks that the tag, the package version, the version
   `action.yml` pins and the changelog entry all agree, verifies the wheel ships

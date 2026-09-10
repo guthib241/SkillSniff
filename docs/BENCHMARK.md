@@ -61,6 +61,24 @@ fixes, each addressing a modelling gap rather than muting a rule:
 | `127.0.0.1` classified as a suspicious destination | Private and documentation hosts classified as non-destinations |
 | URLs in shell comments became external references | Comment blanking applied to URL extraction |
 
+## The one piece of external evidence
+
+`examples/skills/` holds four skills written for this project's predecessor,
+against a different rule set, before any current rule existed. They are the only
+content in the repository not authored alongside the rules that judge them, and
+CI scans them under `--strict` on every commit.
+
+All four pass. More usefully, the first scan of them found a real false
+positive — `INJ003` firing on "a spec written *without asking* the user
+anything", which advocates asking rather than concealing. The rule was
+conflating concealment with permission; that is now split, with regression tests
+in both directions.
+
+Four skills is not a sample and one false positive is not a rate. What it does
+establish is that the failure mode a self-authored corpus cannot detect is real
+and was present, which is the concrete argument for a proper source-disjoint
+evaluation rather than a theoretical one.
+
 ## Corpus composition
 
 | Group | Cases | Purpose |

@@ -131,6 +131,30 @@ git switch -c feature
         assert_quiet(actionable_rule_ids(body=body), "EXE005", "PRV003")
 
 
+class TestPermissionVersusConcealment:
+    """Failing to ask is about permission; hiding is about disclosure.
+
+    Conflating them made INJ003 fire on ordinary authoring advice. Found by
+    scanning skills written for the predecessor tool, before these rules
+    existed — which is the kind of input the internal corpus cannot provide.
+    """
+
+    def test_authoring_advice_about_asking_is_not_concealment(self, actionable_rule_ids):
+        body = (
+            "\n# S\n\n## Caveats\n\n- **The interrogation is the product.** A spec written "
+            "without asking the user anything mostly restates the request in more words.\n"
+        )
+        assert_quiet(actionable_rule_ids(body=body), "INJ003", "PRV001")
+
+    def test_a_guardrail_telling_the_agent_to_ask_is_not_a_bypass(self, actionable_rule_ids):
+        body = "\n# S\n\nNever proceed without asking the user to confirm the target.\n"
+        assert_quiet(actionable_rule_ids(body=body), "INJ003", "PRV001")
+
+    def test_asking_the_user_is_not_a_finding(self, actionable_rule_ids):
+        body = "\n# S\n\nStop and ask the user before deleting anything.\n"
+        assert_quiet(actionable_rule_ids(body=body), "INJ003", "PRV001", "EXE005")
+
+
 class TestShellComments:
     def test_commented_out_dangerous_commands(self, actionable_rule_ids):
         script = (

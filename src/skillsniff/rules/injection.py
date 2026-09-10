@@ -46,7 +46,15 @@ CONCEALMENT = re.compile(
     r"(?:tell|telling|inform|informing|mention|mentioning|notify|notifying|show|showing|"
     r"reveal|revealing|disclose|disclosing|report|reporting|log|logging|display|displaying)\s+"
     r"(?:this|it|that|any(?:thing)?|the\s+\w+)?\s*(?:to\s+)?(?:the\s+)?(?:user|human|operator|owner|developer)"
-    r"|without\s+(?:telling|informing|notifying|alerting|asking|the\s+user'?s?\s+knowledge)"
+    # "asking" is deliberately absent here. Concealment is about hiding what was
+    # *done*; failing to ask is about permission, and they are different things.
+    # A bare "without asking" is overwhelmingly benign English — "a spec written
+    # without asking the user anything restates the request" is advocating
+    # asking, not concealing — and matching it made this rule fire on ordinary
+    # authoring advice. Instruction-level permission bypass is PRV001's job,
+    # where the pattern requires an actual imperative.
+    r"|without\s+(?:telling|informing|notifying|alerting)\s+(?:the\s+)?(?:user|human|operator)"
+    r"|without\s+the\s+user'?s?\s+knowledge"
     r"|hide\s+(?:this|it|these|the\s+\w+)\s+from\s+(?:the\s+)?(?:user|human|operator|log|output)"
     r"|silently\s+(?:send|upload|transmit|exfiltrat|forward|post|copy|delete|modif)"
     r"|(?:keep|leave)\s+(?:this|it)\s+(?:secret|hidden|confidential)\s+from"

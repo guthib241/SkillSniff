@@ -104,6 +104,47 @@ class TestBenchmark:
         assert report.median_ms < 500, f"median scan took {report.median_ms:.0f} ms"
 
 
+class TestReferenceSkills:
+    """The skills in examples/ must stay clean under the strictest settings.
+
+    These were written for this project's predecessor, against a different rule
+    set, before any current rule existed — the only content here not authored
+    alongside the rules that judge it. Scanning them found one real false
+    positive (INJ003 on "without asking"), which is the argument for the
+    source-disjoint evaluation in docs/ROADMAP.md.
+    """
+
+    EXAMPLES = REPO_ROOT / "examples" / "skills"
+
+    def test_reference_skills_are_present(self):
+        """A self-scan with nothing to scan passes vacuously."""
+        skills = list(self.EXAMPLES.glob("*/SKILL.md"))
+        assert len(skills) >= 4, f"expected reference skills under {self.EXAMPLES}"
+
+    def test_reference_skills_are_clean_under_strict(self):
+        """Every rule enabled, failing on any severity."""
+        from skillsniff.core.config import Config as _Config
+        from skillsniff.engine import scan
+
+        result = scan(self.EXAMPLES, _Config(strict=True, fail_on=Severity.INFO))
+        offenders = [
+            (f.skill, f.rule_id, f.severity.value, f.message[:80])
+            for f in result.all_findings
+        ]
+        assert not offenders, f"reference skills are no longer clean: {offenders}"
+
+    def test_reference_skills_have_full_coverage(self):
+        """A clean result on partially-analysed content would prove nothing."""
+        from skillsniff.core.config import Config as _Config
+        from skillsniff.engine import scan
+
+        for skill in scan(self.EXAMPLES, _Config()).skills:
+            assert skill.coverage.confidence == "HIGH", (
+                f"{skill.name}: coverage {skill.coverage.confidence}, "
+                f"gaps {skill.coverage.gaps}"
+            )
+
+
 @pytest.mark.slow
 class TestSelfScan:
     def test_repository_has_no_actionable_findings(self):

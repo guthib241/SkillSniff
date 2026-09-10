@@ -408,7 +408,17 @@ PERMISSION_BYPASS = re.compile(
     r"|--allow-all\b"
     r"|--trust-all\b"
     r"|skip[_-]?(?:permission|confirmation|approval)s?\s*[:=]\s*(?:true|1|yes)"
-    r"|--accept-all-risks\b",
+    r"|--accept-all-risks\b"
+    # Instruction-level permission bypass: the skill tells the agent to take an
+    # action without seeking confirmation. Requires an imperative action verb
+    # immediately before, because a bare "without asking" is ordinary English
+    # and matching it produced false positives on authoring advice.
+    r"|\b(?:proceed|continue|do\s+it|act|apply|execute|run|delete|deploy|push|install|"
+    r"overwrite|commit|merge|send)\b[^.\n]{0,40}"
+    r"without\s+(?:asking|confirming|confirmation|permission|prompting|approval|"
+    r"waiting\s+for)\b"
+    r"|\bdo\s*n[o']?t\s+(?:ask|prompt|wait\s+for|request)\b[^.\n]{0,30}"
+    r"(?:permission|confirmation|approval|the\s+user)",
     re.IGNORECASE,
 )
 
