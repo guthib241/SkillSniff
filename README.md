@@ -339,10 +339,34 @@ Reproduce with `python -m skillsniff benchmark` from a checkout.
 
 **Read that table narrowly.** Every case in the corpus was written by this
 project, alongside the rules it exercises. It is a regression suite, not
-evidence of generalisation. Precision and recall against skills in the wild are
-**unmeasured**, and a source-disjoint evaluation is the number that would
-actually mean something. The tool prints this caveat itself rather than leaving
-it to the README.
+evidence of generalisation. The tool prints this caveat itself rather than
+leaving it to the README.
+
+### Against skills this project did not write
+
+`python scripts/external_eval.py` runs the scanner over pinned public corpora
+by other authors. On `anthropics/skills` (20 skills, treated as the
+false-positive corpus, since nothing in it is malicious):
+
+| Metric | Value |
+| --- | --- |
+| Skills blocked | 0 / 20 |
+| False BLOCK rate | 0.000, Wilson 95% CI [0.000, 0.161] |
+| CRITICAL findings | 0 |
+
+That interval is what 20 samples buys. It is not a claim that the rate is
+below 16%.
+
+This evaluation is also how five false-positive defects were found. Before
+them, SkillSniff returned **BLOCK on Anthropic's own published skills** — nine
+CRITICAL findings, every one of them wrong — while the self-authored benchmark
+above simultaneously reported a false-positive rate of 0.000. A corpus written
+alongside the rules cannot contain the shapes its author did not think of.
+
+**Recall is still unmeasured.** No independently labelled corpus of agent
+skills is public, so there is no honest detection rate to quote. See
+[docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) for the method, the
+defects, and the gaps that remain open.
 
 The corpus does include 14 benign cases built to resemble attacks — security
 documentation quoting `curl | bash`, red-team skills containing injection
@@ -475,6 +499,7 @@ that fails if the wheel gains a runtime dependency.
 - [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) — what SkillSniff defends against, and what it does not
 - [docs/LIMITATIONS.md](docs/LIMITATIONS.md) — every known blind spot
 - [docs/BENCHMARK.md](docs/BENCHMARK.md) — corpus methodology
+- [docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) — measured against skills written by other people
 - [docs/CONFIGURATION.md](docs/CONFIGURATION.md) — config and policy reference
 - [docs/ROADMAP.md](docs/ROADMAP.md) — implemented / planned / experimental / research
 - [CONTRIBUTING.md](CONTRIBUTING.md) — the bar for a new rule

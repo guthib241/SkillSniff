@@ -32,7 +32,7 @@ def render(result: ScanResult, stream: TextIO | None = None, *, max_findings: in
 
     emit(f"## {_VERDICT_ICON.get(verdict.value, '')} SkillSniff: {verdict.value}")
     emit()
-    emit(f"_{verdict.summary}_")
+    emit(f"_{result.summary}_")
     emit()
     emit(
         f"**{len(result.skills)} skill(s) scanned** · "

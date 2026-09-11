@@ -7,6 +7,39 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+- **Five false positives found by scanning skills this project did not write.**
+  Before this change SkillSniff returned `BLOCK` on `anthropics/skills` — nine
+  CRITICAL findings, all wrong — while the self-authored benchmark reported a
+  false-positive rate of 0.000. Each fix is a narrowing with a stated semantic
+  basis, each has a regression test named after the skill that exposed it, and
+  each is paired with a test asserting the real attack shape still fires.
+  Detection on the malicious corpus was unchanged: 18 CRITICAL findings and 3
+  blocked skills before and after.
+  - `PRV001` read "don't ask the user **for a key**" as a safety-control
+    bypass. Declining to solicit a credential is the opposite of bypassing
+    permission, so the object of the asking now decides it.
+  - `PRV001` treated an example system prompt quoted in a markdown blockquote
+    as an instruction. Quotation is not assertion; blockquotes now count as
+    documentation framing, which downgrades to LOW rather than suppressing.
+  - `EXF002` matched the bare word "HTTP" in the prose "HTTP/2 protocol error"
+    and swallowed 200 characters that happened to contain a key name. The
+    `http` branch now requires an HTTPie-shaped invocation.
+  - `MEM001` matched `agents.md` *inside* `managed-agents.md`, and `/memory.md`
+    inside a URL path. Naming a file is not writing to it.
+  - `CRE003` used `$` under `re.MULTILINE`, so any prose line ending in the
+    word "env" became a wholesale environment dump. `env` must now be in
+    command position.
+- `EXF003` missed `paste.c-net.org`, the exfiltration endpoint in Snyk's
+  published ToxicSkills demo skill. Paste hosts are now recognised
+  structurally by their leftmost label as well as by the curated list.
+- A `CLEAR` verdict printed "No issues detected by the enabled checks" even
+  when specification and quality findings existed, because those dimensions are
+  deliberately isolated from the verdict gates. The verdict was right and the
+  sentence was not, which is the one place this tool could talk a reader out of
+  looking at a real finding. Exposed by `skill-with-commands` in
+  `snyk-labs/toxicskills-goof`, which reported `CLEAR` over an invalid name and
+  six authoring findings.
+
 - `INJ003` (concealment) fired on the phrase "without asking" in ordinary
   authoring advice — "a spec written without asking the user anything restates
   the request" is advocating asking, not concealing. The rule was conflating two
@@ -19,6 +52,19 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **`EXF005` — system reconnaissance output sent to a remote host.** A network
+  command whose payload contains command substitution running `uname`,
+  `whoami`, `hostname` or similar. This was a genuine coverage gap: the skill
+  that Snyk's ToxicSkills corpus documents as malicious posts `uname -a` to a
+  paste site, and SkillSniff saw the shell execution but had no rule for the
+  payload. Rated HIGH rather than CRITICAL — host fingerprinting is a precursor
+  and legitimate installers do it — so the labelled sample still lands on
+  `REVIEW` rather than `BLOCK`. That gap is reported rather than tuned away.
+- **`docs/EXTERNAL_VALIDATION.md` and `scripts/external_eval.py`** — a
+  source-disjoint evaluation against pinned public corpora written by other
+  people. Reports a false `BLOCK` rate of 0/20 on `anthropics/skills`, Wilson
+  95% CI [0.000, 0.161], and states plainly that recall remains unmeasured
+  because no independently labelled corpus of agent skills is public.
 - **Baseline suppression** (`skillsniff baseline`, `scan --baseline`). The
   practical barrier to adopting any analyser on an existing repository is that
   day one it reports everything at once, and a team that cannot reach zero in

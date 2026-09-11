@@ -5,7 +5,6 @@ license: MIT
 metadata:
   version: 1.0.0
   category: product
-  assay-grade: "A+"
 ---
 
 # Feature spec

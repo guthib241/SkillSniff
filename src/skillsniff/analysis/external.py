@@ -58,8 +58,23 @@ PASTE_HOSTS = frozenset(
         "pastebin.com", "paste.ee", "hastebin.com", "ghostbin.com", "dpaste.com",
         "termbin.com", "transfer.sh", "0x0.st", "file.io", "anonfiles.com",
         "gofile.io", "temp.sh", "bashupload.com", "oshi.at", "envs.sh",
+        # paste.c-net.org is the destination in Snyk's published ToxicSkills
+        # demo skill. It was absent, so the documented sample's exfiltration
+        # endpoint was classified as an ordinary host.
+        "paste.c-net.org", "controlc.com", "rentry.co", "dpaste.org",
+        "ix.io", "sprunge.us", "clbin.com", "0bin.net", "privatebin.net",
     }
 )
+
+#: Leftmost labels that identify a paste service structurally. A curated list
+#: cannot keep up with this class — the services are numerous, short-lived, and
+#: trivially replaced — so the host's own name carries part of the signal.
+_PASTE_LABELS = frozenset({"paste", "pastebin", "hastebin", "ghostbin", "dpaste", "termbin"})
+
+
+def is_paste_host(host: str) -> bool:
+    """True for a known or structurally-identifiable paste or file-drop host."""
+    return host in PASTE_HOSTS or host.split(".")[0] in _PASTE_LABELS
 
 URL_SHORTENERS = frozenset(
     {
@@ -183,7 +198,7 @@ def classify_url(url: str, evidence: Evidence | None = None) -> ExternalResource
     ecosystem = ""
     pinned_to = ""
 
-    if host in PASTE_HOSTS:
+    if is_paste_host(host):
         kind, trust = ResourceKind.RAW_FILE, TrustLevel.SUSPICIOUS
         reasons.append("anonymous paste or file-drop host; content can change or disappear")
     elif host in URL_SHORTENERS:

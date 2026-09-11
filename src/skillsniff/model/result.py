@@ -123,6 +123,23 @@ DIMENSION_FAMILIES: dict[str, tuple[str, ...]] = {
     "quality": ("QUA",),
 }
 
+#: The dimensions excluded from the verdict gates, per the note above. Keeping
+#: them out of the gates is right: how a skill is *written* must not read as a
+#: security judgement. But it makes the bare ``CLEAR`` sentence ("no issues
+#: detected") false whenever one of these families fired, and that is the one
+#: place this tool could talk a reader out of looking at a real finding. The
+#: verdict stays CLEAR; the sentence has to say what was found anyway.
+ISOLATED_DIMENSIONS: tuple[str, ...] = ("specification", "quality")
+
+
+def _clear_summary(isolated: int) -> str:
+    """The ``CLEAR`` sentence, refined by findings the gates cannot see."""
+    if not isolated:
+        return Verdict.CLEAR.summary
+    noun = "finding" if isolated == 1 else "findings"
+    return f"No security findings; {isolated} specification/quality {noun} to review"
+
+
 DIMENSION_LABELS = {
     "security": "Security risk",
     "capability": "Capability exposure",
@@ -187,10 +204,27 @@ class RiskAssessment:
         dimension = self.dimensions.get(key)
         return dimension.band if dimension else RiskBand.NONE
 
+    @property
+    def isolated_findings(self) -> list[Finding]:
+        """Findings in dimensions the verdict gates deliberately ignore."""
+        out: list[Finding] = []
+        for key in ISOLATED_DIMENSIONS:
+            dimension = self.dimensions.get(key)
+            if dimension:
+                out.extend(dimension.findings)
+        return out
+
+    @property
+    def summary(self) -> str:
+        """The verdict sentence, truthful about findings the gates ignore."""
+        if self.verdict is not Verdict.CLEAR:
+            return self.verdict.summary
+        return _clear_summary(len(self.isolated_findings))
+
     def as_dict(self) -> dict[str, Any]:
         return {
             "verdict": self.verdict.value,
-            "summary": self.verdict.summary,
+            "summary": self.summary,
             "rationale": list(self.rationale),
             "dimensions": {k: v.as_dict() for k, v in self.dimensions.items()},
         }
@@ -359,6 +393,13 @@ class ScanResult:
             return Verdict.CLEAR
         return min((s.risk.verdict for s in self.skills), key=lambda v: v.rank)
 
+    @property
+    def summary(self) -> str:
+        """The overall sentence, truthful about findings the gates ignore."""
+        if self.verdict is not Verdict.CLEAR:
+            return self.verdict.summary
+        return _clear_summary(sum(len(s.risk.isolated_findings) for s in self.skills))
+
     def counts(self) -> dict[str, int]:
         out = {s.value: 0 for s in Severity}
         for finding in self.all_findings:
@@ -371,7 +412,7 @@ class ScanResult:
             "version": self.tool_version,
             "scanned_path": self.scanned_path,
             "verdict": self.verdict.value,
-            "summary": self.verdict.summary,
+            "summary": self.summary,
             "skills_scanned": len(self.skills),
             "rules_run": self.rules_run,
             "counts": self.counts(),

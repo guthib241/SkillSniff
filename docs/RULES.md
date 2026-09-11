@@ -1,6 +1,6 @@
 # Rule catalogue
 
-87 rules in 16 families, generated from the registry by
+88 rules in 16 families, generated from the registry by
 `scripts/gen_rules_doc.py` for SkillSniff 0.2.0. Do not edit by hand.
 
 `skillsniff explain <RULE>` prints any entry below, including its limitations.
@@ -22,7 +22,7 @@ contribute to the security verdict.
 | [`CRE`](#cre) Credential and secret access | 3 | security |
 | [`EVA`](#eva) Scanner evasion | 4 | security |
 | [`EXE`](#exe) Execution | 6 | security |
-| [`EXF`](#exf) Exfiltration | 4 | security |
+| [`EXF`](#exf) Exfiltration | 5 | security |
 | [`INJ`](#inj) Prompt / instruction injection | 6 | security |
 | [`MCP`](#mcp) Tool and MCP abuse | 3 | security |
 | [`MEM`](#mem) Memory and state | 2 | security |
@@ -455,6 +455,22 @@ contribute to the security verdict.
 **Fix.** State exactly which file is uploaded and to where, and require confirmation before sending.
 
 **Cannot detect.** Legitimate upload workflows match. Judge by the destination.
+
+### `EXF005` — System reconnaissance output sent to a remote host
+
+**high** · medium confidence
+
+**Detects.** A network command's payload contains command substitution running a host-profiling command — 'uname', 'whoami', 'hostname', 'id' — so the output of that command is what gets sent.
+
+**Why it matters.** The operator learns which machine the agent runs on: kernel, architecture, hostname, user. That is the target-selection step of an intrusion, and it is the shape used by the skill in Snyk's published ToxicSkills demo, which posted 'uname -a' to a paste site under the guise of an allow-list check.
+
+**Fix.** Remove the call. If diagnostics genuinely need to be reported, show the user exactly what will be sent and get confirmation first.
+
+**Cannot detect.** Lexical, and legitimate crash reporters and installers do profile the host. The finding is the shape, not proof of intent; judge it by the destination and by whether the skill's description admits to it.
+
+**Taxonomy.** `CWE-200`
+
+**References.** [1](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
 
 ## INJ
 

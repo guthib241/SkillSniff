@@ -94,6 +94,30 @@ class TestRiskAssessment:
         assert assessment.verdict is Verdict.CLEAR
         assert assessment.dimensions["specification"].band.value == "high"
 
+    def test_clear_summary_admits_isolated_findings(self):
+        """Exposed by ``skill-with-commands`` in snyk-labs/toxicskills-goof.
+
+        Isolating SPEC and QUA from the gates is correct, but it made the CLEAR
+        sentence claim "no issues detected" over an invalid name and six
+        authoring findings. The verdict is right; the sentence was a lie, and
+        it was the sentence a reader would act on.
+        """
+        findings = [make("SPEC003", Severity.HIGH, "SPEC")]
+        findings += [make(f"QUA{i:03d}", Severity.MEDIUM, "QUA") for i in range(6)]
+        assessment = assess(findings, self.COMPLETE)
+        assert assessment.verdict is Verdict.CLEAR
+        assert "No issues detected" not in assessment.summary
+        assert "7 specification/quality findings" in assessment.summary
+
+    def test_clear_summary_is_unqualified_when_nothing_fired(self):
+        assessment = assess([], self.COMPLETE)
+        assert assessment.verdict is Verdict.CLEAR
+        assert assessment.summary == Verdict.CLEAR.summary
+
+    def test_clear_summary_singular(self):
+        assessment = assess([make("SPEC003", Severity.HIGH, "SPEC")], self.COMPLETE)
+        assert "1 specification/quality finding to review" in assessment.summary
+
     def test_low_coverage_forbids_a_clean_verdict(self):
         coverage = Coverage(files_analyzed=1, files_discovered=10, confidence="LOW")
         assert assess([], coverage).verdict is Verdict.INCONCLUSIVE

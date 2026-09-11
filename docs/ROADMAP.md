@@ -58,6 +58,17 @@ Designed and intended, not yet built.
   path rather than parsed as a structure.
 - **Rule-level suppression comments** — in-file, reviewable, with a required reason.
 - **Incremental scanning** — reuse a lockfile to skip unchanged files.
+- **Separate "documented install" from "runtime install" in `SUP004`** — on
+  `anthropics/skills`, 24 of 27 `SUP004` findings sit in markdown telling a
+  developer to run `pip install`, not in code a skill executes. Both are
+  currently HIGH. Splitting them needs a defensible rule for when an install
+  command in prose is an instruction to the *agent* rather than to a human
+  reader, which is not obvious; see
+  [EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md).
+- **A labelled external corpus** — the missing piece for measuring recall and
+  per-rule precision. Needs a written codebook, per-skill labels produced
+  independently of the tool, and ideally two labellers with a reported
+  agreement statistic.
 
 ---
 
