@@ -69,7 +69,9 @@ class Match:
         view = self.file.view
         if view is None or self.projection == "decoded":
             return False
-        return documentation_framed(view.raw, self.start, self.end)
+        return documentation_framed(
+            view.raw, self.start, self.end, markdown=self.path.lower().endswith(_MD_SUFFIXES)
+        )
 
 
 def _line_at(text: str, offset: int) -> int:
@@ -78,6 +80,12 @@ def _line_at(text: str, offset: int) -> int:
 
 #: Suffixes whose comments are prose about the code, not the code itself.
 _SHELL_SUFFIXES = frozenset({".sh", ".bash", ".zsh", ".ksh", ".fish"})
+
+#: Suffixes where a leading ``>`` is a blockquote rather than a redirect.
+_MD_SUFFIXES = (".md", ".markdown", ".mdx")
+
+#: A blockquote marker opening the line the match sits on.
+_BLOCKQUOTE_PREFIX = re.compile(r"[ \t]{0,3}>")
 
 
 def _projections(file: FileContext, view) -> tuple[str, str]:
@@ -274,14 +282,25 @@ _TRAILING_FRAMING = re.compile(
 )
 
 
-def documentation_framed(text: str, offset: int, end: int | None = None) -> bool:
+def documentation_framed(
+    text: str, offset: int, end: int | None = None, *, markdown: bool = False
+) -> bool:
     """True when the content at ``offset`` is framed as documentation.
 
     Looks backwards from the match — past the opening fence if it is inside a
     code block, then over the preceding few lines of prose — and forwards from
     the *end* of the match to the end of its sentence. Requires an explicit
     framing signal, so ordinary instructions are unaffected.
+
+    In markdown, a blockquote counts on its own. Quotation is not assertion: a
+    guide that quotes an example system prompt is reporting what someone else
+    wrote, not instructing the agent. This is scoped to markdown because a
+    leading ``>`` in a script is a redirect, not a quote.
     """
+    if markdown:
+        line_start = text.rfind("\n", 0, offset) + 1
+        if _BLOCKQUOTE_PREFIX.match(text, line_start, offset):
+            return True
     # Forward window: the remainder of the sentence *after* the match. Starting
     # at the match itself would let a payload frame itself with its own words.
     tail_start = end if end is not None else offset

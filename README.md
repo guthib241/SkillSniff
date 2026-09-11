@@ -136,7 +136,7 @@ against PyYAML on every document shape a skill can contain.
 | `skillsniff scan PATH` | Analyse a skill, or every skill under a directory |
 | `skillsniff baseline PATH` | Record today's findings so the gate enforces only new work |
 | `skillsniff inspect PATH` | Full trust report: purpose, capabilities, trust graph, coverage |
-| `skillsniff rules` | List the 87-rule catalogue |
+| `skillsniff rules` | List the 88-rule catalogue |
 | `skillsniff explain RULE` | What a rule detects, why it matters, and what it cannot see |
 | `skillsniff lock PATH` | Record the skill's current capabilities, hashes and provenance |
 | `skillsniff verify PATH` | Report meaningful changes since the lockfile |
@@ -278,7 +278,7 @@ inspect.**
 
 ## Rule taxonomy
 
-87 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
+88 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
 of them, including what it *cannot* detect.
 
 | | | | |
@@ -324,7 +324,7 @@ Every decision names the clause that produced it. See
 
 ## Measured results
 
-On **SkillSniffBench**, the 41-case corpus in `src/skillsniff/bench/corpus`:
+On **SkillSniffBench**, the 43-case corpus in `src/skillsniff/bench/corpus`:
 
 | Metric | Value |
 | --- | --- |
@@ -333,18 +333,42 @@ On **SkillSniffBench**, the 41-case corpus in `src/skillsniff/bench/corpus`:
 | F1 | 1.000 |
 | False-positive rate | 0.000 |
 | False-negative rate | 0.000 |
-| Median scan time | 13.4 ms per skill |
+| Median scan time | 4.5 ms per skill |
 
 Reproduce with `python -m skillsniff benchmark` from a checkout.
 
 **Read that table narrowly.** Every case in the corpus was written by this
 project, alongside the rules it exercises. It is a regression suite, not
-evidence of generalisation. Precision and recall against skills in the wild are
-**unmeasured**, and a source-disjoint evaluation is the number that would
-actually mean something. The tool prints this caveat itself rather than leaving
-it to the README.
+evidence of generalisation. The tool prints this caveat itself rather than
+leaving it to the README.
 
-The corpus does include 14 benign cases built to resemble attacks — security
+### Against skills this project did not write
+
+`python scripts/external_eval.py` runs the scanner over pinned public corpora
+by other authors. On `anthropics/skills` (20 skills, treated as the
+false-positive corpus, since nothing in it is malicious):
+
+| Metric | Value |
+| --- | --- |
+| Skills blocked | 0 / 20 |
+| False BLOCK rate | 0.000, Wilson 95% CI [0.000, 0.161] |
+| CRITICAL findings | 0 |
+
+That interval is what 20 samples buys. It is not a claim that the rate is
+below 16%.
+
+This evaluation is also how five false-positive defects were found. Before
+them, SkillSniff returned **BLOCK on Anthropic's own published skills** — nine
+CRITICAL findings, every one of them wrong — while the self-authored benchmark
+above simultaneously reported a false-positive rate of 0.000. A corpus written
+alongside the rules cannot contain the shapes its author did not think of.
+
+**Recall is still unmeasured.** No independently labelled corpus of agent
+skills is public, so there is no honest detection rate to quote. See
+[docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) for the method, the
+defects, and the gaps that remain open.
+
+The corpus does include 15 benign cases built to resemble attacks — security
 documentation quoting `curl | bash`, red-team skills containing injection
 strings, commented-out dangerous commands, `localhost` URLs, placeholder
 credentials, and an API client that legitimately sends a token in an
@@ -475,6 +499,8 @@ that fails if the wheel gains a runtime dependency.
 - [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) — what SkillSniff defends against, and what it does not
 - [docs/LIMITATIONS.md](docs/LIMITATIONS.md) — every known blind spot
 - [docs/BENCHMARK.md](docs/BENCHMARK.md) — corpus methodology
+- [docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) — measured against skills written by other people
+- [CLAIMS.md](CLAIMS.md) — every figure in this README, and where it came from
 - [docs/CONFIGURATION.md](docs/CONFIGURATION.md) — config and policy reference
 - [docs/ROADMAP.md](docs/ROADMAP.md) — implemented / planned / experimental / research
 - [CONTRIBUTING.md](CONTRIBUTING.md) — the bar for a new rule

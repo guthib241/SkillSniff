@@ -189,7 +189,7 @@ def render(
 
     # -- verdict ------------------------------------------------------------
     heading("Verdict")
-    emit(f"    {style.verdict(verdict, verdict.value)} — {verdict.summary}")
+    emit(f"    {style.verdict(verdict, verdict.value)} — {skill.risk.summary}")
     for reason in skill.risk.rationale:
         for line in wrap(reason, line_width - 8, "      "):
             emit(style(line, "dim"))

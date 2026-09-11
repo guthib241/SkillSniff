@@ -5,7 +5,6 @@ license: MIT
 metadata:
   version: 1.0.0
   category: security
-  assay-grade: "A+"
 ---
 
 # Threat model review

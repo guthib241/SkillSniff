@@ -124,13 +124,36 @@ are weak: `QUA013` (unmarked warnings) infers salience from formatting, and
 
 The reported precision and recall come from a corpus written by this project
 alongside the rules it exercises. It is a **regression suite**, not evidence of
-generalisation. Performance against skills in the wild is unmeasured. A
-source-disjoint evaluation against an external corpus is the number that would
-mean something, and it does not exist yet. See [BENCHMARK.md](BENCHMARK.md).
+generalisation. See [BENCHMARK.md](BENCHMARK.md).
+
+A source-disjoint evaluation now exists and is the number to read instead:
+[EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md). It is still small — 29
+skills across two public corpora — and it measures the false-positive side
+only. Recall and per-rule precision remain unmeasured, because no
+independently labelled corpus of agent skills is public and this project has
+not built one. When the self-authored benchmark last reported a false-positive
+rate of 0.000, the external corpus was simultaneously producing nine CRITICAL
+false positives on Anthropic's own published skills.
+
+## Documentation framing
+
+Several rules downgrade rather than suppress when surrounding prose frames a
+pattern as an example: a fenced block under "Never run these", a sentence that
+says "attackers will", or a markdown blockquote. A downgraded finding is
+clamped to LOW confidence, which keeps it visible but stops it reaching a
+blocking verdict.
+
+The cost is direct: **a payload placed only inside a blockquote will not
+block.** Quoting is the right signal to honour — a migration guide quoting a
+sample system prompt is not instructing the agent — but an author who knows
+this can reach for it. The finding is still printed; nothing is dropped
+silently.
 
 ## Performance
 
-Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs.
+Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs. The
+benchmark-corpus row was re-measured on 2026-09-11 after the corpus grew to
+43 cases; the other rows are unchanged from 2026-09-09.
 
 | Input shape | Median | Files |
 | --- | --- | --- |
@@ -140,7 +163,7 @@ Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs.
 | Archive with 200 entries | 417 ms | 2 |
 | One 1 MB line (padding / minified) | 1.7 s | 2 |
 | 100 encoded regions | 5 ms | 2 |
-| Whole 41-case benchmark corpus | 4.0 ms per skill | — |
+| Whole 43-case benchmark corpus | 4.5 ms per skill | — |
 
 Peak RSS across all of the above: ~111 MB.
 

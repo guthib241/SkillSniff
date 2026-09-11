@@ -25,22 +25,23 @@ caveat does.
 
 ## Results
 
-Measured on 2026-09-09 with SkillSniff 0.2.0, Python 3.11.15:
+Measured on 2026-09-11 with SkillSniff 0.2.0, Python 3.11.15, one core.
+Timing is the median of 7 runs; counts are exact.
 
 | Metric | Value |
 | --- | --- |
-| Cases | 41 |
-| True positives | 27 |
+| Cases | 43 |
+| True positives | 28 |
 | False positives | 0 |
-| True negatives | 14 |
+| True negatives | 15 |
 | False negatives | 0 |
 | Precision | 1.000 |
 | Recall | 1.000 |
 | F1 | 1.000 |
 | False-positive rate | 0.000 |
 | False-negative rate | 0.000 |
-| Total time | ~0.6 s |
-| Median per skill | 13.4 ms |
+| Total time | ~0.22 s |
+| Median per skill | 4.5 ms |
 
 A perfect score on a self-authored corpus is what you would expect from a tool
 whose rules and tests were developed together. Its value is as a **regression

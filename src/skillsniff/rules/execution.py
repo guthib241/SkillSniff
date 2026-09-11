@@ -418,7 +418,17 @@ PERMISSION_BYPASS = re.compile(
     r"without\s+(?:asking|confirming|confirmation|permission|prompting|approval|"
     r"waiting\s+for)\b"
     r"|\bdo\s*n[o']?t\s+(?:ask|prompt|wait\s+for|request)\b[^.\n]{0,30}"
-    r"(?:permission|confirmation|approval|the\s+user)",
+    r"(?:permission|confirmation|approval)"
+    # "don't ask the user" on its own is a bypass shape, but only when what is
+    # withheld is *permission*. "Don't ask the user for a key" is the opposite:
+    # it tells the agent not to solicit a credential, which is advice we want
+    # skills to follow. This is the same distinction PRV001's sibling INJ003
+    # draws between concealment and permission — the object of the asking is
+    # what decides it, not the asking.
+    r"|\bdo\s*n[o']?t\s+(?:ask|prompt)\s+(?:the\s+)?(?:user|human|operator)\b"
+    r"(?![^.\n]{0,40}\bfor\s+(?:a|an|the|their|any)?\s*"
+    r"(?:api[_\s-]?key|key|token|password|passphrase|secret|credential|"
+    r"value|input|path|filename|email|address)s?\b)",
     re.IGNORECASE,
 )
 

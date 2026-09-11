@@ -31,7 +31,11 @@ SHELL_PROFILE = re.compile(
 )
 
 AGENT_INSTRUCTION_FILE = re.compile(
-    r"\b(?:CLAUDE|AGENTS?|GEMINI|CURSOR|COPILOT|WINDSURF|CONTINUE)\.md\b"
+    # The lookbehind rejects a hyphenated filename that merely *ends* in one of
+    # these names: ``managed-agents.md`` is a documentation page, not the
+    # agent's own instruction file, and \b alone matched it because "-" is a
+    # non-word character.
+    r"(?<![\w-])(?:CLAUDE|AGENTS?|GEMINI|CURSOR|COPILOT|WINDSURF|CONTINUE)\.md\b"
     r"|\.(?:claude|cursor|codex|continue|aider|windsurf)/(?:settings|config|rules|memory)"
     r"|\.cursorrules\b|\.aider\.conf\b|\.github/copilot-instructions\.md\b"
     r"|(?:^|/)memory\.(?:md|json|jsonl)\b",
@@ -230,11 +234,28 @@ def _write_near(view_text: str, line: int, window: int = 2) -> bool:
     return bool(WRITE_VERB.search("\n".join(lines[start : line + window])))
 
 
+#: A URL opening before the match on the same line, with no whitespace between.
+_URL_BEFORE = re.compile(r"://\S*$")
+
+
+def _inside_url(text: str, start: int) -> bool:
+    """True when the match sits inside a URL.
+
+    A path segment in a URL is not a local file. ``…/managed-agents/memory.md``
+    is a documentation link, and reporting it as a write to the agent's memory
+    file is wrong in a way that costs the reader real trust.
+    """
+    line_start = text.rfind("\n", 0, start) + 1
+    return bool(_URL_BEFORE.search(text[line_start:start]))
+
+
 def _targeted(context: AnalysisContext, pattern: re.Pattern[str]) -> Iterator[tuple[str, int, str]]:
     """Yield (path, line, excerpt) where ``pattern`` matches near a write verb."""
     for match in _scan.scan(context, pattern, limit_per_file=6):
         view = match.file.view
         if view is None:
+            continue
+        if _inside_url(view.raw, match.start):
             continue
         if _write_near(view.raw, match.line):
             yield match.path, match.line, match.excerpt

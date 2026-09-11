@@ -80,7 +80,7 @@ def _render_skill(
 ) -> None:
     verdict = skill.risk.verdict
     badge = style.verdict(verdict, f" {verdict.value} ")
-    emit(f"  {style(skill.name, 'bold')}  {badge}  {style(verdict.summary, 'dim')}")
+    emit(f"  {style(skill.name, 'bold')}  {badge}  {style(skill.risk.summary, 'dim')}")
 
     if not quiet:
         bands = [
@@ -189,7 +189,7 @@ def _render_summary(result: ScanResult, emit, style: Style, line_width: int, *, 
     emit(f"  {len(result.skills)} skill(s) · {result.rules_run} rules · {summary}")
 
     verdict = result.verdict
-    emit(f"  Overall: {style.verdict(verdict, verdict.value)} — {verdict.summary}")
+    emit(f"  Overall: {style.verdict(verdict, verdict.value)} — {result.summary}")
 
     if result.baseline_path:
         emit(

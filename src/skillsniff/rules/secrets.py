@@ -80,7 +80,11 @@ SECRET_ENV_NAME = re.compile(
 
 ENV_DUMP = re.compile(
     r"\bprintenv\b(?!\s+\w)"
-    r"|(?<![\w-])\benv\b\s*(?:\||>|$)"
+    # ``env`` must be in command position. Anchoring on end-of-line alone made
+    # every prose line that happens to end in the word "env" a wholesale
+    # environment dump — "reads ANTHROPIC_WEBHOOK_SIGNING_KEY from env" was
+    # reported at HIGH. A real dump is `env` piped, redirected, or run alone.
+    r"|(?:^|[;&|]\s*)[ \t]*env\b[ \t]*(?:\||>|$)"
     r"|\bos\.environ\b(?!\s*(?:\.get\s*\(\s*[\"']|\[))"
     r"|\bprocess\.env\b(?!\s*\.)"
     r"|\bGet-ChildItem\s+Env:",
@@ -250,6 +254,35 @@ registry.define_all(
             ),
             limitations="Legitimate upload workflows match. Judge by the destination.",
         ),
+        RuleMeta(
+            id="EXF005",
+            title="System reconnaissance output sent to a remote host",
+            family=Family.EXF,
+            severity=Severity.HIGH,
+            confidence=Confidence.MEDIUM,
+            explanation=(
+                "A network command's payload contains command substitution running a "
+                "host-profiling command — 'uname', 'whoami', 'hostname', 'id' — so the output "
+                "of that command is what gets sent."
+            ),
+            impact=(
+                "The operator learns which machine the agent runs on: kernel, architecture, "
+                "hostname, user. That is the target-selection step of an intrusion, and it is "
+                "the shape used by the skill in Snyk's published ToxicSkills demo, which "
+                "posted 'uname -a' to a paste site under the guise of an allow-list check."
+            ),
+            remediation=(
+                "Remove the call. If diagnostics genuinely need to be reported, show the user "
+                "exactly what will be sent and get confirmation first."
+            ),
+            limitations=(
+                "Lexical, and legitimate crash reporters and installers do profile the host. "
+                "The finding is the shape, not proof of intent; judge it by the destination "
+                "and by whether the skill's description admits to it."
+            ),
+            references=(TOXICSKILLS,),
+            taxonomy=("CWE-200",),
+        ),
     ]
 )
 
@@ -391,7 +424,12 @@ def check_taint_flows(context: AnalysisContext) -> Iterator[Finding]:
 
 
 SENDER = re.compile(
-    r"(?:curl|wget|http(?:ie)?|nc|ncat|socat)\b[^\n]{0,200}"
+    # ``http`` here means the HTTPie CLI, so it has to look like a command
+    # invocation. A bare \bhttp\b matched the prose "HTTP/2 protocol error" and
+    # then swallowed 200 characters of documentation, which is how this rule
+    # reported a credential exfiltration in a page about HTTP headers.
+    r"(?:curl|wget|httpie|nc|ncat|socat)\b[^\n]{0,200}"
+    r"|\bhttp\s+(?:(?:GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\b|https?://|:)[^\n]{0,200}"
     r"|(?:requests|httpx|axios|fetch)\s*\.?\s*(?:post|put|patch|request)\s*\([^\n]{0,200}",
     re.IGNORECASE,
 )
@@ -467,6 +505,31 @@ FILE_UPLOAD = re.compile(
     r"|files\s*=\s*\{[^\n}]{0,120}open\s*\(",
     re.IGNORECASE,
 )
+
+
+#: Commands whose only output is a description of the machine. Sending any of
+#: these somewhere is reconnaissance regardless of what the payload is called.
+RECON = re.compile(
+    r"(?:curl|wget|httpie|nc|ncat|socat)\b[^\n]{0,200}"
+    r"(?:\$\(|`)\s*(?:uname|whoami|hostname|id|w|who|arch|uptime|sw_vers|"
+    r"systeminfo|lsb_release|ifconfig|ipconfig|ps|last|groups)\b",
+    re.IGNORECASE,
+)
+
+
+@registry.implement("EXF005")
+def check_recon_exfiltration(context: AnalysisContext) -> Iterator[Finding]:
+    for match in _scan.scan(context, RECON, limit_per_file=5):
+        host_match = _URL_IN.search(match.text)
+        host = (host_match.group(1).split(":")[0] if host_match else "").lower()
+        if host and is_benign_host(host):
+            continue
+        yield emit(
+            "EXF005",
+            context.name,
+            message=f"{match.path}: sends host information — {match.excerpt!r}",
+            evidence=[match.evidence()],
+        )
 
 
 @registry.implement("EXF004")

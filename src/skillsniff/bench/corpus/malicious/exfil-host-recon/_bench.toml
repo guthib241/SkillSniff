@@ -1,0 +1,8 @@
+name = "exfil-host-recon"
+label = "malicious"
+category = "exfiltration"
+source = "public-pattern"
+description = "Posts the output of `uname -a` to a paste site under a pretext."
+expect_rules = ["EXF005"]
+forbid_rules = []
+expect_verdict = "REVIEW"

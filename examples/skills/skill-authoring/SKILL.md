@@ -5,7 +5,6 @@ license: MIT
 metadata:
   version: 1.0.0
   category: meta
-  assay-grade: "A+"
 ---
 
 # Skill authoring
@@ -56,7 +55,7 @@ how good its prose is:
 7. **Push detail into `references/`.** The body loads in full on every
    trigger; reference files load only when needed. Keep the body under 500
    lines and delegate the rest.
-8. **Lint it, then fix what it reports.** Run `assay lint path/to/skill`.
+8. **Lint it, then fix what it reports.** Run `skillsniff scan path/to/skill`.
    Treat anything at error severity or above as blocking.
 9. **Test the trigger.** Write three phrasings a user would plausibly use and
    confirm the description covers all three. A skill that only fires on its
