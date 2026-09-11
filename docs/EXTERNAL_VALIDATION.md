@@ -12,6 +12,107 @@ SkillSniff does what its authors intended on inputs its authors chose.
 This document is the counterweight. It runs the scanner over skills written by
 other people and reports what happened, including the parts that look bad.
 
+## Pre-registration: recall against externally-authored malicious skills
+
+**Committed 2026-09-11, before any result was computed.** The thresholds below
+were written down first precisely so they cannot move once the numbers are in.
+Git history is the evidence: this section landed in its own commit, and the
+results section was added afterwards.
+
+### Corpora, and what could not be obtained
+
+Checked 2026-09-11. Availability is from this session, through its network
+policy; a corpus blocked here may be perfectly public elsewhere.
+
+| Corpus | Status | Licence | Pin |
+|---|---|---|---|
+| [`trailofbits/overtly-malicious-skills`](https://github.com/trailofbits/overtly-malicious-skills) | **obtainable** | **no licence file** (all rights reserved; read and scanned, never redistributed) | `4ffbf9461ef0505f9ce76a0d3694a18ec33ea531` |
+| [`kurtpayne/skillscan-security`](https://github.com/kurtpayne/skillscan-security) adversarial cases | **obtainable** | Apache-2.0 | `c2a2cc4dc67d8d23221c1ab3fb7aa7c7695f5f82` |
+| [`snyk-labs/toxicskills-goof`](https://github.com/snyk-labs/toxicskills-goof) | **obtainable** (already used) | no licence file | `80ce2e06f52fd384163c4bd6778676019723773c` |
+| `cuhk-zhuque/SkillTrustBench` (Hugging Face) | **NOT obtainable here** | — | — |
+| `OpenClaw/clawhub-security-signals` (Hugging Face) | **NOT obtainable here** | — | — |
+| skillscan.sh scanner benchmark | **NOT obtainable here** | — | — |
+
+The three unobtainable ones are blocked by this session's egress policy:
+`huggingface.co` and `skillscan.sh` both return 403 to CONNECT at the proxy
+(confirmed in the proxy's own `recentRelayFailures`). Nothing has been
+substituted for them. The `openclaw/clawscan` harness repository itself is
+obtainable and MIT-licensed, but it only *points at* the two Hugging Face
+datasets, so it does not provide the samples. SkillTrustBench and
+clawhub-security-signals therefore remain unmeasured, and the
+`eval_holdout` split in particular is untouched.
+
+### What counts as a detection
+
+- **Primary metric — blocked.** Verdict `BLOCK`. This is the only verdict that
+  fails a gate at the default threshold, so it is the only one that answers
+  "would this have stopped the skill".
+- **Secondary metric — flagged.** `BLOCK` or `REVIEW`: surfaced for a human.
+  Reported separately and never as the headline.
+- **`INCONCLUSIVE` is not a detection.** It means coverage was too poor to
+  judge. It is counted as a miss in the primary metric and reported separately
+  in the coverage table.
+- **`CLEAR` and `CAUTION` are misses** for a malicious sample.
+
+### Sample scope, declared in advance
+
+SkillSniff discovers skills by `SKILL.md` and reports "no SKILL.md found"
+otherwise. Ten of the 27 `kurtpayne` cases are bare fragments with no manifest
+(`setup.sh`, `main.py`, `requirements.txt`, `package.json`), aimed at a scanner
+that walks arbitrary directories. They are outside this tool's input contract.
+
+Both figures will be published:
+
+- **In-domain recall (primary).** Labelled malicious samples that are actual
+  Agent Skills: 4 from Trail of Bits + 15 from `kurtpayne` = **19 samples**.
+- **Whole-corpus recall (secondary).** All 29 labelled malicious samples,
+  counting every non-discovered fragment as a miss. This is the pessimistic
+  reading and it will be stated, not hidden.
+
+Negative controls in scope: `a22_benign` and `a27_graph_benign` from
+`kurtpayne`. A `BLOCK` on either is a false positive.
+
+`toxicskills-goof` publishes a per-skill label only for its fake Vercel skill,
+so it stays reported as a verdict spread and contributes no recall figure.
+
+### Expected outcome
+
+**A low number is expected.** Two independent sources say so:
+
+- [arXiv:2607.02357](https://arxiv.org/abs/2607.02357), *Cloak and Detonate*
+  (Ji, Xu, Li, Gao, Wei, Wang & Cheung, HKUST, July 2026): across eight
+  scanners and 1,613 in-the-wild malicious skills, self-extracting-skill
+  packing bypasses **every** scanner at over 90%, and structural obfuscation
+  exceeds 80% on most static scanners.
+- `kurtpayne/skillscan-security` was **retired on 2026-07-03** with the stated
+  conclusion that "static scanning of AI skills doesn't work as a security
+  boundary" — a maintainer shutting down their own shipped product after
+  benchmarking it.
+
+The Trail of Bits samples are additionally adversarial *by construction*: that
+repository exists to subvert scanners, and one of its four skills attacks the
+scanner's reasoning directly rather than hiding a payload.
+
+### Interpretation rule, fixed in advance
+
+Against in-domain labelled malicious samples, primary metric:
+
+| Measured recall | Conclusion, committed now |
+|---|---|
+| **≥ 0.70** | The security rules are fit to block. Current default posture stands. |
+| **0.40 – 0.69** | Fit as an advisory signal only. The README must say so next to any rule table, and the blocking default must be reconsidered. |
+| **< 0.40** | **Not fit as a security gate.** The README must state this plainly in its own words, `--fail-on` should default to advisory rather than blocking, and the tool must stop being presented as something that catches malicious skills. |
+
+### Anti-tuning commitment
+
+No detection rule will be added, widened, or retuned in response to these
+results inside this change. Doing so would convert an independent corpus into
+a self-authored one and reproduce exactly the defect the rest of this document
+records. Any rule gap found becomes a documented miss and, at most, a roadmap
+entry.
+
+---
+
 ## What this measures, and what it does not
 
 **Measured.** The false-positive side. `anthropics/skills` is a public,
