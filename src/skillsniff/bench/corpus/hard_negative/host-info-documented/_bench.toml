@@ -1,0 +1,7 @@
+name = "host-info-documented"
+label = "benign"
+category = "hard-negative-exfiltration"
+source = "internal"
+description = "Tells the user to run `uname -a` and read it themselves; nothing is sent."
+expect_rules = []
+forbid_rules = ["EXF005"]
