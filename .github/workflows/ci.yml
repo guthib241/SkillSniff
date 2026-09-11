@@ -89,6 +89,19 @@ jobs:
           git diff --exit-code docs/RULES.md \
             || { echo "::error::docs/RULES.md is stale; run scripts/gen_rules_doc.py"; exit 1; }
 
+  claims:
+    name: every README figure has a source
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # A number with no derivation is the fastest way to lose a reader who
+      # checks. This fails if the README carries a figure CLAIMS.md does not
+      # account for, which is how "87 rules" survived becoming 88.
+      - run: python scripts/claims_lint.py
+
   benchmark:
     name: SkillSniffBench
     runs-on: ubuntu-latest

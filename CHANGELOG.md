@@ -32,6 +32,11 @@ project uses [Semantic Versioning](https://semver.org/).
 - `EXF003` missed `paste.c-net.org`, the exfiltration endpoint in Snyk's
   published ToxicSkills demo skill. Paste hosts are now recognised
   structurally by their leftmost label as well as by the curated list.
+- Stale counts across the README and docs: the rule catalogue said 87 rather
+  than 88, the benchmark corpus said 41 cases rather than 43 in five files, and
+  the median scan time was published as 13.4 ms in two places while a third
+  said 4.0 ms. Re-measured at 4.5 ms per skill, median of 7 runs on one core.
+  The `claims` CI job now prevents this class of drift.
 - A `CLEAR` verdict printed "No issues detected by the enabled checks" even
   when specification and quality findings existed, because those dimensions are
   deliberately isolated from the verdict gates. The verdict was right and the
@@ -52,6 +57,16 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **`CLAIMS.md` and a `claims` CI job.** Every figure in the README now traces
+  to how it was obtained — MEASURED (a command in this repository), CITED (an
+  external source, quoted as that source states it), or DERIVED (a count,
+  regenerable). `scripts/claims_lint.py` fails the build if the README carries
+  a figure the ledger does not account for. It caught real drift on its first
+  run: adding one rule left "87 rules" in two places and "41-case corpus" in
+  five files, and two documents disagreed about the median scan time by 3x.
+  The file also records the claims deliberately *not* made — no score, no
+  letter grade, no "safe" or "smell-free", no per-rule precision, and not
+  "production ready".
 - **`EXF005` — system reconnaissance output sent to a remote host.** A network
   command whose payload contains command substitution running `uname`,
   `whoami`, `hostname` or similar. This was a genuine coverage gap: the skill

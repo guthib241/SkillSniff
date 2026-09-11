@@ -33,7 +33,7 @@ Working, tested, and covered by the benchmark corpus.
 - **Lock / verify** — content hashes, capability snapshot, provenance, graded change detection
 - **Behavioural diff** — capability, dependency, external and verdict deltas
 - **Policy engine** — deterministic, testable, every decision names its clause
-- **SkillSniffBench** — 41-case corpus, precision/recall/F1, per-category and per-source metrics
+- **SkillSniffBench** — 43-case corpus, precision/recall/F1, per-category and per-source metrics
 - **Output** — terminal, JSON, SARIF 2.1.0, Markdown, trust report
 - **Configuration** — file discovery, rule selection, severity thresholds, limits
 - **Scanner hardening** — no subprocess, no eval, no extraction, resource budgets

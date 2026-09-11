@@ -136,7 +136,7 @@ against PyYAML on every document shape a skill can contain.
 | `skillsniff scan PATH` | Analyse a skill, or every skill under a directory |
 | `skillsniff baseline PATH` | Record today's findings so the gate enforces only new work |
 | `skillsniff inspect PATH` | Full trust report: purpose, capabilities, trust graph, coverage |
-| `skillsniff rules` | List the 87-rule catalogue |
+| `skillsniff rules` | List the 88-rule catalogue |
 | `skillsniff explain RULE` | What a rule detects, why it matters, and what it cannot see |
 | `skillsniff lock PATH` | Record the skill's current capabilities, hashes and provenance |
 | `skillsniff verify PATH` | Report meaningful changes since the lockfile |
@@ -278,7 +278,7 @@ inspect.**
 
 ## Rule taxonomy
 
-87 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
+88 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
 of them, including what it *cannot* detect.
 
 | | | | |
@@ -324,7 +324,7 @@ Every decision names the clause that produced it. See
 
 ## Measured results
 
-On **SkillSniffBench**, the 41-case corpus in `src/skillsniff/bench/corpus`:
+On **SkillSniffBench**, the 43-case corpus in `src/skillsniff/bench/corpus`:
 
 | Metric | Value |
 | --- | --- |
@@ -333,7 +333,7 @@ On **SkillSniffBench**, the 41-case corpus in `src/skillsniff/bench/corpus`:
 | F1 | 1.000 |
 | False-positive rate | 0.000 |
 | False-negative rate | 0.000 |
-| Median scan time | 13.4 ms per skill |
+| Median scan time | 4.5 ms per skill |
 
 Reproduce with `python -m skillsniff benchmark` from a checkout.
 
@@ -368,7 +368,7 @@ skills is public, so there is no honest detection rate to quote. See
 [docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) for the method, the
 defects, and the gaps that remain open.
 
-The corpus does include 14 benign cases built to resemble attacks — security
+The corpus does include 15 benign cases built to resemble attacks — security
 documentation quoting `curl | bash`, red-team skills containing injection
 strings, commented-out dangerous commands, `localhost` URLs, placeholder
 credentials, and an API client that legitimately sends a token in an
@@ -500,6 +500,7 @@ that fails if the wheel gains a runtime dependency.
 - [docs/LIMITATIONS.md](docs/LIMITATIONS.md) — every known blind spot
 - [docs/BENCHMARK.md](docs/BENCHMARK.md) — corpus methodology
 - [docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) — measured against skills written by other people
+- [CLAIMS.md](CLAIMS.md) — every figure in this README, and where it came from
 - [docs/CONFIGURATION.md](docs/CONFIGURATION.md) — config and policy reference
 - [docs/ROADMAP.md](docs/ROADMAP.md) — implemented / planned / experimental / research
 - [CONTRIBUTING.md](CONTRIBUTING.md) — the bar for a new rule

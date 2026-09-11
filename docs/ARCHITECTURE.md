@@ -15,7 +15,7 @@ cannot skip a control the stage below enforces. Reading it bottom-up:
                                           │
         ┌──────────────┬──────────────────┼─────────────────┬────────────────┐
    rules/          policy/          provenance/          diff/            bench/
-   87 rules,       policy-as-code   lock + verify       behavioural       corpus +
+   88 rules,       policy-as-code   lock + verify       behavioural       corpus +
    16 families                                          comparison        metrics
         └──────────────┴──────────────────┼─────────────────┴────────────────┘
                                           │

@@ -4,7 +4,7 @@
 this document. Reproduce with `python scripts/external_eval.py`.*
 
 The bundled benchmark (`skillsniff benchmark`) reports precision 1.000 and
-recall 1.000 over 41 cases. That number is real, and it is not evidence the
+recall 1.000 over 43 cases. That number is real, and it is not evidence the
 tool works on anything. Every case in that corpus was written by this project
 alongside the rules it exercises, so it measures self-consistency: whether
 SkillSniff does what its authors intended on inputs its authors chose.

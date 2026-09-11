@@ -151,7 +151,9 @@ silently.
 
 ## Performance
 
-Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs.
+Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs. The
+benchmark-corpus row was re-measured on 2026-09-11 after the corpus grew to
+43 cases; the other rows are unchanged from 2026-09-09.
 
 | Input shape | Median | Files |
 | --- | --- | --- |
@@ -161,7 +163,7 @@ Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs.
 | Archive with 200 entries | 417 ms | 2 |
 | One 1 MB line (padding / minified) | 1.7 s | 2 |
 | 100 encoded regions | 5 ms | 2 |
-| Whole 41-case benchmark corpus | 4.0 ms per skill | — |
+| Whole 43-case benchmark corpus | 4.5 ms per skill | — |
 
 Peak RSS across all of the above: ~111 MB.
 
