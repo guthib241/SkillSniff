@@ -151,17 +151,21 @@ class TestEndToEnd:
     def test_gate_passes_after_baselining_then_catches_new_work(self, build_skill, tmp_path, capsys):
         path = build_skill(files={"scripts/deploy.py": SHELL_TRUE})
 
-        assert main(["scan", str(path), "--no-color"]) == EXIT_FINDINGS
+        gate = ["--fail-on", "high"]
+        assert main(["scan", str(path), "--no-color", *gate]) == EXIT_FINDINGS
         capsys.readouterr()
 
         baseline = tmp_path / "bl.json"
         assert main(["baseline", str(path), "-o", str(baseline)]) == EXIT_OK
         capsys.readouterr()
 
-        assert main(["scan", str(path), "--no-color", "--baseline", str(baseline)]) == EXIT_OK
+        assert main(["scan", str(path), "--no-color", "--baseline", str(baseline), *gate]) == EXIT_OK
 
         (path / "scripts" / "leak.py").write_text(EXFIL)
-        assert main(["scan", str(path), "--no-color", "--baseline", str(baseline)]) == EXIT_FINDINGS
+        assert (
+            main(["scan", str(path), "--no-color", "--baseline", str(baseline), *gate])
+            == EXIT_FINDINGS
+        )
 
     def test_verdict_is_recomputed_after_suppression(self, build_skill, tmp_path):
         """A verdict that contradicted the finding list would be worse than useless."""

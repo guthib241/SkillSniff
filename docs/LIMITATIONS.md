@@ -127,13 +127,16 @@ alongside the rules it exercises. It is a **regression suite**, not evidence of
 generalisation. See [BENCHMARK.md](BENCHMARK.md).
 
 A source-disjoint evaluation now exists and is the number to read instead:
-[EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md). It is still small — 29
-skills across two public corpora — and it measures the false-positive side
-only. Recall and per-rule precision remain unmeasured, because no
-independently labelled corpus of agent skills is public and this project has
-not built one. When the self-authored benchmark last reported a false-positive
-rate of 0.000, the external corpus was simultaneously producing nine CRITICAL
-false positives on Anthropic's own published skills.
+[EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md). When the self-authored
+benchmark last reported a false-positive rate of 0.000, the external corpus
+was simultaneously producing nine CRITICAL false positives on Anthropic's own
+published skills.
+
+**Measured recall is 0.316** (6 of 19 labelled malicious skills blocked, 95% CI
+[0.154, 0.540]). Two thirds of known-malicious skills are not blocked, which is
+why gating is opt-in rather than the default. Read a finding, not a silence:
+the false-positive rate is low, so a finding is worth acting on, but a clean
+result is weak evidence. Per-rule precision is still unmeasured.
 
 ## Documentation framing
 

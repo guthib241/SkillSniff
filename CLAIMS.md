@@ -70,9 +70,38 @@ are pinned to the commits below.
 | 27 `SUP004` findings on `anthropics/skills`, 24 of them in markdown | MEASURED | same |
 | 13 `CRE003` findings before, 5 after | MEASURED | same |
 
-**Recall is unmeasured.** No independently labelled corpus of agent skills is
-public and this project has not built one, so no detection rate is quoted
-anywhere. See [docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md).
+## Recall against labelled malicious skills
+
+Measured 2026-09-11 against a pre-registration committed beforehand (commit
+`fc7a03f`, before any result was computed). Reproduce with
+`python scripts/external_eval.py`. Corpora pinned below.
+
+| Claim | Kind | Source |
+|---|---|---|
+| 19 in-domain labelled malicious samples | DERIVED | 4 from Trail of Bits + 15 from `kurtpayne`, both pinned |
+| 29 labelled malicious samples in total | DERIVED | adds the 10 `kurtpayne` fragments with no `SKILL.md` |
+| 6 blocked | MEASURED | `python scripts/external_eval.py` |
+| recall 0.316 | DERIVED | 6/19 |
+| Wilson 95% CI [0.154, 0.540] | DERIVED | Wilson score interval, k=6, n=19, z=1.96 |
+| whole-corpus recall 0.207, CI [0.098, 0.384] | DERIVED | 6/29, same method |
+| 9 / 19 flagged (BLOCK or REVIEW) | MEASURED | same run |
+| 0 false BLOCKs on 2 benign controls | MEASURED | same run |
+| 0.70 / 0.40 interpretation thresholds | PRE-REGISTERED | committed in `fc7a03f` before measurement |
+| 1 / 4 blocked on Trail of Bits, CI [0.046, 0.699] | MEASURED | same run |
+| 5 / 15 blocked on `kurtpayne`, CI [0.152, 0.583] | MEASURED | same run |
+| `trailofbits/overtly-malicious-skills` @ `4ffbf94…` | DERIVED | pinned in `scripts/external_eval.py`; no licence file |
+| `kurtpayne/skillscan-security` @ `c2a2cc4…` | DERIVED | pinned likewise; Apache-2.0 |
+| 224 s to scan a 100,000-line padded file; 4.5 ms median otherwise | MEASURED | timed on the Trail of Bits `csv-summarizer` sample |
+| 197 ms / 2.5 s / 224 s at 1,000 / 10,000 / 100,000 blank lines | MEASURED | synthetic padding series, same machine |
+
+**Corpora that could not be obtained**, and are therefore unmeasured:
+`cuhk-zhuque/SkillTrustBench` and `OpenClaw/clawhub-security-signals` (both on
+Hugging Face) and the skillscan.sh benchmark. `huggingface.co` and
+`skillscan.sh` each return 403 to CONNECT at this session's egress proxy.
+Nothing was substituted for them.
+
+**Per-rule precision is still unmeasured.** Recall now has a number; precision
+per rule does not, because that needs labels this project does not have.
 
 ## Performance
 
@@ -101,6 +130,8 @@ not reproduce them and does not claim to.
 | 3,984 skills audited | CITED | Snyk, [*ToxicSkills*](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/) |
 | 13.4% of audited skills had at least one critical-level issue | CITED | same |
 | `paste.c-net.org` as an exfiltration endpoint in a documented malicious skill | CITED | [`snyk-labs/toxicskills-goof`](https://github.com/snyk-labs/toxicskills-goof) README |
+| Over 90% evasion across eight scanners via self-extracting packing | CITED | Ji, Xu, Li, Gao, Wei, Wang & Cheung, *Cloak and Detonate*, [arXiv:2607.02357](https://arxiv.org/abs/2607.02357) (HKUST, July 2026) |
+| Static scanning of AI skills does not work as a security boundary | CITED | `kurtpayne/skillscan-security` README, retired 2026-07-03 |
 | Lethal trifecta (private data + untrusted content + egress) | CITED | Willison, [*The lethal trifecta*](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) |
 | OWASP LLM taxonomy tags on rules | CITED | [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) |
 | CWE identifiers on rules | CITED | [CWE](https://cwe.mitre.org/) |

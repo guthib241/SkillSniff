@@ -5,7 +5,27 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- **`skillsniff scan` is advisory by default and exits 0.** Measured recall
+  against externally-authored malicious skills is **0.316** — two in three are
+  not blocked — so an exit code of 0 must not be read as "this skill is safe".
+  Gating is now opt-in: `--fail-on`, `--strict`, or `fail_on` in a config file.
+  The GitHub Action and the pre-commit hook both pass a severity explicitly, so
+  installing either still gates. The 0.40 floor that triggered this was
+  pre-registered and committed before the measurement ran.
+
 ### Fixed
+
+- **A scan that could not finish reported `CLEAR`.** On time-budget
+  exhaustion the engine broke out of its rule loop recording only a string in
+  `errors`, never a coverage gap, so the report still read `coverage: HIGH`,
+  `complete: true`, `gaps: []` while roughly half the security rules had never
+  executed. The coverage ledger exists so an incomplete scan cannot return a
+  clean verdict; an aborted rule loop was the one path around it. The abort now
+  records a `time-budget-exceeded` gap and the verdict is `INCONCLUSIVE`.
+  Found by `csv-summarizer` in `trailofbits/overtly-malicious-skills`, which
+  pads a script with 100,000 newlines to force exactly this.
 
 - **Five false positives found by scanning skills this project did not write.**
   Before this change SkillSniff returned `BLOCK` on `anthropics/skills` — nine
@@ -57,6 +77,17 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **Recall measured against skills this project did not write**, with the
+  methodology pre-registered and committed first so the thresholds could not
+  move afterwards. 6 of 19 labelled malicious skills blocked: recall 0.316,
+  Wilson 95% CI [0.154, 0.540]; 0 false blocks on the benign controls.
+  `scripts/external_eval.py` now scores per-sample against publisher-supplied
+  labels — read from `kurtpayne`'s own `expectations.json` rather than
+  transcribed — and reports detection, a confidence interval, the per-rule
+  breakdown, coverage, and every miss. `docs/EXTERNAL_VALIDATION.md` lists all
+  13 misses with their technique and whether any rule could have caught them,
+  and records the three corpora that could not be obtained from this session
+  rather than substituting others.
 - **`CLAIMS.md` and a `claims` CI job.** Every figure in the README now traces
   to how it was obtained — MEASURED (a command in this repository), CITED (an
   external source, quoted as that source states it), or DERIVED (a count,

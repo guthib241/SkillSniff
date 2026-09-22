@@ -65,10 +65,20 @@ Designed and intended, not yet built.
   command in prose is an instruction to the *agent* rather than to a human
   reader, which is not obvious; see
   [EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md).
-- **A labelled external corpus** — the missing piece for measuring recall and
-  per-rule precision. Needs a written codebook, per-skill labels produced
-  independently of the tool, and ideally two labellers with a reported
-  agreement statistic.
+- **A labelled external corpus** — recall is now measured against two public
+  labelled corpora (docs/EXTERNAL_VALIDATION.md). Per-rule precision still
+  needs a written codebook and independent labellers.
+- **Bound the cost of line count.** 100,000 blank lines take a scan from 4.5 ms
+  to 224 s: the per-match helpers re-split the whole file, so cost is quadratic
+  in lines. Found by Trail of Bits `csv-summarizer`. A malicious skill can
+  stall a CI job with it.
+- **Close the recall gaps the external corpora exposed**, each a documented
+  miss rather than a guess: `curl … | bash` in bare prose (EXE001 needs a
+  shell-tokenisable context); defanged URLs (`hxxps://evil[.]example`) not
+  re-fanged before matching; no DNS or SMTP egress rule; no clone-then-execute
+  correlation; no cross-skill escalation rule at blocking severity; `.pyc`
+  bytecode scanned as strings but never disassembled; a disguised `.docx` not
+  treated as an archive to open.
 
 ---
 

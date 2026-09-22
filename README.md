@@ -363,10 +363,40 @@ CRITICAL findings, every one of them wrong — while the self-authored benchmark
 above simultaneously reported a false-positive rate of 0.000. A corpus written
 alongside the rules cannot contain the shapes its author did not think of.
 
-**Recall is still unmeasured.** No independently labelled corpus of agent
-skills is public, so there is no honest detection rate to quote. See
-[docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) for the method, the
-defects, and the gaps that remain open.
+### Recall: measured, and poor
+
+Against 19 labelled malicious skills written by other people — Trail of Bits'
+scanner-subversion corpus and the adversarial cases from the retired
+`kurtpayne/skillscan-security`:
+
+| Metric | Value |
+| --- | --- |
+| Blocked | 6 / 19 |
+| **Recall** | **0.316**, Wilson 95% CI [0.154, 0.540] |
+| Flagged for a human (BLOCK or REVIEW) | 9 / 19 |
+| False BLOCKs on benign controls | 0 |
+
+**Two thirds of known-malicious skills are not blocked.** The threshold for
+"fit to be a blocking gate" was pre-registered at 0.70, and 0.40 was
+pre-registered as the floor below which the tool is not a gate at all. 0.316
+is below that floor, and the commit that set those numbers predates the one
+that measured them.
+
+So **`skillsniff scan` is advisory by default** and exits 0. Gating is opt-in
+via `--fail-on`, `--strict`, or `fail_on` in a config file; the GitHub Action
+and pre-commit hook pass a severity explicitly, so both still gate.
+
+Read a finding, not a silence. When SkillSniff fires it is usually right — no
+false blocks on Anthropic's skills or on either benign control. When it is
+quiet, that is weak evidence of anything. This is consistent with the
+published literature: *Cloak and Detonate* ([arXiv:2607.02357](https://arxiv.org/abs/2607.02357))
+reports over 90% evasion across eight scanners, and
+`kurtpayne/skillscan-security` was retired in July 2026 with the conclusion
+that static scanning of AI skills does not work as a security boundary.
+
+[docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) lists **every**
+missed sample with its technique, the corpora that could not be obtained, and
+two defects the exercise found in SkillSniff itself.
 
 The corpus does include 15 benign cases built to resemble attacks — security
 documentation quoting `curl | bash`, red-team skills containing injection

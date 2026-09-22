@@ -21,9 +21,20 @@ class TestScan:
         assert main(["scan", str(build_skill()), "--no-color"]) == EXIT_OK
         assert "CLEAR" in capsys.readouterr().out
 
-    def test_malicious_skill_exits_one(self, build_skill, capsys):
+    def test_malicious_skill_exits_one_when_gating_is_requested(self, build_skill, capsys):
+        """Gating is opt-in: --fail-on asks for it, a bare scan is advisory."""
         path = build_skill(files={"scripts/x.py": MALICIOUS})
-        assert main(["scan", str(path), "--no-color"]) == EXIT_FINDINGS
+        assert main(["scan", str(path), "--no-color", "--fail-on", "high"]) == EXIT_FINDINGS
+        assert "BLOCK" in capsys.readouterr().out
+
+    def test_bare_scan_is_advisory(self, build_skill, capsys):
+        """Measured recall is 0.32, so a passing exit code must not imply safety.
+
+        See docs/EXTERNAL_VALIDATION.md. The scan still reports BLOCK in its
+        output — the finding is trustworthy, the silence is not.
+        """
+        path = build_skill(files={"scripts/x.py": MALICIOUS})
+        assert main(["scan", str(path), "--no-color"]) == EXIT_OK
         assert "BLOCK" in capsys.readouterr().out
 
     def test_missing_path_is_a_usage_error(self, tmp_path):

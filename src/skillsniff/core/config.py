@@ -34,8 +34,19 @@ class Config:
     select: tuple[str, ...] = ()
     #: Rule ids or family prefixes to suppress.
     ignore: tuple[str, ...] = ()
-    #: Findings below this severity are reported but never fail the run.
+    #: The severity at which a run fails, *when gating is requested at all*.
     fail_on: Severity = Severity.HIGH
+    #: Whether findings fail the run. **Default off, deliberately.**
+    #:
+    #: Measured recall against externally-authored malicious skills is 0.32
+    #: (docs/EXTERNAL_VALIDATION.md): roughly two in three known-malicious
+    #: samples are not blocked. A tool that exits non-zero by default invites
+    #: the reading "it passed, so the skill is safe", and that reading is not
+    #: supported by the evidence. Gating is therefore opt-in — pass --fail-on,
+    #: set fail_on in a config file, or use --strict — and a bare run reports
+    #: without judging. False positives are rare (0/20 on anthropics/skills),
+    #: so a finding is worth acting on; the absence of one means little.
+    gate: bool = False
     #: Findings below this are hidden from human output entirely.
     min_severity: Severity = Severity.INFO
     exclude: tuple[str, ...] = DEFAULT_EXCLUDES
@@ -112,6 +123,9 @@ def from_mapping(data: dict[str, Any], source: Path | None = None) -> Config:
             raise ConfigError(f"unknown configuration key {key!r}; valid keys: {valid}")
         kwargs[normalised] = _coerce(normalised, value)
 
+    # Naming fail_on in a config file is a request to gate on it.
+    if "fail_on" in kwargs or "strict" in kwargs:
+        kwargs.setdefault("gate", True)
     config = Config(**kwargs, source=source)
     if limit_kwargs:
         config.limits = Limits(**{**_limits_as_dict(config.limits), **limit_kwargs})
