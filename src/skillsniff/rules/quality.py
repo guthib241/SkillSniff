@@ -97,8 +97,13 @@ FIRST_PERSON = re.compile(r"\b(?:I|I'm|I'll|my|we|we're|our|us)\b")
 SECOND_PERSON = re.compile(r"\b(?:you|your|you're|yourself)\b", re.IGNORECASE)
 XML_TAG = re.compile(r"<[a-zA-Z_][\w:-]*\s*(?:/?>|\s[^>]*>)")
 BACKSLASH_PATH = re.compile(r"[A-Za-z0-9_.\-]\\[A-Za-z0-9_.\-]+\\")
-ORDERED_ITEM = re.compile(r"^\s*\d+[.)]\s+\S", re.MULTILINE)
-STEP_HEADING = re.compile(r"^\s*(?:\d+[.)]\s+|#{2,}\s*step\s|#{2,}\s*\d+[.)]?\s)", re.IGNORECASE | re.MULTILINE)
+# [ \t], not \s, after ^: under re.MULTILINE \s crosses newlines, so each line
+# start can consume every following blank line before failing — O(n^2) in line
+# count, and a list item is a single line anyway.
+ORDERED_ITEM = re.compile(r"^[ \t]*\d+[.)][ \t]+\S", re.MULTILINE)
+STEP_HEADING = re.compile(
+    r"^[ \t]*(?:\d+[.)][ \t]+|#{2,}[ \t]*step\s|#{2,}[ \t]*\d+[.)]?\s)", re.IGNORECASE | re.MULTILINE
+)
 CODE_FENCE = re.compile(r"```")
 TIME_SENSITIVE = re.compile(
     r"\b(?:as of (?:january|february|march|april|may|june|july|august|september|"

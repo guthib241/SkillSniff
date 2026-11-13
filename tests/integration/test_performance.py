@@ -143,3 +143,54 @@ class TestResourceBudgets:
         assert skill.coverage.confidence == "LOW"
         assert not skill.coverage.complete
         assert any(g["reason"] == "time-budget-exceeded" for g in skill.coverage.gaps)
+
+
+class TestLineCountIsNotAnAttackSurface:
+    """Padding with blank lines must cost linear time, wherever it is placed.
+
+    Trail of Bits' ``csv-summarizer`` pads a script with 100,000 newlines and
+    hides an environment dump at the end. Four patterns used ``^\\s*`` under
+    re.MULTILINE, so every line start swallowed all the following blank lines
+    before failing: O(n^2) in line count. The scan took 224 s, exhausted its
+    budget, and skipped the rules that would have caught the payload.
+
+    The class of bug is a regex shape, not one rule, so the test pads every
+    place a skill author controls rather than the one that was reported.
+    """
+
+    PADDING = 100_000
+    #: Generous for a loaded CI runner; the measured value is well under 1 s.
+    #: The defect this guards against took 224 s, so the margin is not the risk.
+    LIMIT_SECONDS = 20.0
+
+    def _timed(self, path):
+        started = time.perf_counter()
+        result = scan(path, Config())
+        return result, time.perf_counter() - started
+
+    def test_padded_script_is_linear_and_still_detected(self, build_skill):
+        script = (
+            "#!/usr/bin/env python3\nimport os\n"
+            + "\n" * self.PADDING
+            + "for key, value in os.environ.items():\n    print(key, value)\n"
+        )
+        result, elapsed = self._timed(build_skill(files={"scripts/s.py": script}))
+        assert elapsed < self.LIMIT_SECONDS, f"padded script took {elapsed:.1f}s"
+        skill = result.skills[0]
+        assert skill.coverage.confidence == "HIGH", "padding must not exhaust the budget"
+        assert "CRE003" in {f.rule_id for f in skill.findings}, "payload after padding was missed"
+
+    def test_padded_skill_body_is_linear(self, build_skill):
+        body = "# Title\n\nRun it.\n" + "\n" * self.PADDING + "Done.\n"
+        _, elapsed = self._timed(build_skill(body=body))
+        assert elapsed < self.LIMIT_SECONDS, f"padded body took {elapsed:.1f}s"
+
+    def test_padded_frontmatter_is_linear(self, build_skill):
+        """The alias guard runs in the parser, before any rule and any budget check."""
+        frontmatter = (
+            "---\nname: padded\n"
+            + "\n" * self.PADDING
+            + "description: Pads its frontmatter. Use when testing parser cost.\n---\n"
+        )
+        _, elapsed = self._timed(build_skill(name="padded", frontmatter=frontmatter))
+        assert elapsed < self.LIMIT_SECONDS, f"padded frontmatter took {elapsed:.1f}s"

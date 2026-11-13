@@ -136,7 +136,7 @@ against PyYAML on every document shape a skill can contain.
 | `skillsniff scan PATH` | Analyse a skill, or every skill under a directory |
 | `skillsniff baseline PATH` | Record today's findings so the gate enforces only new work |
 | `skillsniff inspect PATH` | Full trust report: purpose, capabilities, trust graph, coverage |
-| `skillsniff rules` | List the 88-rule catalogue |
+| `skillsniff rules` | List the 93-rule catalogue |
 | `skillsniff explain RULE` | What a rule detects, why it matters, and what it cannot see |
 | `skillsniff lock PATH` | Record the skill's current capabilities, hashes and provenance |
 | `skillsniff verify PATH` | Report meaningful changes since the lockfile |
@@ -278,7 +278,7 @@ inspect.**
 
 ## Rule taxonomy
 
-88 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
+93 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
 of them, including what it *cannot* detect.
 
 | | | | |
@@ -324,7 +324,7 @@ Every decision names the clause that produced it. See
 
 ## Measured results
 
-On **SkillSniffBench**, the 43-case corpus in `src/skillsniff/bench/corpus`:
+On **SkillSniffBench**, the 52-case corpus in `src/skillsniff/bench/corpus`:
 
 | Metric | Value |
 | --- | --- |
@@ -333,7 +333,7 @@ On **SkillSniffBench**, the 43-case corpus in `src/skillsniff/bench/corpus`:
 | F1 | 1.000 |
 | False-positive rate | 0.000 |
 | False-negative rate | 0.000 |
-| Median scan time | 4.5 ms per skill |
+| Median scan time | 3.5 ms per skill |
 
 Reproduce with `python -m skillsniff benchmark` from a checkout.
 
@@ -394,11 +394,21 @@ reports over 90% evasion across eight scanners, and
 `kurtpayne/skillscan-security` was retired in July 2026 with the conclusion
 that static scanning of AI skills does not work as a security boundary.
 
+Since that measurement, the general gaps it exposed have been closed — a bug
+that hid `curl … | bash` written in prose, plus rules for disabling host
+security controls, running files a search turns up, DNS and mail
+exfiltration, bytecode poisoning, and defanged URLs. Re-run on the same
+corpus, recall is 0.526 (CI [0.317, 0.727]) with still no false blocks. **That
+is not an independent figure**: the rules were written after seeing which
+samples were missed, so the corpus is contaminated and 0.316 remains the
+honest estimate. Even 0.526 is below the 0.70 bar for "fit to block", so the
+advisory default stands either way.
+
 [docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) lists **every**
 missed sample with its technique, the corpora that could not be obtained, and
-two defects the exercise found in SkillSniff itself.
+the defects the exercise found in SkillSniff itself.
 
-The corpus does include 15 benign cases built to resemble attacks — security
+The corpus does include 19 benign cases built to resemble attacks — security
 documentation quoting `curl | bash`, red-team skills containing injection
 strings, commented-out dangerous commands, `localhost` URLs, placeholder
 credentials, and an API client that legitimately sends a token in an

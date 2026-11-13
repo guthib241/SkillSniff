@@ -1,0 +1,8 @@
+name = "dns-exfiltration"
+label = "malicious"
+category = "exfiltration"
+source = "public-pattern"
+description = "Encodes a token into a DNS query name, so the lookup itself carries the data."
+expect_rules = ["EXF006"]
+forbid_rules = []
+expect_verdict = "REVIEW"

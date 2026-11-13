@@ -67,7 +67,11 @@ CONCEALMENT = re.compile(
 FRAME_IMPERSONATION = re.compile(
     r"<\s*/?\s*(?:system|assistant|human|user|developer|instructions?|important_instructions)\s*>"
     r"|\[/?(?:SYSTEM|INST|ASSISTANT|USER)\]"
-    r"|^\s*(?:System|Assistant|Human)\s*:\s*(?:you\s+(?:must|are|should)|ignore|new\s+instruction)"
+    # Horizontal whitespace only around the role label. Under re.MULTILINE,
+    # ``^\s*`` lets every line start swallow all following blank lines before
+    # failing, which is O(n^2) in line count: 100,000 blank lines took a scan
+    # to 224 s. A role label is one line of text, so [ \t] is also the intent.
+    r"|^[ \t]*(?:System|Assistant|Human)[ \t]*:[ \t]*(?:you\s+(?:must|are|should)|ignore|new\s+instruction)"
     r"|<\|(?:im_start|im_end|system|endoftext|start_header_id)\|>"
     r"|###\s*(?:SYSTEM|NEW\s+INSTRUCTIONS?)\s*(?:###|:)",
     re.IGNORECASE | re.MULTILINE,

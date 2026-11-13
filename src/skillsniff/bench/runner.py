@@ -254,9 +254,17 @@ def load_cases(corpus: Path) -> list[Case]:
 
 
 def run_case(case: Case, config: Config | None = None) -> CaseResult:
+    from dataclasses import replace
+
     from skillsniff.engine import scan
 
+    # The case's own metadata is not part of the skill under test. Scanning it
+    # let a case's description text produce findings: describing a benign case
+    # as sending a notification "by mail; no secret is on the line" fired the
+    # mail-exfiltration rule on that sentence. Worse, an expected detection
+    # sourced only from the description would have passed for the wrong reason.
     config = config or Config()
+    config = replace(config, exclude=(*config.exclude, BENCH_FILE, f"*/{BENCH_FILE}"))
     started = time.perf_counter()
     try:
         result = scan(case.path, config)

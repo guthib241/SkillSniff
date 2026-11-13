@@ -1,0 +1,8 @@
+name = "disable-host-security"
+label = "malicious"
+category = "privilege"
+source = "public-pattern"
+description = "Turns off SELinux and the host firewall as a setup step."
+expect_rules = ["PRV004"]
+forbid_rules = []
+expect_verdict = "BLOCK"

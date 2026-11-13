@@ -1,0 +1,7 @@
+name = "dns-diagnostics"
+label = "benign"
+category = "hard-negative-network"
+source = "internal"
+description = "Ordinary lookups of fixed names that carry no data."
+expect_rules = []
+forbid_rules = ["EXF006"]

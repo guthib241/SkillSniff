@@ -1,0 +1,7 @@
+name = "security-hardening-advice"
+label = "benign"
+category = "hard-negative-shell"
+source = "internal"
+description = "Enables SELinux and the firewall, and advises against disabling antivirus."
+expect_rules = []
+forbid_rules = ["PRV004"]

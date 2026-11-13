@@ -33,7 +33,17 @@ Working, tested, and covered by the benchmark corpus.
 - **Lock / verify** — content hashes, capability snapshot, provenance, graded change detection
 - **Behavioural diff** — capability, dependency, external and verdict deltas
 - **Policy engine** — deterministic, testable, every decision names its clause
-- **SkillSniffBench** — 43-case corpus, precision/recall/F1, per-category and per-source metrics
+- **SkillSniffBench** — 52-case corpus, precision/recall/F1, per-category and per-source metrics
+- **Linear cost in line count** — four patterns used `^\s*` under
+  `re.MULTILINE`, which made a file of blank lines quadratic (224 s for
+  100,000). Now single-digit milliseconds, with a regression test that pads a
+  script, a skill body and the frontmatter.
+- **Gaps closed from the external corpora** — markdown-prose pipelines
+  (`EXE001`), host security controls disabled (`PRV004`), found-file execution
+  (`EXE007`), DNS and mail exfiltration (`EXF006`, `EXF007`), bytecode
+  poisoning (`EVA005`), and defanged URLs re-fanged before matching. See
+  `docs/EXTERNAL_VALIDATION.md`; the corpus they were found on is now
+  contaminated for recall.
 - **Output** — terminal, JSON, SARIF 2.1.0, Markdown, trust report
 - **Configuration** — file discovery, rule selection, severity thresholds, limits
 - **Scanner hardening** — no subprocess, no eval, no extraction, resource budgets
@@ -68,17 +78,15 @@ Designed and intended, not yet built.
 - **A labelled external corpus** — recall is now measured against two public
   labelled corpora (docs/EXTERNAL_VALIDATION.md). Per-rule precision still
   needs a written codebook and independent labellers.
-- **Bound the cost of line count.** 100,000 blank lines take a scan from 4.5 ms
-  to 224 s: the per-match helpers re-split the whole file, so cost is quadratic
-  in lines. Found by Trail of Bits `csv-summarizer`. A malicious skill can
-  stall a CI job with it.
-- **Close the recall gaps the external corpora exposed**, each a documented
-  miss rather than a guess: `curl … | bash` in bare prose (EXE001 needs a
-  shell-tokenisable context); defanged URLs (`hxxps://evil[.]example`) not
-  re-fanged before matching; no DNS or SMTP egress rule; no clone-then-execute
-  correlation; no cross-skill escalation rule at blocking severity; `.pyc`
-  bytecode scanned as strings but never disassembled; a disguised `.docx` not
-  treated as an archive to open.
+- **Correlate a clone with a later execution.** `git clone <url>` followed by
+  running a script from the clone is how ordinary setup instructions read too,
+  so it needs a dataflow link between the two, not co-occurrence.
+- **Cross-skill analysis.** A skill that grants itself a capability by
+  bundling or invoking a second skill is invisible to per-skill analysis.
+- **Stronger evidence for the HIGH exfiltration rules.** An environment dump
+  (`CRE003`) or a found-file execution (`EXE007`) is HIGH, so it reviews rather
+  than blocks. Raising either needs evidence of where the data goes, not a
+  higher number.
 
 ---
 

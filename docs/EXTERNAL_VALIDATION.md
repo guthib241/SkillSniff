@@ -4,7 +4,7 @@
 this document. Reproduce with `python scripts/external_eval.py`.*
 
 The bundled benchmark (`skillsniff benchmark`) reports precision 1.000 and
-recall 1.000 over 43 cases. That number is real, and it is not evidence the
+recall 1.000 over 52 cases. That number is real, and it is not evidence the
 tool works on anything. Every case in that corpus was written by this project
 alongside the rules it exercises, so it measures self-consistency: whether
 SkillSniff does what its authors intended on inputs its authors chose.
@@ -221,9 +221,77 @@ the recall figure, because `INCONCLUSIVE` was pre-registered as a miss.
 from 4.5 ms to **224 seconds** on a 100 KB file. Measured on padding alone:
 1,000 lines 197 ms; 10,000 lines 2.5 s; 100,000 lines 224 s. A malicious skill
 can therefore stall a CI job cheaply, and before fix 1 it could also use that
-stall to force a `CLEAR`. **Not fixed here** — it is a performance defect
-rather than a correctness one, and fixing it under the same change as the
-measurement would blur what was measured. It is on the roadmap.
+stall to force a `CLEAR`. Not fixed in the change that measured it, so a
+performance fix would not blur what was measured. **Since fixed** — see "After
+closing the gaps" below: four patterns used `^\s*` under `re.MULTILINE`, and
+the same sample now scans in 301 ms.
+
+## After closing the gaps — not an independent measurement
+
+**Read this section knowing the corpus is now contaminated.** The rules below
+were written after seeing which of these 19 samples were missed. Each one is
+justified by its technique and tested on inputs written separately, but a
+figure measured on the same samples that motivated a change is no longer an
+estimate of how the tool does on skills it has never seen. **The independent
+recall is still 0.316**, and that is the number to quote. What follows is what
+a careful re-test of the same corpus shows, labelled as such.
+
+Measured 2026-11-13 on the pinned snapshots, same harness, same labels.
+
+| | Independent (pre-registered) | After the gap fixes (contaminated) |
+|---|---|---|
+| Blocked, in-domain | 6 / 19 | 10 / 19 |
+| Recall | 0.316, CI [0.154, 0.540] | 0.526, CI [0.317, 0.727] |
+| Whole-corpus recall | 0.207 | 0.345, CI [0.199, 0.527] |
+| Flagged for a human | 9 / 19 | 13 / 19 |
+| False BLOCKs on benign controls | 0 | 0 |
+| `anthropics/skills` blocked | 0 / 20 | 0 / 20 |
+
+**The gating decision does not depend on which number you believe.** Even the
+contaminated 0.526 is below the 0.70 that the pre-registration set as "fit to
+block". The advisory default stands under either reading.
+
+### What changed, and why
+
+Four samples moved to BLOCK. Each through a fix with a reason independent of
+the sample:
+
+| Sample | Now | Fix |
+|---|---|---|
+| `a01_curl_bash`, `a02_wget_sh` | BLOCK | **Bug** in `EXE001`: its regex pass skipped every raw match assuming the shell tokeniser had covered it, which was only true for shell files. A pipeline in markdown prose was seen by neither path. |
+| `a20_privilege_disable` | BLOCK | New `PRV004`: switching off host security controls — antivirus, Defender, the firewall, SELinux. |
+| `simple-formatter` | BLOCK | New `EVA005`: bytecode naming a capability, here `environ`, that its shipped source does not. |
+
+Two more now carry a security finding without blocking: `context-loader`
+fires the new `EXE007` (`find … -exec {}`, running whatever a search turns up)
+at HIGH, and `csv-summarizer` fires `CRE003` once the padding no longer
+exhausts the scan.
+
+### What is still missed, and why that is deliberate
+
+| Sample | Verdict | Why it is still missed |
+|---|---|---|
+| `a07_dns_exfil`, `a08_smtp_exfil`, `a12_defanged_url` | CLEAR | Their "attacker" domains are `.example`, an RFC 2606 reserved documentation TLD. Every exfiltration rule treats reserved domains as benign so documentation full of `api.example.com` does not light up. The new DNS, mail and re-fanging logic catches the same techniques against a real domain (see the tests). Relaxing the filter to catch these would buy a corpus number with false positives elsewhere. **Predicted before the re-run.** |
+| `a04_disable_security` | REVIEW | "disable security" with no object. `PRV004` requires a named control (antivirus, firewall, SELinux…), because the bare phrase is too vague to block on. |
+| `a06_ioc_known` | CLEAR | A known-bad URL. No reputation list, by design: it would go stale unversioned. |
+| `a21_alt_download_exec` | CLEAR | `git clone` then `python installer.py`. Ordinary setup instructions do exactly this; no rule separates the two without a dataflow link. |
+| `a26_graph_escalation` | CLEAR | Escalation across two skills. Needs cross-skill analysis this tool does not do. |
+| `csv-summarizer` | REVIEW | Payload now detected (`CRE003`) but an environment dump is HIGH, not CRITICAL. |
+| `context-loader` | REVIEW | `EXE007` is HIGH: running found files is dangerous but has rare legitimate uses. |
+
+### Defects found while closing the gaps
+
+- **`PRV003` read `chmod 644` and `chmod 755` as setuid.** Its pattern matched
+  any three-digit mode beginning 6 or 7. Setuid modes are four digits led by
+  4, 2 or 6; those are still caught. Pre-existing, found by a hard negative.
+- **The benchmark scanned each case's own `_bench.toml`**, so a case's
+  description text could produce findings. It did once, on a case written
+  here. No original case depended on it: `mcp-config-write`'s expected
+  detection also fires on the skill's real files, so the published 1.000
+  recall stands.
+- **The quadratic blow-up is fixed.** Four patterns used `^\s*` under
+  `re.MULTILINE`; 100,000 blank lines now cost single-digit milliseconds
+  rather than minutes, and `csv-summarizer` scans in 301 ms instead of 224 s.
 
 ## What this measures, and what it does not
 
