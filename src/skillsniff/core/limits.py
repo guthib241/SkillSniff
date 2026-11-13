@@ -42,6 +42,9 @@ class CoverageReason(str, Enum):
     #: A language analyser stopped early on pathological input. The pattern
     #: scanners still read the file; the structural analysis did not finish.
     ANALYSIS_TRUNCATED = "analysis-truncated"
+    #: An analyser or rule raised on this input. Whatever it would have
+    #: established is unknown, so a clean verdict cannot be asserted.
+    ANALYSIS_ERROR = "analysis-error"
     BINARY = "binary"
     ENCRYPTED_ARCHIVE = "encrypted-archive"
     UNSAFE_PATH = "unsafe-path"
@@ -170,6 +173,7 @@ class Budget:
             return "HIGH"
         blocking = {
             CoverageReason.TIME_BUDGET_EXCEEDED,
+            CoverageReason.ANALYSIS_ERROR,
             CoverageReason.FILE_COUNT_EXCEEDED,
             CoverageReason.TOTAL_BYTES_EXCEEDED,
             CoverageReason.ENCRYPTED_ARCHIVE,

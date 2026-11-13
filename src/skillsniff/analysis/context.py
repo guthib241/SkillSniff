@@ -138,92 +138,117 @@ def build_context(skill: Skill, config: Config, budget: Budget) -> AnalysisConte
         file_context = FileContext(scanned=scanned)
         context.files.append(file_context)
 
-        if scanned.text is None:
-            continue
+        try:
+            _derive(context, file_context)
+        except Exception as exc:  # recorded as a gap, never allowed to end the scan
+            # An analyser that raises on one file must not abort the scan: a crash
+            # anyone can trigger is a way past the scanner. Whatever views were
+            # built before the failure are still read by the rules; what the
+            # analyser would have established is recorded as unknown, so the
+            # verdict cannot be CLEAR.
+            budget.note_gap(
+                scanned.display,
+                CoverageReason.ANALYSIS_ERROR,
+                f"{type(exc).__name__}: {str(exc)[:200]}",
+            )
 
-        view = TextView(
-            raw=scanned.text,
-            path=scanned.display,
-            max_decode_depth=config.limits.max_decode_depth,
+    try:
+        _collect_capabilities(context)
+    except Exception as exc:  # recorded as a gap, never allowed to end the scan
+        budget.note_gap(
+            context.entry_path, CoverageReason.ANALYSIS_ERROR, f"capability merge: {type(exc).__name__}: {exc}"[:240]
         )
-        file_context.view = view
-        budget.encoded_regions_inspected += len(view.decoded)
-
-        suffix = scanned.suffix
-        name = scanned.name
-
-        if suffix in (".py", ".pyi"):
-            file_context.python = analyze_python(scanned.text, scanned.display)
-            if not file_context.python.syntax_ok:
-                budget.note_gap(
-                    scanned.display,
-                    CoverageReason.UNPARSEABLE,
-                    file_context.python.syntax_error,
-                )
-        elif suffix in JS_SUFFIXES or _is_js_script(scanned.text):
-            file_context.js = analyze_javascript(scanned.text, scanned.display)
-            if file_context.js.truncated:
-                budget.note_gap(
-                    scanned.display,
-                    CoverageReason.ANALYSIS_TRUNCATED,
-                    file_context.js.truncated,
-                )
-        elif suffix in SHELL_SUFFIXES or scanned.text.startswith("#!"):
-            file_context.shell = parse_shell(scanned.text, scanned.display)
-
-        # Fenced shell blocks inside Markdown are executable instructions to the
-        # agent even though the file is documentation — *unless* the surrounding
-        # prose frames them as examples of what not to do. A skill that
-        # documents `curl … | bash` as an attack indicator does not thereby
-        # acquire the capability to fetch and execute remote code, and treating
-        # it as if it did is what makes security documentation unscannable.
-        if suffix in (".md", ".markdown"):
-            from skillsniff.rules._scan import documentation_framed
-
-            merged = ShellAnalysis(path=scanned.display)
-            for code, start_line, _language in shell_blocks(scanned.text):
-                offset = _offset_of_line(scanned.text, start_line)
-                if documentation_framed(scanned.text, offset):
-                    continue
-                block = parse_shell(code, scanned.display, start_line=start_line)
-                merged.commands.extend(block.commands)
-                merged.observations.extend(block.observations)
-                merged.fetch_to_interpreter.extend(block.fetch_to_interpreter)
-                merged.decode_to_interpreter.extend(block.decode_to_interpreter)
-                merged.credential_reads.extend(block.credential_reads)
-                merged.network_sends.extend(block.network_sends)
-                merged.installers.extend(block.installers)
-                merged.destructive.extend(block.destructive)
-            # A clone in one block and its build in the next is the usual way a
-            # README is written, so the link is followed across the file's blocks.
-            from skillsniff.analysis.shell import find_clone_runs
-
-            merged.clone_runs = find_clone_runs(merged.commands)
-            if merged.commands:
-                file_context.shell = merged
-
-        # A URL inside a shell comment is documentation about a URL, not a
-        # reference to one, so it must not become an external-resource edge.
-        url_source = scanned.text
-        # (A JavaScript file with a shebang is not a shell script: ``#`` is not
-        # its comment character, so blanking ``#`` lines would hide real code.)
-        if (suffix in SHELL_SUFFIXES or scanned.text.startswith("#!")) and file_context.js is None:
-            from skillsniff.rules._scan import _blank_shell_comments
-
-            url_source = _blank_shell_comments(scanned.text)
-        # Re-fang before extracting: an agent reads hxxps://host[.]tk as a URL,
-        # so the trust graph must too. Re-fanging never touches a newline, so
-        # the line numbers recorded against each URL stay exact.
-        from skillsniff.core.text import refang
-
-        file_context.urls = find_urls(refang(url_source), scanned.display)
-        file_context.dependencies = parse_manifest(name, scanned.text, scanned.display)
-
-        context.externals.extend(file_context.urls)
-        context.dependencies.extend(file_context.dependencies)
-
-    _collect_capabilities(context)
     return context
+
+
+def _derive(context: AnalysisContext, file_context: FileContext) -> None:
+    """Compute every derived view of one file and add it to ``context``."""
+    scanned = file_context.scanned
+    config = context.config
+    budget = context.budget
+    if scanned.text is None:
+        return
+
+    view = TextView(
+        raw=scanned.text,
+        path=scanned.display,
+        max_decode_depth=config.limits.max_decode_depth,
+    )
+    file_context.view = view
+    budget.encoded_regions_inspected += len(view.decoded)
+
+    suffix = scanned.suffix
+    name = scanned.name
+
+    if suffix in (".py", ".pyi"):
+        file_context.python = analyze_python(scanned.text, scanned.display)
+        if not file_context.python.syntax_ok:
+            budget.note_gap(
+                scanned.display,
+                CoverageReason.UNPARSEABLE,
+                file_context.python.syntax_error,
+            )
+    elif suffix in JS_SUFFIXES or _is_js_script(scanned.text):
+        file_context.js = analyze_javascript(scanned.text, scanned.display)
+        if file_context.js.truncated:
+            budget.note_gap(
+                scanned.display,
+                CoverageReason.ANALYSIS_TRUNCATED,
+                file_context.js.truncated,
+            )
+    elif suffix in SHELL_SUFFIXES or scanned.text.startswith("#!"):
+        file_context.shell = parse_shell(scanned.text, scanned.display)
+
+    # Fenced shell blocks inside Markdown are executable instructions to the
+    # agent even though the file is documentation — *unless* the surrounding
+    # prose frames them as examples of what not to do. A skill that
+    # documents `curl … | bash` as an attack indicator does not thereby
+    # acquire the capability to fetch and execute remote code, and treating
+    # it as if it did is what makes security documentation unscannable.
+    if suffix in (".md", ".markdown"):
+        from skillsniff.rules._scan import documentation_framed
+
+        merged = ShellAnalysis(path=scanned.display)
+        for code, start_line, _language in shell_blocks(scanned.text):
+            offset = _offset_of_line(scanned.text, start_line)
+            if documentation_framed(scanned.text, offset):
+                continue
+            block = parse_shell(code, scanned.display, start_line=start_line)
+            merged.commands.extend(block.commands)
+            merged.observations.extend(block.observations)
+            merged.fetch_to_interpreter.extend(block.fetch_to_interpreter)
+            merged.decode_to_interpreter.extend(block.decode_to_interpreter)
+            merged.credential_reads.extend(block.credential_reads)
+            merged.network_sends.extend(block.network_sends)
+            merged.installers.extend(block.installers)
+            merged.destructive.extend(block.destructive)
+        # A clone in one block and its build in the next is the usual way a
+        # README is written, so the link is followed across the file's blocks.
+        from skillsniff.analysis.shell import find_clone_runs
+
+        merged.clone_runs = find_clone_runs(merged.commands)
+        if merged.commands:
+            file_context.shell = merged
+
+    # A URL inside a shell comment is documentation about a URL, not a
+    # reference to one, so it must not become an external-resource edge.
+    url_source = scanned.text
+    # (A JavaScript file with a shebang is not a shell script: ``#`` is not
+    # its comment character, so blanking ``#`` lines would hide real code.)
+    if (suffix in SHELL_SUFFIXES or scanned.text.startswith("#!")) and file_context.js is None:
+        from skillsniff.rules._scan import _blank_shell_comments
+
+        url_source = _blank_shell_comments(scanned.text)
+    # Re-fang before extracting: an agent reads hxxps://host[.]tk as a URL,
+    # so the trust graph must too. Re-fanging never touches a newline, so
+    # the line numbers recorded against each URL stay exact.
+    from skillsniff.core.text import refang
+
+    file_context.urls = find_urls(refang(url_source), scanned.display)
+    file_context.dependencies = parse_manifest(name, scanned.text, scanned.display)
+
+    context.externals.extend(file_context.urls)
+    context.dependencies.extend(file_context.dependencies)
 
 
 def _collect_capabilities(context: AnalysisContext) -> None:

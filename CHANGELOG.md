@@ -7,6 +7,17 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Security
 
+- **One malformed URL aborted a whole scan.** URL classification passed a URL
+  with an unbalanced IPv6 bracket, or full-width punctuation inside its host,
+  to `urlparse`, which raises; nothing caught it, so the skill was never
+  scanned to the end — 18 of SkillTrustBench's cases and 20 of ClawHub's
+  holdout rows, which the holdout figures count as not detected. A crash
+  anyone can trigger is a way past the scanner. URLs are now parsed
+  defensively, and as a guard behind that, an analyser or rule that raises
+  records an `analysis-error` coverage gap, which forbids a `CLEAR` verdict,
+  instead of ending the scan or being logged and ignored. A rule that raised
+  could previously leave the verdict `CLEAR` with that rule never having run.
+
 - **Extensionless scripts were never read.** A file with no extension was
   classified by its name alone, as binary, so `bin/run` opening `#!/bin/sh` or
   `#!/usr/bin/env node` reached no lexical or structural rule: the most

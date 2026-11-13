@@ -55,7 +55,8 @@ file and in source order. Values are **not** followed through function calls,
 across files or re-exports, or through computed properties, and types are not
 understood. Every stage is linear in the file's size, and a file that exhausts
 the analyser's work budget is recorded as an `analysis-truncated` coverage gap
-rather than skipped silently.
+rather than skipped silently. An analyser or rule that raises on any input is
+recorded as an `analysis-error` gap, which forbids a `CLEAR` verdict.
 
 Ruby, Go, Rust, PHP and Perl get no structural analysis. A
 `system("curl … | sh")` in a bundled `.rb` file is caught only if it matches a

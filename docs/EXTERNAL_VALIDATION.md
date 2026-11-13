@@ -646,7 +646,11 @@ bypass, not a nuisance. The same defect crashed 31 development rows before
 the holdout was touched and was not fixed then; that was a mistake. As
 pre-registered, the figures above count those scans as not detected (10
 malicious SkillTrustBench cases). The defect is fixed after this measurement,
-in its own commit, and the measurement is not re-run.
+in its own commit, and the measurement is not re-run: all 38 inputs that
+raised now scan to the end, and their verdicts are deliberately not reported.
+Behind the fix, any analyser or rule that raises now records an
+`analysis-error` coverage gap, which forbids a clean verdict, rather than
+ending the scan.
 
 ### ClawHub: agreement with another scanner
 
