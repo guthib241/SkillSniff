@@ -5,6 +5,31 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Security
+
+- **Line count is no longer an attack surface.** Four patterns used `^\s*`
+  under `re.MULTILINE`, so a file of blank lines cost O(n²): 100,000 of them
+  took a scan to 224 s, and before the coverage fix that stall forced a
+  `CLEAR`. The patterns are `FRAME_IMPERSONATION`, two quality patterns, and
+  the frontmatter alias guard, which runs before any rule. All four are now
+  linear. Trail of Bits' `csv-summarizer` scans in 301 ms instead of 224 s, and
+  the environment dump hidden after its padding is now reported.
+
+### Added
+
+- **Five rules for gaps the external corpora exposed**, each justified by its
+  technique and tested on inputs written separately: `PRV004` host security
+  controls disabled (critical), `EXE007` executing whatever a search finds,
+  `EXF006` DNS exfiltration, `EXF007` secrets sent by email, and `EVA005`
+  bytecode poisoning (critical) — a `.pyc` naming a capability its shipped
+  source does not, read from raw bytes and never unmarshalled. Defanged URLs
+  (`hxxps[:]//host[.]tk`) are re-fanged before matching. 93 rules.
+- **Re-measured recall on the same corpus: 0.526, labelled as contaminated.**
+  The rules were written after seeing the misses, so this is not an
+  independent estimate and 0.316 remains the honest figure. It is still below
+  the 0.70 pre-registered as "fit to block", so the advisory default stands
+  under either reading. Anthropic's skills stay at 0 / 20 blocked.
+
 ### Changed
 
 - **`skillsniff scan` is advisory by default and exits 0.** Measured recall
@@ -17,6 +42,16 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+- `EXE001` missed `curl … | bash` written as markdown prose or inline code. Its
+  regex pass skipped every raw match assuming the shell tokeniser had covered
+  it, which was only true for shell files.
+- `PRV003` read `chmod 644` and `chmod 755` as setuid. Its pattern matched any
+  three-digit mode beginning 6 or 7. Setuid modes are still caught.
+- The benchmark scanned each case's own `_bench.toml`, so a case's
+  description could produce findings. No original case's expected detection
+  depended on it.
+- CI would have failed on the next push: mypy 2.x reports the untyped `yaml`
+  import as an error. `types-PyYAML` is now a dev dependency.
 - **A scan that could not finish reported `CLEAR`.** On time-budget
   exhaustion the engine broke out of its rule loop recording only a string in
   `errors`, never a coverage gap, so the report still read `coverage: HIGH`,

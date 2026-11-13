@@ -133,10 +133,24 @@ was simultaneously producing nine CRITICAL false positives on Anthropic's own
 published skills.
 
 **Measured recall is 0.316** (6 of 19 labelled malicious skills blocked, 95% CI
-[0.154, 0.540]). Two thirds of known-malicious skills are not blocked, which is
-why gating is opt-in rather than the default. Read a finding, not a silence:
-the false-positive rate is low, so a finding is worth acting on, but a clean
-result is weak evidence. Per-rule precision is still unmeasured.
+[0.154, 0.540]). Two thirds of known-malicious skills were not blocked, which
+is why gating is opt-in rather than the default. Read a finding, not a
+silence: the false-positive rate is low, so a finding is worth acting on, but
+a clean result is weak evidence. Per-rule precision is still unmeasured.
+
+The gaps that measurement exposed have since been closed, and the same corpus
+now gives 0.526 — but that corpus shaped the rules, so it can no longer
+measure them. **0.316 is the last independent figure.** A fresh, unseen
+labelled corpus is what would replace it.
+
+## Reserved documentation domains are treated as benign
+
+`example.com`, `.example`, `.test`, `.invalid` and `localhost` cannot be real
+destinations, so every exfiltration rule ignores them; otherwise documentation
+full of `https://api.example.com` would be unscannable. The cost: a sample
+that uses a reserved domain as its "attacker" is not reported. Three of the
+`kurtpayne` adversarial cases do exactly that, and remain misses. The same
+technique against a real domain is caught.
 
 ## Documentation framing
 
@@ -155,8 +169,9 @@ silently.
 ## Performance
 
 Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs. The
-benchmark-corpus row was re-measured on 2026-09-11 after the corpus grew to
-43 cases; the other rows are unchanged from 2026-09-09.
+benchmark-corpus row was re-measured on 2026-11-13 after the corpus grew to
+52 cases; the other rows are unchanged from 2026-09-09. The large-file rows
+predate the fix for quadratic line-count cost and are conservative.
 
 | Input shape | Median | Files |
 | --- | --- | --- |
@@ -166,7 +181,7 @@ benchmark-corpus row was re-measured on 2026-09-11 after the corpus grew to
 | Archive with 200 entries | 417 ms | 2 |
 | One 1 MB line (padding / minified) | 1.7 s | 2 |
 | 100 encoded regions | 5 ms | 2 |
-| Whole 43-case benchmark corpus | 4.5 ms per skill | — |
+| Whole 52-case benchmark corpus | 3.5 ms per skill | — |
 
 Peak RSS across all of the above: ~111 MB.
 

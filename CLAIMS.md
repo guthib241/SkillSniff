@@ -21,7 +21,7 @@ is that it reports how often it is wrong. Three kinds of entry appear below:
 
 | Claim | Kind | Source |
 |---|---|---|
-| 88 rules | DERIVED | `python -m skillsniff rules \| tail -2`; `scripts/gen_rules_doc.py` prints `88 rules, 16 families` |
+| 93 rules | DERIVED | `python -m skillsniff rules \| tail -2`; `scripts/gen_rules_doc.py` prints `93 rules, 16 families` |
 | 16 families | DERIVED | same |
 | SARIF 2.1.0 | CITED | [OASIS SARIF 2.1.0 specification](https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html) |
 | Python 3.11+ | DERIVED | `requires-python = ">=3.11"` in `pyproject.toml`; CI runs 3.11, 3.12, 3.13 |
@@ -29,21 +29,21 @@ is that it reports how often it is wrong. Three kinds of entry appear below:
 
 ## SkillSniffBench — the self-authored corpus
 
-Measured 2026-09-11, SkillSniff 0.2.0, Python 3.11.15, one core. Reproduce with
+Measured 2026-11-13, SkillSniff 0.2.0, Python 3.11.18, one core. Reproduce with
 `python -m skillsniff benchmark`. Timing is the median of 7 runs; counts are exact.
 
 | Claim | Kind | Source |
 |---|---|---|
-| 43 cases | DERIVED | `ls src/skillsniff/bench/corpus/*/ \| wc -l` — 28 malicious, 4 benign, 11 hard negatives |
-| 28 true positives | MEASURED | `python -m skillsniff benchmark` |
-| 15 true negatives | MEASURED | same (4 benign + 11 hard negatives) |
+| 52 cases | DERIVED | `ls src/skillsniff/bench/corpus/*/ \| wc -l` — 33 malicious, 4 benign, 15 hard negatives |
+| 33 true positives | MEASURED | `python -m skillsniff benchmark` |
+| 19 true negatives | MEASURED | same (4 benign + 15 hard negatives) |
 | precision 1.000 | MEASURED | same |
 | recall 1.000 | MEASURED | same |
 | F1 1.000 | MEASURED | same |
 | false-positive rate 0.000 | MEASURED | same |
 | false-negative rate 0.000 | MEASURED | same |
-| ~0.22 s total | MEASURED | same; 7 runs gave 200–227 ms |
-| 4.5 ms median per skill | MEASURED | same; 7 runs gave 4.1–4.6 ms |
+| ~0.21 s total | MEASURED | same; 7 runs gave 189–224 ms |
+| 3.5 ms median per skill | MEASURED | same; 7 runs gave 3.2–3.8 ms |
 
 **What these numbers do not mean.** Every case was written by this project
 alongside the rules it exercises. The figures measure self-consistency, not
@@ -91,8 +91,25 @@ Measured 2026-09-11 against a pre-registration committed beforehand (commit
 | 5 / 15 blocked on `kurtpayne`, CI [0.152, 0.583] | MEASURED | same run |
 | `trailofbits/overtly-malicious-skills` @ `4ffbf94…` | DERIVED | pinned in `scripts/external_eval.py`; no licence file |
 | `kurtpayne/skillscan-security` @ `c2a2cc4…` | DERIVED | pinned likewise; Apache-2.0 |
-| 224 s to scan a 100,000-line padded file; 4.5 ms median otherwise | MEASURED | timed on the Trail of Bits `csv-summarizer` sample |
+| 224 s to scan a 100,000-line padded file before the fix; 301 ms after | MEASURED | timed on the Trail of Bits `csv-summarizer` sample, before and after commit `ddcf744` |
 | 197 ms / 2.5 s / 224 s at 1,000 / 10,000 / 100,000 blank lines | MEASURED | synthetic padding series, same machine |
+
+### After closing the gaps — contaminated, not independent
+
+Measured 2026-11-13 on the same pinned corpora, after rules were written in
+response to the misses above. **Not an estimate of performance on unseen
+skills**; the independent figure is the 0.316 above.
+
+| Claim | Kind | Source |
+|---|---|---|
+| 10 / 19 blocked after the gap fixes | MEASURED | `python scripts/external_eval.py` at commit `78f69d8` |
+| recall 0.526 (contaminated) | DERIVED | 10/19 |
+| Wilson 95% CI [0.317, 0.727] | DERIVED | k=10, n=19, z=1.96 |
+| whole-corpus 0.345, CI [0.199, 0.527] (contaminated) | DERIVED | 10/29 |
+| 13 / 19 flagged for a human (contaminated) | MEASURED | same run |
+| 0 false BLOCKs on the 2 benign controls; 0 / 20 on `anthropics/skills` | MEASURED | same run |
+| 93 rules after adding PRV004, EXE007, EXF006, EXF007, EVA005 | DERIVED | `scripts/gen_rules_doc.py` |
+| 0.70 bar for "fit to block" still not met | DERIVED | 0.526 < 0.70, threshold from `fc7a03f` |
 
 **Corpora that could not be obtained**, and are therefore unmeasured:
 `cuhk-zhuque/SkillTrustBench` and `OpenClaw/clawhub-security-signals` (both on
