@@ -39,6 +39,10 @@ dev = [
     "mypy>=1.11",
     "build>=1.2",
     "PyYAML>=6.0",
+    # Stubs for the optional YAML backend. mypy 2.x reports a missing-stub
+    # import as an error, so without this CI broke on a tool release with no
+    # change to this repository.
+    "types-PyYAML>=6.0",
 ]
 
 [project.urls]

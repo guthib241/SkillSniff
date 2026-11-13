@@ -33,7 +33,11 @@ HAVE_PYYAML = _pyyaml is not None
 
 MAX_FRONTMATTER_BYTES = 256 * 1024
 MAX_DEPTH = 12
-_ALIAS_RE = re.compile(r"(?m)^\s*[^#\n]*?(?<![\w])[*&][A-Za-z0-9_-]+")
+# ``^[ \t]*`` rather than ``^\s*``: under (?m) \s crosses newlines, so padding
+# the frontmatter with blank lines made this O(n^2) — 5.9 s at 20,000 lines, in
+# the parser that runs before any rule. Every line is still a candidate ``^``
+# position, so an anchor or alias on any line is found exactly as before.
+_ALIAS_RE = re.compile(r"(?m)^[ \t]*[^#\n]*?(?<![\w])[*&][A-Za-z0-9_-]+")
 
 
 class IssueKind(str, Enum):
