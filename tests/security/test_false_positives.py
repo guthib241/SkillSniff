@@ -15,6 +15,8 @@ from __future__ import annotations
 
 import base64
 
+import pytest
+
 from skillsniff.model.result import Verdict
 
 SECURITY_RULES = (
@@ -681,3 +683,22 @@ class TestClawHubDevelopmentSplit:
         result = scan_skill(files={"scripts/k.py": script})
         assert "critical" in _severities(result, "CRE001")
         assert result.risk.verdict is Verdict.BLOCK
+
+
+class TestCloneWithoutRunningIt:
+    """EXE008's counterweight: a clone is reported only when its code runs, unpinned."""
+
+    @pytest.mark.parametrize(
+        "script",
+        [
+            "git clone https://github.com/x/docs\nls docs\ncat docs/README.md\n",
+            "git clone https://github.com/x/tool\ncd tool\n"
+            "git checkout 0123456789abcdef0123456789abcdef01234567\nmake\n",
+            "git clone ../tool\ncd tool\nmake\n",
+            "git clone https://github.com/x/tool\ncd /tmp\n./run.sh\n",
+            "git clone https://github.com/x/repo\npython installer.py\n",
+        ],
+        ids=["read-only", "pinned-to-a-commit", "local-clone", "cd-elsewhere", "unlinked-script"],
+    )
+    def test_no_link_or_a_pin(self, actionable_rule_ids, script):
+        assert_quiet(actionable_rule_ids(files={"scripts/s.sh": "#!/bin/sh\n" + script}), "EXE008")
