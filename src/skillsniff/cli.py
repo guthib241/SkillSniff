@@ -55,7 +55,7 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument(
         "--fail-on", metavar="SEVERITY",
-        help="exit non-zero at this severity or above (default: high)",
+        help="exit non-zero at this severity or above; without it a scan is advisory",
     )
     parser.add_argument(
         "--min-severity", metavar="SEVERITY", help="hide findings below this severity",
@@ -211,11 +211,13 @@ def resolve_config(args: argparse.Namespace) -> Config:
     # usage error, not a crash.
     if getattr(args, "fail_on", None):
         config.fail_on = _parse_severity(args.fail_on, "--fail-on")
+        config.gate = True
     if getattr(args, "min_severity", None):
         config.min_severity = _parse_severity(args.min_severity, "--min-severity")
     if getattr(args, "strict", False):
         config.strict = True
         config.fail_on = Severity.LOW
+        config.gate = True
     if getattr(args, "no_archives", False):
         config.expand_archives = False
     if getattr(args, "baseline", None):
@@ -277,6 +279,9 @@ def _open_output(args: argparse.Namespace):
 
 
 def _exit_code(result: Any, config: Config) -> int:
+    # Advisory unless gating was asked for; see Config.gate for why.
+    if not config.gate:
+        return EXIT_OK
     threshold = config.fail_on
     if any(f.severity.rank <= threshold.rank for f in result.all_findings):
         return EXIT_FINDINGS
@@ -367,6 +372,9 @@ def cmd_inspect(args: argparse.Namespace) -> int:
     for error in errors:
         print(f"skillsniff: {error}", file=sys.stderr)
 
+    # Advisory unless gating was asked for; see Config.gate for why.
+    if not config.gate:
+        return EXIT_OK
     return EXIT_FINDINGS if any(
         f.severity.rank <= config.fail_on.rank for f in result.findings
     ) else EXIT_OK

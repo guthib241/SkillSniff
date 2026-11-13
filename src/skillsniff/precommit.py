@@ -86,6 +86,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         config = discover(skills[0])
         config.fail_on = _parse_severity(severity, "--fail-on")
+        config.gate = True
     except SkillSniffError as exc:
         print(f"skillsniff: {exc}", file=sys.stderr)
         return EXIT_USAGE
@@ -102,7 +103,7 @@ def main(argv: list[str] | None = None) -> int:
             min_severity=config.min_severity,
             show_capabilities=False,
         )
-        if any(f.severity.rank <= config.fail_on.rank for f in result.all_findings):
+        if config.gate and any(f.severity.rank <= config.fail_on.rank for f in result.all_findings):
             failed = True
 
     if failed:

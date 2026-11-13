@@ -18,7 +18,7 @@ from pathlib import Path
 from skillsniff import __version__
 from skillsniff.analysis.context import AnalysisContext, build_context
 from skillsniff.core.config import Config
-from skillsniff.core.limits import Budget
+from skillsniff.core.limits import Budget, CoverageReason
 from skillsniff.model.finding import Finding, deduplicate
 from skillsniff.model.result import Coverage, ScanResult, SkillResult, assess
 from skillsniff.model.skill import Skill, discover_skills, load_skill
@@ -74,6 +74,20 @@ def run_rules(context: AnalysisContext) -> tuple[list[Finding], list[str], int]:
         ):
             continue
         if context.budget.time_exhausted():
+            # Record this as a *coverage gap*, not just an error string. The
+            # whole point of the coverage ledger is that a scan which could not
+            # finish must not return a clean verdict, and an aborted rule loop
+            # is exactly that case: every rule after this one never ran.
+            # Appending to `errors` alone left coverage reporting HIGH and
+            # complete, so a skill that exhausted the budget came back CLEAR
+            # with half the security rules unexecuted. Found by
+            # trailofbits/overtly-malicious-skills `csv-summarizer`, which pads
+            # a file with 100,000 newlines to force precisely this.
+            context.budget.note_gap(
+                context.entry_path,
+                CoverageReason.TIME_BUDGET_EXCEEDED,
+                f"aborted before rule {rule_id}; {context.budget.elapsed:.1f}s elapsed",
+            )
             errors.append(f"time budget exhausted before rule {rule_id}")
             break
         try:

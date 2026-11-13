@@ -116,3 +116,30 @@ class TestResourceBudgets:
         elapsed = (time.perf_counter() - started) * 1000
         assert elapsed < 2_000
         assert result.skills[0].coverage.gaps
+
+    def test_exhausted_time_budget_cannot_return_a_clean_verdict(self, build_skill):
+        """An aborted rule loop must report INCONCLUSIVE, never CLEAR.
+
+        Found by ``csv-summarizer`` in trailofbits/overtly-malicious-skills. It
+        pads a script with 100,000 newlines, which pushed the scan past its time
+        budget; the engine broke out of the rule loop after recording only an
+        error string, so coverage still read HIGH and complete and the skill
+        came back CLEAR with half the security rules never executed. A scan that
+        could not finish must say so — that is the entire purpose of the
+        coverage ledger, and an aborted rule loop is the case it most needs to
+        catch.
+        """
+        from dataclasses import replace
+
+        from skillsniff.core.limits import Limits
+        from skillsniff.model.result import Verdict
+
+        path = build_skill()
+        config = Config(limits=replace(Limits(), time_budget_seconds=0.001))
+        result = scan(path, config)
+
+        skill = result.skills[0]
+        assert skill.risk.verdict is Verdict.INCONCLUSIVE
+        assert skill.coverage.confidence == "LOW"
+        assert not skill.coverage.complete
+        assert any(g["reason"] == "time-budget-exceeded" for g in skill.coverage.gaps)

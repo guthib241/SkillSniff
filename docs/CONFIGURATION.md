@@ -13,7 +13,10 @@ filesystem root. Command-line flags always win.
 
 ```toml
 [skillsniff]
-# Findings at or above this severity make the run exit 1.
+# Findings at or above this severity make the run exit 1. Setting this key at
+# all turns gating on: without it (and without --fail-on or --strict) a scan is
+# advisory and exits 0. Measured recall is 0.316, so a passing exit code is not
+# evidence a skill is safe — see docs/EXTERNAL_VALIDATION.md.
 fail_on = "high"              # critical | high | medium | low | info
 
 # Findings below this are hidden from human output entirely.
@@ -59,7 +62,7 @@ valid set.
 | `--select RULE` | Run only these rule ids or family prefixes (repeatable, comma-separated accepted) |
 | `--ignore RULE` | Suppress these (added to config, never replacing it) |
 | `--exclude GLOB` | Skip paths (added to config) |
-| `--fail-on SEVERITY` | Exit-code threshold |
+| `--fail-on SEVERITY` | Exit-code threshold, and opts the run into gating at all |
 | `--min-severity SEVERITY` | Display threshold |
 | `--strict` | Fail on any finding, including low |
 | `--baseline PATH` | Suppress findings recorded in a baseline file |
