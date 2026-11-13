@@ -1,0 +1,1023 @@
+{
+  "scanned_commit": "7d1d388f5bdc4c420e80580522d9477fb22fe48a",
+  "started": "2026-11-13T15:41:22Z",
+  "protocol": "docs/EXTERNAL_VALIDATION.md, Pre-registration 2",
+  "skilltrustbench": {
+    "dataset": "cuhk-zhuque/SkillTrustBench@ef338a55117c6039de7f408c24b3f05eedf0a6e3",
+    "headline_excludes": "4 external_overtly_malicious_skills cases",
+    "headline": {
+      "cases": 5516,
+      "accuracy": 0.3609,
+      "macro_f1": 0.3656,
+      "malicious_recall": {
+        "hits": 775,
+        "total": 2859,
+        "rate": 0.2711,
+        "wilson95": [
+          0.2551,
+          0.2877
+        ]
+      },
+      "non_normal_recall": {
+        "hits": 3587,
+        "total": 3873,
+        "rate": 0.9262,
+        "wilson95": [
+          0.9175,
+          0.934
+        ]
+      },
+      "false_block_rate_on_normal": {
+        "hits": 65,
+        "total": 1643,
+        "rate": 0.0396,
+        "wilson95": [
+          0.0312,
+          0.0501
+        ]
+      },
+      "flagged_rate_on_normal": {
+        "hits": 1214,
+        "total": 1643,
+        "rate": 0.7389,
+        "wilson95": [
+          0.7171,
+          0.7596
+        ]
+      },
+      "inconclusive": {},
+      "scan_errors": {
+        "malicious": 10,
+        "normal": 5,
+        "suspicious": 3
+      },
+      "per_label": {
+        "normal": {
+          "precision": 0.6,
+          "recall": 0.2611,
+          "f1": 0.3639,
+          "support": 1643
+        },
+        "suspicious": {
+          "precision": 0.2014,
+          "recall": 0.7761,
+          "f1": 0.3198,
+          "support": 1014
+        },
+        "malicious": {
+          "precision": 0.8679,
+          "recall": 0.2711,
+          "f1": 0.4131,
+          "support": 2859
+        }
+      },
+      "confusion": {
+        "normal": {
+          "normal": 429,
+          "suspicious": 1149,
+          "malicious": 65
+        },
+        "suspicious": {
+          "normal": 174,
+          "suspicious": 787,
+          "malicious": 53
+        },
+        "malicious": {
+          "normal": 112,
+          "suspicious": 1972,
+          "malicious": 775
+        }
+      },
+      "verdicts_by_gold": {
+        "normal": {
+          "CLEAR": 198,
+          "REVIEW": 1149,
+          "CAUTION": 226,
+          "BLOCK": 65,
+          "ERROR": 5
+        },
+        "suspicious": {
+          "REVIEW": 787,
+          "CAUTION": 123,
+          "BLOCK": 53,
+          "CLEAR": 48,
+          "ERROR": 3
+        },
+        "malicious": {
+          "BLOCK": 775,
+          "REVIEW": 1972,
+          "CAUTION": 90,
+          "CLEAR": 12,
+          "ERROR": 10
+        }
+      }
+    },
+    "by_source": {
+      "injected": {
+        "cases": 3359,
+        "malicious_recall": {
+          "hits": 508,
+          "total": 2323,
+          "rate": 0.2187,
+          "wilson95": [
+            0.2023,
+            0.2359
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 3084,
+          "total": 3324,
+          "rate": 0.9278,
+          "wilson95": [
+            0.9185,
+            0.9361
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 1,
+          "total": 35,
+          "rate": 0.0286,
+          "wilson95": [
+            0.0051,
+            0.1453
+          ]
+        }
+      },
+      "injected_d11": {
+        "cases": 290,
+        "malicious_recall": {
+          "hits": 101,
+          "total": 290,
+          "rate": 0.3483,
+          "wilson95": [
+            0.2957,
+            0.4048
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 275,
+          "total": 290,
+          "rate": 0.9483,
+          "wilson95": [
+            0.9164,
+            0.9684
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "injected_d8": {
+        "cases": 119,
+        "malicious_recall": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 1,
+          "total": 1,
+          "rate": 1.0,
+          "wilson95": [
+            0.2065,
+            1.0
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 21,
+          "total": 118,
+          "rate": 0.178,
+          "wilson95": [
+            0.1194,
+            0.2568
+          ]
+        }
+      },
+      "injected_p0_normal_base": {
+        "cases": 6,
+        "malicious_recall": {
+          "hits": 1,
+          "total": 6,
+          "rate": 0.1667,
+          "wilson95": [
+            0.0301,
+            0.5635
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 6,
+          "total": 6,
+          "rate": 1.0,
+          "wilson95": [
+            0.6097,
+            1.0
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "safe_pool": {
+        "cases": 1500,
+        "malicious_recall": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 9,
+          "total": 10,
+          "rate": 0.9,
+          "wilson95": [
+            0.5958,
+            0.9821
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 43,
+          "total": 1490,
+          "rate": 0.0289,
+          "wilson95": [
+            0.0215,
+            0.0386
+          ]
+        }
+      },
+      "wild": {
+        "cases": 37,
+        "malicious_recall": {
+          "hits": 21,
+          "total": 35,
+          "rate": 0.6,
+          "wilson95": [
+            0.4357,
+            0.7445
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 35,
+          "total": 37,
+          "rate": 0.9459,
+          "wilson95": [
+            0.823,
+            0.985
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "wild_diffused": {
+        "cases": 159,
+        "malicious_recall": {
+          "hits": 120,
+          "total": 159,
+          "rate": 0.7547,
+          "wilson95": [
+            0.6824,
+            0.8151
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 133,
+          "total": 159,
+          "rate": 0.8365,
+          "wilson95": [
+            0.7712,
+            0.8859
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "wild_expanded": {
+        "cases": 46,
+        "malicious_recall": {
+          "hits": 24,
+          "total": 46,
+          "rate": 0.5217,
+          "wilson95": [
+            0.3814,
+            0.6588
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 44,
+          "total": 46,
+          "rate": 0.9565,
+          "wilson95": [
+            0.8547,
+            0.988
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "by_risk_label": {
+      "T01": {
+        "cases": 1424,
+        "malicious_recall": {
+          "hits": 285,
+          "total": 1130,
+          "rate": 0.2522,
+          "wilson95": [
+            0.2278,
+            0.2783
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 1348,
+          "total": 1424,
+          "rate": 0.9466,
+          "wilson95": [
+            0.9337,
+            0.9571
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T02": {
+        "cases": 164,
+        "malicious_recall": {
+          "hits": 55,
+          "total": 164,
+          "rate": 0.3354,
+          "wilson95": [
+            0.2676,
+            0.4107
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 144,
+          "total": 164,
+          "rate": 0.878,
+          "wilson95": [
+            0.8191,
+            0.9197
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T03": {
+        "cases": 811,
+        "malicious_recall": {
+          "hits": 239,
+          "total": 787,
+          "rate": 0.3037,
+          "wilson95": [
+            0.2726,
+            0.3367
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 763,
+          "total": 811,
+          "rate": 0.9408,
+          "wilson95": [
+            0.9224,
+            0.9551
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T04": {
+        "cases": 2856,
+        "malicious_recall": {
+          "hits": 646,
+          "total": 2446,
+          "rate": 0.2641,
+          "wilson95": [
+            0.247,
+            0.2819
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 2724,
+          "total": 2856,
+          "rate": 0.9538,
+          "wilson95": [
+            0.9455,
+            0.9609
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T05": {
+        "cases": 1074,
+        "malicious_recall": {
+          "hits": 242,
+          "total": 693,
+          "rate": 0.3492,
+          "wilson95": [
+            0.3146,
+            0.3854
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 951,
+          "total": 1074,
+          "rate": 0.8855,
+          "wilson95": [
+            0.865,
+            0.9032
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T06": {
+        "cases": 96,
+        "malicious_recall": {
+          "hits": 26,
+          "total": 96,
+          "rate": 0.2708,
+          "wilson95": [
+            0.192,
+            0.3673
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 81,
+          "total": 96,
+          "rate": 0.8438,
+          "wilson95": [
+            0.7581,
+            0.903
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T07": {
+        "cases": 124,
+        "malicious_recall": {
+          "hits": 20,
+          "total": 124,
+          "rate": 0.1613,
+          "wilson95": [
+            0.1069,
+            0.236
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 116,
+          "total": 124,
+          "rate": 0.9355,
+          "wilson95": [
+            0.8778,
+            0.9669
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T08": {
+        "cases": 239,
+        "malicious_recall": {
+          "hits": 2,
+          "total": 128,
+          "rate": 0.0156,
+          "wilson95": [
+            0.0043,
+            0.0552
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 212,
+          "total": 239,
+          "rate": 0.887,
+          "wilson95": [
+            0.8406,
+            0.9212
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "T09": {
+        "cases": 1118,
+        "malicious_recall": {
+          "hits": 49,
+          "total": 304,
+          "rate": 0.1612,
+          "wilson95": [
+            0.1241,
+            0.2067
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 963,
+          "total": 1118,
+          "rate": 0.8614,
+          "wilson95": [
+            0.8399,
+            0.8804
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "none": {
+        "cases": 1643,
+        "malicious_recall": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": [
+            0.0,
+            1.0
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 65,
+          "total": 1643,
+          "rate": 0.0396,
+          "wilson95": [
+            0.0312,
+            0.0501
+          ]
+        }
+      }
+    },
+    "contaminated_cases": [
+      {
+        "id": "case_05503",
+        "gold": "malicious",
+        "verdict": "BLOCK",
+        "rules": [
+          "EVA002",
+          "EVA005"
+        ]
+      },
+      {
+        "id": "case_05502",
+        "gold": "malicious",
+        "verdict": "BLOCK",
+        "rules": [
+          "CRE001",
+          "SUP004"
+        ]
+      },
+      {
+        "id": "case_05504",
+        "gold": "malicious",
+        "verdict": "REVIEW",
+        "rules": [
+          "EVA003",
+          "EXE007"
+        ]
+      },
+      {
+        "id": "case_05506",
+        "gold": "malicious",
+        "verdict": "REVIEW",
+        "rules": [
+          "CRE003"
+        ]
+      }
+    ],
+    "missing_skill_md": 0
+  },
+  "clawhub": {
+    "dataset": "OpenClaw/clawhub-security-signals@69dcbd323c155312fb000ec89ea0b1efdf6a5757",
+    "measures": "agreement with ClawScan's automated verdict (silver labels), not ground truth",
+    "combined": {
+      "cases": 10115,
+      "accuracy": 0.5778,
+      "macro_f1": 0.3883,
+      "malicious_recall": {
+        "hits": 2,
+        "total": 24,
+        "rate": 0.0833,
+        "wilson95": [
+          0.0232,
+          0.2585
+        ]
+      },
+      "non_normal_recall": {
+        "hits": 2281,
+        "total": 3878,
+        "rate": 0.5882,
+        "wilson95": [
+          0.5726,
+          0.6036
+        ]
+      },
+      "false_block_rate_on_normal": {
+        "hits": 233,
+        "total": 6237,
+        "rate": 0.0374,
+        "wilson95": [
+          0.0329,
+          0.0424
+        ]
+      },
+      "flagged_rate_on_normal": {
+        "hits": 2425,
+        "total": 6237,
+        "rate": 0.3888,
+        "wilson95": [
+          0.3768,
+          0.401
+        ]
+      },
+      "inconclusive": {},
+      "scan_errors": {
+        "normal": 7,
+        "suspicious": 12,
+        "malicious": 1
+      },
+      "per_label": {
+        "normal": {
+          "precision": 0.7048,
+          "recall": 0.6112,
+          "f1": 0.6546,
+          "support": 6237
+        },
+        "suspicious": {
+          "precision": 0.4799,
+          "recall": 0.5267,
+          "f1": 0.5022,
+          "support": 3854
+        },
+        "malicious": {
+          "precision": 0.0042,
+          "recall": 0.0833,
+          "f1": 0.008,
+          "support": 24
+        }
+      },
+      "confusion": {
+        "normal": {
+          "normal": 3812,
+          "suspicious": 2192,
+          "malicious": 233
+        },
+        "suspicious": {
+          "normal": 1583,
+          "suspicious": 2030,
+          "malicious": 241
+        },
+        "malicious": {
+          "normal": 14,
+          "suspicious": 8,
+          "malicious": 2
+        }
+      },
+      "verdicts_by_gold": {
+        "normal": {
+          "REVIEW": 2192,
+          "CAUTION": 738,
+          "CLEAR": 3067,
+          "BLOCK": 233,
+          "ERROR": 7
+        },
+        "suspicious": {
+          "REVIEW": 2030,
+          "CAUTION": 348,
+          "BLOCK": 241,
+          "CLEAR": 1223,
+          "ERROR": 12
+        },
+        "malicious": {
+          "REVIEW": 8,
+          "CLEAR": 8,
+          "CAUTION": 5,
+          "BLOCK": 2,
+          "ERROR": 1
+        }
+      }
+    },
+    "per_split": {
+      "test": {
+        "cases": 6747,
+        "accuracy": 0.5794,
+        "macro_f1": 0.3897,
+        "malicious_recall": {
+          "hits": 1,
+          "total": 16,
+          "rate": 0.0625,
+          "wilson95": [
+            0.0111,
+            0.2833
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 1564,
+          "total": 2629,
+          "rate": 0.5949,
+          "wilson95": [
+            0.576,
+            0.6135
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 149,
+          "total": 4118,
+          "rate": 0.0362,
+          "wilson95": [
+            0.0309,
+            0.0423
+          ]
+        },
+        "flagged_rate_on_normal": {
+          "hits": 1595,
+          "total": 4118,
+          "rate": 0.3873,
+          "wilson95": [
+            0.3726,
+            0.4023
+          ]
+        },
+        "inconclusive": {},
+        "scan_errors": {
+          "normal": 3,
+          "suspicious": 9,
+          "malicious": 1
+        },
+        "per_label": {
+          "normal": {
+            "precision": 0.7032,
+            "recall": 0.6127,
+            "f1": 0.6548,
+            "support": 4118
+          },
+          "suspicious": {
+            "precision": 0.4884,
+            "recall": 0.53,
+            "f1": 0.5084,
+            "support": 2613
+          },
+          "malicious": {
+            "precision": 0.0031,
+            "recall": 0.0625,
+            "f1": 0.0059,
+            "support": 16
+          }
+        },
+        "confusion": {
+          "normal": {
+            "normal": 2523,
+            "suspicious": 1446,
+            "malicious": 149
+          },
+          "suspicious": {
+            "normal": 1055,
+            "suspicious": 1385,
+            "malicious": 173
+          },
+          "malicious": {
+            "normal": 10,
+            "suspicious": 5,
+            "malicious": 1
+          }
+        },
+        "verdicts_by_gold": {
+          "normal": {
+            "REVIEW": 1446,
+            "CAUTION": 502,
+            "CLEAR": 2018,
+            "BLOCK": 149,
+            "ERROR": 3
+          },
+          "suspicious": {
+            "REVIEW": 1385,
+            "CAUTION": 236,
+            "BLOCK": 173,
+            "CLEAR": 810,
+            "ERROR": 9
+          },
+          "malicious": {
+            "REVIEW": 5,
+            "CLEAR": 4,
+            "CAUTION": 5,
+            "BLOCK": 1,
+            "ERROR": 1
+          }
+        }
+      },
+      "eval_holdout": {
+        "cases": 3368,
+        "accuracy": 0.5745,
+        "macro_f1": 0.3854,
+        "malicious_recall": {
+          "hits": 1,
+          "total": 8,
+          "rate": 0.125,
+          "wilson95": [
+            0.0224,
+            0.4709
+          ]
+        },
+        "non_normal_recall": {
+          "hits": 717,
+          "total": 1249,
+          "rate": 0.5741,
+          "wilson95": [
+            0.5464,
+            0.6012
+          ]
+        },
+        "false_block_rate_on_normal": {
+          "hits": 84,
+          "total": 2119,
+          "rate": 0.0396,
+          "wilson95": [
+            0.0321,
+            0.0488
+          ]
+        },
+        "flagged_rate_on_normal": {
+          "hits": 830,
+          "total": 2119,
+          "rate": 0.3917,
+          "wilson95": [
+            0.3711,
+            0.4127
+          ]
+        },
+        "inconclusive": {},
+        "scan_errors": {
+          "normal": 4,
+          "suspicious": 3
+        },
+        "per_label": {
+          "normal": {
+            "precision": 0.7079,
+            "recall": 0.6083,
+            "f1": 0.6543,
+            "support": 2119
+          },
+          "suspicious": {
+            "precision": 0.4627,
+            "recall": 0.5197,
+            "f1": 0.4896,
+            "support": 1241
+          },
+          "malicious": {
+            "precision": 0.0065,
+            "recall": 0.125,
+            "f1": 0.0124,
+            "support": 8
+          }
+        },
+        "confusion": {
+          "normal": {
+            "normal": 1289,
+            "suspicious": 746,
+            "malicious": 84
+          },
+          "suspicious": {
+            "normal": 528,
+            "suspicious": 645,
+            "malicious": 68
+          },
+          "malicious": {
+            "normal": 4,
+            "suspicious": 3,
+            "malicious": 1
+          }
+        },
+        "verdicts_by_gold": {
+          "normal": {
+            "REVIEW": 746,
+            "CLEAR": 1049,
+            "CAUTION": 236,
+            "BLOCK": 84,
+            "ERROR": 4
+          },
+          "suspicious": {
+            "CLEAR": 413,
+            "REVIEW": 645,
+            "BLOCK": 68,
+            "CAUTION": 112,
+            "ERROR": 3
+          },
+          "malicious": {
+            "BLOCK": 1,
+            "CLEAR": 4,
+            "REVIEW": 3
+          }
+        }
+      }
+    }
+  },
+  "finished": "2026-11-13T15:46:17Z"
+}

@@ -66,6 +66,12 @@ Designed and intended, not yet built.
 - **Structural analysis for Ruby, Go and Rust** — pattern-only today.
   JavaScript and TypeScript are tokenised; a full parser would add
   interprocedural flow and computed-property resolution.
+- **Severity calibration against a fresh holdout** — on SkillTrustBench, 1,972
+  of the 2,084 missed malicious cases were already flagged HIGH, most often
+  for dynamic evaluation, obfuscation or a supply-chain finding. Compound
+  escalation could raise blocking recall; it must be developed on other data
+  and measured on a holdout nobody has looked at, because SkillTrustBench is
+  spent for that question once its misses have been read.
 - **Interprocedural dataflow** — the taint analysis stops at function
   boundaries; call-graph propagation would materially raise `EXF001` recall.
 - **Attestation** — sign a lockfile so a verified skill can be proven verified.

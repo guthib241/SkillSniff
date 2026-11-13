@@ -1,0 +1,2084 @@
+{"id": "case_00001", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXE004"]}
+{"id": "case_00003", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00004", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00008", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_00009", "verdict": "REVIEW", "rules": ["CON001", "CON012"]}
+{"id": "case_00013", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE003"]}
+{"id": "case_00014", "verdict": "REVIEW", "rules": ["CON001", "CON012"]}
+{"id": "case_00019", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_00024", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00026", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_00028", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00029", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_00030", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_00031", "verdict": "CLEAR", "rules": ["SPEC003"]}
+{"id": "case_00036", "verdict": "CLEAR", "rules": []}
+{"id": "case_00039", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00042", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC003"]}
+{"id": "case_00043", "verdict": "REVIEW", "rules": ["CON001", "CON004"]}
+{"id": "case_00044", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_00048", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00051", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_00055", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00056", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_00059", "verdict": "REVIEW", "rules": ["CON010", "CON011", "SPEC001", "SUP004"]}
+{"id": "case_00060", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00062", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_00067", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00069", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00074", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_00084", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_00086", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_00088", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00089", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00091", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00093", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001"]}
+{"id": "case_00095", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_00104", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00106", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00110", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "SPEC003", "SUP004"]}
+{"id": "case_00114", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_00115", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "EXF003"]}
+{"id": "case_00116", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CRE003", "SUP004"]}
+{"id": "case_00118", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "CRE003", "OBS001"]}
+{"id": "case_00119", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00120", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_00121", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00123", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001", "PER001", "SUP004"]}
+{"id": "case_00128", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_00133", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00135", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00136", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_00139", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00140", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001"]}
+{"id": "case_00143", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "MEM001", "OBS001"]}
+{"id": "case_00144", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00146", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00148", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_00149", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_00150", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00153", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00157", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00158", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_00159", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_00160", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_00161", "verdict": "REVIEW", "rules": ["CRE003", "SPEC001"]}
+{"id": "case_00163", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_00169", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00170", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF005"]}
+{"id": "case_00171", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_00173", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00174", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00176", "verdict": "REVIEW", "rules": ["PER001"]}
+{"id": "case_00178", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00180", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_00181", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_00182", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00183", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_00184", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00185", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_00187", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_00190", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "PER002"]}
+{"id": "case_00193", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_00195", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_00208", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00209", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_00210", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_00211", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_00213", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00214", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE003", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_00217", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_00220", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00222", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00231", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXF005"]}
+{"id": "case_00242", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SUP004"]}
+{"id": "case_00243", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_00248", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00249", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE003", "OBS001", "PER002"]}
+{"id": "case_00250", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_00252", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CRE003"]}
+{"id": "case_00253", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "OBS001"]}
+{"id": "case_00259", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00263", "verdict": "REVIEW", "rules": ["EXF003", "SPEC001", "SUP004"]}
+{"id": "case_00267", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXE004"]}
+{"id": "case_00269", "verdict": "REVIEW", "rules": ["EXE004", "EXF005"]}
+{"id": "case_00270", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00274", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00275", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_00279", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001"]}
+{"id": "case_00282", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00283", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00285", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00286", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SPEC003"]}
+{"id": "case_00288", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00291", "verdict": "REVIEW", "rules": ["CON011", "CON012", "EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00294", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_00295", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00298", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_00299", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00300", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "OBS001", "PER002", "SUP004"]}
+{"id": "case_00302", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00303", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_00305", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_00311", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00314", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001"]}
+{"id": "case_00315", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00321", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00324", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00325", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00327", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_00328", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_00333", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00336", "verdict": "REVIEW", "rules": ["EXE004", "EXF004"]}
+{"id": "case_00337", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00341", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00342", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "SUP004"]}
+{"id": "case_00343", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001"]}
+{"id": "case_00348", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00354", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_00357", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_00363", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00365", "verdict": "CAUTION", "rules": ["SPEC003"]}
+{"id": "case_00366", "verdict": "REVIEW", "rules": ["EXF003", "SUP004"]}
+{"id": "case_00370", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00373", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_00375", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00376", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_00377", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_00379", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "SUP004"]}
+{"id": "case_00382", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SPEC003"]}
+{"id": "case_00386", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00392", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00394", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00397", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001", "SUP004"]}
+{"id": "case_00398", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_00400", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00405", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_00407", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00409", "verdict": "REVIEW", "rules": ["CON004", "PRV003", "SUP004"]}
+{"id": "case_00411", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00412", "verdict": "CLEAR", "rules": []}
+{"id": "case_00418", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00424", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00433", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011"]}
+{"id": "case_00434", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003"]}
+{"id": "case_00436", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00439", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "INJ005"]}
+{"id": "case_00443", "verdict": "REVIEW", "rules": ["CRE003", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00445", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00448", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_00450", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_00451", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00454", "verdict": "REVIEW", "rules": ["OBS001", "SUP004"]}
+{"id": "case_00457", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_00461", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_00464", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00466", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00471", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00473", "verdict": "CAUTION", "rules": []}
+{"id": "case_00478", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00480", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00481", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "CRE003", "SPEC003", "SUP004"]}
+{"id": "case_00483", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001"]}
+{"id": "case_00484", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00487", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00488", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXF005"]}
+{"id": "case_00491", "verdict": "REVIEW", "rules": ["CON001", "CON004", "MEM001"]}
+{"id": "case_00496", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00497", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00498", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE003", "INJ004"]}
+{"id": "case_00502", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00503", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00505", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_00506", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_00508", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_00511", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00515", "verdict": "REVIEW", "rules": ["CRE003"]}
+{"id": "case_00516", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00517", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00520", "verdict": "CAUTION", "rules": []}
+{"id": "case_00521", "verdict": "REVIEW", "rules": ["OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00523", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_00525", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_00526", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "SUP004"]}
+{"id": "case_00528", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00534", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00537", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00538", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00540", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "SUP004"]}
+{"id": "case_00541", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_00543", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00544", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00551", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00555", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_00556", "verdict": "CAUTION", "rules": []}
+{"id": "case_00557", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_00564", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_00569", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00572", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_00575", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00576", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00578", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_00579", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00581", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_00583", "verdict": "CAUTION", "rules": []}
+{"id": "case_00586", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00590", "verdict": "CAUTION", "rules": []}
+{"id": "case_00591", "verdict": "REVIEW", "rules": ["EXE003"]}
+{"id": "case_00592", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00597", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00600", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_00601", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_00602", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_00603", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_00606", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00610", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE008", "SPEC003", "SUP004"]}
+{"id": "case_00611", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00613", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_00614", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00616", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_00621", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00625", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00626", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00631", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_00632", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00633", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_00636", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00637", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00641", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "SPEC001"]}
+{"id": "case_00642", "verdict": "REVIEW", "rules": ["OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00644", "verdict": "REVIEW", "rules": ["EXE003", "SPEC001"]}
+{"id": "case_00652", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00656", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00657", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00660", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_00662", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "PRV002", "SUP004"]}
+{"id": "case_00669", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_00672", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00674", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "case_00675", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_00676", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF004"]}
+{"id": "case_00677", "verdict": "CAUTION", "rules": []}
+{"id": "case_00680", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00682", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_00683", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00684", "verdict": "CAUTION", "rules": ["SPEC003"]}
+{"id": "case_00694", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_00698", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00701", "verdict": "REVIEW", "rules": ["CON001", "CON011", "OBS001"]}
+{"id": "case_00706", "verdict": "CLEAR", "rules": []}
+{"id": "case_00707", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00713", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00716", "verdict": "REVIEW", "rules": ["CON001", "EXE008", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_00723", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_00724", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00728", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_00729", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00731", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_00732", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_00736", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00737", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00738", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE006"]}
+{"id": "case_00747", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_00748", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00750", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00752", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_00754", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_00755", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00756", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_00757", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_00758", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXF005", "OBS001", "SUP004"]}
+{"id": "case_00759", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00760", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00768", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00771", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00774", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00778", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_00779", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_00784", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00786", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00789", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON014", "OBS001", "PER001"]}
+{"id": "case_00792", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00799", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00803", "verdict": "CAUTION", "rules": []}
+{"id": "case_00804", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00809", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_00811", "verdict": "REVIEW", "rules": ["EXF003", "SPEC001", "SUP004"]}
+{"id": "case_00813", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXF005", "SUP004"]}
+{"id": "case_00817", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_00819", "verdict": "CAUTION", "rules": []}
+{"id": "case_00820", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "EXE004"]}
+{"id": "case_00822", "verdict": "REVIEW", "rules": ["CON012", "CON014", "EXE004", "OBS001", "SPEC001"]}
+{"id": "case_00825", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_00826", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00831", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00840", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "EXF003", "SUP004"]}
+{"id": "case_00845", "verdict": "REVIEW", "rules": ["EXF005", "OBS001"]}
+{"id": "case_00852", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_00856", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00863", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_00866", "verdict": "ERROR", "rules": []}
+{"id": "case_00869", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00871", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00872", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00884", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_00886", "verdict": "REVIEW", "rules": ["EXF003", "SUP004"]}
+{"id": "case_00887", "verdict": "REVIEW", "rules": ["CON001", "MEM001"]}
+{"id": "case_00891", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_00897", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_00900", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_00905", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00907", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_00909", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00911", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00914", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00921", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "PER001"]}
+{"id": "case_00922", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00924", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_00930", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006"]}
+{"id": "case_00931", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "CRE003", "SUP004"]}
+{"id": "case_00933", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_00944", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_00948", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXF003", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_00949", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "PER001", "SPEC003", "SUP004"]}
+{"id": "case_00950", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_00951", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00952", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_00954", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_00955", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_00958", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SUP004"]}
+{"id": "case_00959", "verdict": "CAUTION", "rules": []}
+{"id": "case_00962", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_00964", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SPEC003", "SUP004"]}
+{"id": "case_00967", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_00970", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00972", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_00974", "verdict": "CAUTION", "rules": ["SPEC003"]}
+{"id": "case_00975", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_00980", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00982", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_00983", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_00985", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_00994", "verdict": "REVIEW", "rules": ["EXF003", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_00995", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_00996", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF004", "OBS001"]}
+{"id": "case_00997", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01005", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_01006", "verdict": "CAUTION", "rules": []}
+{"id": "case_01007", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_01009", "verdict": "CLEAR", "rules": []}
+{"id": "case_01010", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01011", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004"]}
+{"id": "case_01012", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_01014", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01023", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01024", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "MEM001", "SUP004"]}
+{"id": "case_01025", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01028", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_01030", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_01031", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01036", "verdict": "REVIEW", "rules": ["CON001", "CON004"]}
+{"id": "case_01040", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01054", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01055", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01060", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01061", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_01062", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003", "EXE003", "OBS001"]}
+{"id": "case_01065", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_01066", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "EXE006", "OBS001", "SUP004"]}
+{"id": "case_01069", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_01071", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_01074", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01081", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01083", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01085", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01087", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_01096", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01098", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01100", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01101", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "SUP004"]}
+{"id": "case_01102", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CRE003", "OBS001"]}
+{"id": "case_01103", "verdict": "CAUTION", "rules": ["SPEC003"]}
+{"id": "case_01105", "verdict": "REVIEW", "rules": ["CON012", "MEM001", "SPEC001"]}
+{"id": "case_01106", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01107", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "OBS001"]}
+{"id": "case_01109", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01110", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_01111", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01112", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001", "SPEC003"]}
+{"id": "case_01115", "verdict": "REVIEW", "rules": ["EXE003", "EXF004", "OBS001", "PER001"]}
+{"id": "case_01116", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_01117", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01118", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_01119", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "SUP004"]}
+{"id": "case_01120", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01122", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_01123", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01125", "verdict": "REVIEW", "rules": ["CON010", "CON011", "CON012", "EXE004", "SPEC001"]}
+{"id": "case_01129", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SPEC003"]}
+{"id": "case_01130", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01135", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_01137", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01138", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_01142", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_01143", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_01144", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01146", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01148", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_01150", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01151", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01153", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_01154", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001", "SPEC003"]}
+{"id": "case_01155", "verdict": "CAUTION", "rules": []}
+{"id": "case_01156", "verdict": "REVIEW", "rules": ["EXE003", "SPEC001", "SUP004"]}
+{"id": "case_01159", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_01160", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01161", "verdict": "REVIEW", "rules": ["EXF003", "SUP004"]}
+{"id": "case_01162", "verdict": "REVIEW", "rules": ["CON001", "MEM001", "OBS001", "PER002"]}
+{"id": "case_01166", "verdict": "REVIEW", "rules": ["EXF005", "SPEC001"]}
+{"id": "case_01169", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01172", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01173", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003", "SUP004"]}
+{"id": "case_01174", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_01176", "verdict": "REVIEW", "rules": ["CON001", "CON004", "OBS001", "SUP004"]}
+{"id": "case_01180", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXF005", "SUP004"]}
+{"id": "case_01183", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_01189", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "case_01192", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001"]}
+{"id": "case_01200", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_01201", "verdict": "CAUTION", "rules": []}
+{"id": "case_01207", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01208", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "SUP004"]}
+{"id": "case_01210", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_01215", "verdict": "CAUTION", "rules": []}
+{"id": "case_01218", "verdict": "ERROR", "rules": []}
+{"id": "case_01223", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_01225", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01234", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_01239", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01243", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "MEM001", "OBS001"]}
+{"id": "case_01244", "verdict": "REVIEW", "rules": ["CON010", "CON011", "CON012", "EXE004", "SPEC001", "SUP004"]}
+{"id": "case_01245", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01248", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01249", "verdict": "REVIEW", "rules": ["CON010", "CON011", "OBS001", "SPEC001"]}
+{"id": "case_01250", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01253", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001"]}
+{"id": "case_01254", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01260", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_01270", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01272", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01273", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SPEC003"]}
+{"id": "case_01274", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_01279", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01283", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004"]}
+{"id": "case_01284", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_01292", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_01293", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_01294", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01296", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_01300", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_01302", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_01303", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXE004", "PER001"]}
+{"id": "case_01307", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01308", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_01309", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001", "SPEC003"]}
+{"id": "case_01311", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_01314", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE005", "SPEC003"]}
+{"id": "case_01315", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_01317", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_01318", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01321", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01322", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "PRV002"]}
+{"id": "case_01323", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01325", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01329", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_01330", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXF005", "SUP004"]}
+{"id": "case_01331", "verdict": "CAUTION", "rules": []}
+{"id": "case_01333", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01337", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_01339", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_01345", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_01346", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "INJ004", "SUP004"]}
+{"id": "case_01348", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_01350", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "MEM001", "OBS001"]}
+{"id": "case_01353", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP002"]}
+{"id": "case_01354", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001"]}
+{"id": "case_01355", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01356", "verdict": "CAUTION", "rules": []}
+{"id": "case_01358", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001", "SUP004"]}
+{"id": "case_01359", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01362", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_01364", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SPEC003", "SUP004"]}
+{"id": "case_01368", "verdict": "REVIEW", "rules": ["MEM001"]}
+{"id": "case_01370", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "PER002"]}
+{"id": "case_01371", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_01372", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "SPEC001"]}
+{"id": "case_01374", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "CON014", "EXE004", "OBS001", "PER001"]}
+{"id": "case_01375", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_01376", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_01388", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON014", "EXE004", "OBS001"]}
+{"id": "case_01392", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_01397", "verdict": "ERROR", "rules": []}
+{"id": "case_01398", "verdict": "ERROR", "rules": []}
+{"id": "case_01402", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_01407", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01408", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "PRV003", "SPEC001"]}
+{"id": "case_01418", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01421", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SUP004"]}
+{"id": "case_01422", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01427", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01430", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_01431", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_01434", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_01437", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01438", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01441", "verdict": "REVIEW", "rules": ["CON001", "PRV003", "SPEC003", "SUP004"]}
+{"id": "case_01442", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01449", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01454", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE003", "MEM001", "OBS001"]}
+{"id": "case_01456", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01460", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_01462", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01466", "verdict": "REVIEW", "rules": ["EXE003"]}
+{"id": "case_01467", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_01474", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01476", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SPEC003", "SUP004"]}
+{"id": "case_01477", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_01482", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01483", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01485", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011"]}
+{"id": "case_01492", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01497", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "OBS001"]}
+{"id": "case_01499", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01501", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01503", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "MEM001"]}
+{"id": "case_01504", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01505", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01506", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004", "OBS001"]}
+{"id": "case_01507", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_01515", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011"]}
+{"id": "case_01516", "verdict": "REVIEW", "rules": ["CON001", "CON011"]}
+{"id": "case_01518", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01519", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_01523", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "SUP004"]}
+{"id": "case_01525", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "MEM001", "OBS001"]}
+{"id": "case_01527", "verdict": "REVIEW", "rules": ["CRE003", "OBS001", "PER001", "SPEC001"]}
+{"id": "case_01530", "verdict": "REVIEW", "rules": ["EXE004", "PRV003", "SPEC001"]}
+{"id": "case_01531", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01532", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE006"]}
+{"id": "case_01534", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01535", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_01539", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01542", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01543", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_01544", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_01545", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_01546", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012"]}
+{"id": "case_01552", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_01555", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "case_01560", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01565", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_01567", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01569", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01571", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01573", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXF003", "SUP004"]}
+{"id": "case_01574", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_01577", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01578", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_01584", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001"]}
+{"id": "case_01590", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_01594", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_01595", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01596", "verdict": "REVIEW", "rules": ["CON001", "INJ004", "SUP004"]}
+{"id": "case_01597", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "SPEC001", "SUP004"]}
+{"id": "case_01598", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_01599", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004", "EXE008", "SUP004"]}
+{"id": "case_01601", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_01602", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01606", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_01607", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_01609", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "OBS001", "SUP004"]}
+{"id": "case_01612", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01613", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "EXF004"]}
+{"id": "case_01615", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "INJ004", "OBS001", "SPEC003"]}
+{"id": "case_01622", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "PER001"]}
+{"id": "case_01623", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_01624", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01626", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_01627", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_01629", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_01632", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01636", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CRE003"]}
+{"id": "case_01640", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01643", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01645", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_01648", "verdict": "CAUTION", "rules": []}
+{"id": "case_01649", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_01651", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_01653", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01656", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01657", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01659", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_01661", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_01663", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01667", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_01672", "verdict": "REVIEW", "rules": ["CON001", "CON011", "OBS001"]}
+{"id": "case_01675", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01676", "verdict": "ERROR", "rules": []}
+{"id": "case_01684", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_01690", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_01691", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_01695", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_01696", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_01699", "verdict": "CAUTION", "rules": []}
+{"id": "case_01701", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01702", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_01705", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_01709", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "OBS001", "SUP004"]}
+{"id": "case_01710", "verdict": "REVIEW", "rules": ["EXF005", "OBS001"]}
+{"id": "case_01714", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01717", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01719", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_01721", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_01727", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "PRV003", "SPEC003", "SUP004"]}
+{"id": "case_01728", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "SPEC003"]}
+{"id": "case_01730", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_01731", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_01733", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01736", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_01738", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_01739", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "SPEC003"]}
+{"id": "case_01745", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_01746", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001"]}
+{"id": "case_01748", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF005", "OBS001", "SUP004"]}
+{"id": "case_01750", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01752", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01754", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "SUP004"]}
+{"id": "case_01755", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_01759", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SPEC003"]}
+{"id": "case_01760", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_01762", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01768", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01770", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_01771", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01773", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01775", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_01780", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01783", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01784", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "CON014", "EXE003", "MEM001", "OBS001", "SUP004"]}
+{"id": "case_01785", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01786", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004", "SUP004"]}
+{"id": "case_01787", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "SUP004"]}
+{"id": "case_01788", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01793", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_01795", "verdict": "REVIEW", "rules": ["EXF003", "SPEC001", "SUP004"]}
+{"id": "case_01807", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_01809", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01812", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01813", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_01814", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01816", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_01819", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_01820", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01821", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "SUP004"]}
+{"id": "case_01823", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXE003", "MEM001", "OBS001"]}
+{"id": "case_01825", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_01833", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_01836", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_01841", "verdict": "REVIEW", "rules": ["CRE003", "PER001"]}
+{"id": "case_01846", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_01847", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01854", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01855", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01860", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_01867", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01872", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01873", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001"]}
+{"id": "case_01875", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_01876", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "case_01877", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_01879", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01882", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01883", "verdict": "CAUTION", "rules": ["SPEC003"]}
+{"id": "case_01888", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "MEM001"]}
+{"id": "case_01895", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004"]}
+{"id": "case_01896", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_01897", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01907", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_01913", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_01916", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01919", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01920", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01922", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_01924", "verdict": "REVIEW", "rules": ["EXE003", "EXE005", "SPEC003"]}
+{"id": "case_01925", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXE004", "PER001"]}
+{"id": "case_01931", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01932", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_01934", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01935", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01936", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_01941", "verdict": "REVIEW", "rules": ["CON012", "CON014", "EXE004", "MEM001", "OBS001", "PER001", "SPEC001"]}
+{"id": "case_01942", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "OBS001"]}
+{"id": "case_01946", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_01959", "verdict": "REVIEW", "rules": ["EXF003", "SUP004"]}
+{"id": "case_01965", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_01966", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE005"]}
+{"id": "case_01968", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_01969", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "SUP004"]}
+{"id": "case_01971", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_01975", "verdict": "REVIEW", "rules": ["EXE004", "EXE005", "MEM001", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_01976", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_01977", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_01979", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_01980", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001"]}
+{"id": "case_01983", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01986", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_01989", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_01990", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_01992", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_01995", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_01999", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02000", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02003", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_02004", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02006", "verdict": "CAUTION", "rules": []}
+{"id": "case_02007", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02008", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004", "EXE005", "INJ004", "OBS001"]}
+{"id": "case_02013", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02020", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02023", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXF003", "MEM001", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_02030", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02031", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02032", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SUP004"]}
+{"id": "case_02033", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_02035", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_02036", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02043", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02045", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXF004", "OBS001", "SPEC003"]}
+{"id": "case_02049", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02050", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02051", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02052", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_02054", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02060", "verdict": "CAUTION", "rules": []}
+{"id": "case_02065", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001"]}
+{"id": "case_02068", "verdict": "REVIEW", "rules": ["CON001", "CON011"]}
+{"id": "case_02069", "verdict": "REVIEW", "rules": ["CON014", "EXE004", "MEM001"]}
+{"id": "case_02070", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011"]}
+{"id": "case_02076", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_02077", "verdict": "REVIEW", "rules": ["CON001", "PRV003", "SUP004"]}
+{"id": "case_02079", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02080", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SUP004"]}
+{"id": "case_02081", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_02082", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02084", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_02086", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02087", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_02090", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02092", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_02093", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_02094", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_02096", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "INJ004", "OBS001", "PRV002", "SUP004"]}
+{"id": "case_02097", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02099", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02101", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02111", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_02112", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SPEC003"]}
+{"id": "case_02114", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02118", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC003"]}
+{"id": "case_02119", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_02120", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02121", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02124", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_02125", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "EXF006"]}
+{"id": "case_02126", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02127", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02128", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "OBS001", "SPEC003"]}
+{"id": "case_02130", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_02131", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_02134", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02135", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02136", "verdict": "CAUTION", "rules": ["SPEC003"]}
+{"id": "case_02138", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02142", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02143", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02145", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02147", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_02149", "verdict": "CAUTION", "rules": []}
+{"id": "case_02150", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_02154", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02162", "verdict": "REVIEW", "rules": ["CRE002", "MEM001", "SPEC001"]}
+{"id": "case_02163", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02167", "verdict": "REVIEW", "rules": ["EXF005", "OBS001"]}
+{"id": "case_02171", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02172", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003", "PRV003"]}
+{"id": "case_02174", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_02175", "verdict": "REVIEW", "rules": ["CON011", "CON012", "EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_02180", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_02183", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_02184", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "CRE003", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02185", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_02188", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02203", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02208", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "PRV002", "SUP004"]}
+{"id": "case_02209", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02215", "verdict": "REVIEW", "rules": ["EXF003", "MEM001", "PRV003", "SPEC001", "SUP004"]}
+{"id": "case_02218", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SPEC003"]}
+{"id": "case_02219", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02220", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02221", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CRE003", "OBS001"]}
+{"id": "case_02223", "verdict": "REVIEW", "rules": ["CON001", "CON004", "PRV003", "SPEC003", "SUP004"]}
+{"id": "case_02225", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "SPEC001"]}
+{"id": "case_02226", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02227", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_02235", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02236", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02238", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02240", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02241", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "PER001"]}
+{"id": "case_02242", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02243", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_02247", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02256", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "SUP004"]}
+{"id": "case_02259", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_02262", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02263", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_02271", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_02273", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02274", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02275", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02278", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_02279", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "MEM001"]}
+{"id": "case_02281", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02287", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE008", "OBS001"]}
+{"id": "case_02288", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02292", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_02297", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_02299", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004", "OBS001"]}
+{"id": "case_02303", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "SPEC001", "SUP004"]}
+{"id": "case_02304", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02309", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_02310", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02311", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02313", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "EXF003", "SUP004"]}
+{"id": "case_02317", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02318", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_02320", "verdict": "CAUTION", "rules": []}
+{"id": "case_02321", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02323", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02324", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_02328", "verdict": "REVIEW", "rules": ["CON001", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_02331", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_02332", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "EXE004", "EXE006", "OBS001"]}
+{"id": "case_02334", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02337", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "SUP004"]}
+{"id": "case_02338", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "SUP004"]}
+{"id": "case_02340", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02341", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02344", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02345", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_02346", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02350", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_02354", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02356", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "OBS001"]}
+{"id": "case_02358", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_02359", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF005"]}
+{"id": "case_02364", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02365", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_02368", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_02370", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_02371", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02373", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_02376", "verdict": "REVIEW", "rules": ["CON001", "CON004"]}
+{"id": "case_02379", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02380", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02382", "verdict": "REVIEW", "rules": ["EXF003", "SPEC001", "SUP004"]}
+{"id": "case_02386", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "PER001"]}
+{"id": "case_02387", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_02389", "verdict": "REVIEW", "rules": ["CON001", "CON012", "SUP004"]}
+{"id": "case_02390", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02392", "verdict": "CAUTION", "rules": []}
+{"id": "case_02394", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_02397", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_02398", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_02412", "verdict": "REVIEW", "rules": ["MEM001"]}
+{"id": "case_02418", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02422", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02426", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_02428", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02432", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003"]}
+{"id": "case_02437", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_02445", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02446", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02447", "verdict": "REVIEW", "rules": ["CRE003", "OBS001"]}
+{"id": "case_02448", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02449", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02451", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_02452", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_02453", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_02456", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02457", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02459", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02460", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_02461", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_02463", "verdict": "CAUTION", "rules": []}
+{"id": "case_02467", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02470", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "OBS001"]}
+{"id": "case_02474", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_02475", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02476", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02480", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02481", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_02486", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001"]}
+{"id": "case_02488", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02489", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_02492", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_02493", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_02495", "verdict": "CLEAR", "rules": ["SPEC003"]}
+{"id": "case_02505", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "SPEC001"]}
+{"id": "case_02507", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_02509", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "SPEC003", "SUP004"]}
+{"id": "case_02511", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_02512", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02514", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_02515", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02517", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_02528", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001", "SUP004"]}
+{"id": "case_02535", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02536", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_02538", "verdict": "REVIEW", "rules": ["CON012", "EXE004"]}
+{"id": "case_02540", "verdict": "REVIEW", "rules": ["CON004", "EXE004"]}
+{"id": "case_02541", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_02545", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02549", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_02551", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_02552", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02553", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003", "SUP004"]}
+{"id": "case_02557", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02558", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02560", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "SPEC003"]}
+{"id": "case_02564", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02570", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_02573", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_02574", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_02577", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_02579", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02584", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_02585", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02586", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_02589", "verdict": "REVIEW", "rules": ["CON001", "CON011", "OBS001"]}
+{"id": "case_02595", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001"]}
+{"id": "case_02598", "verdict": "REVIEW", "rules": ["EXE004", "MEM001", "OBS001"]}
+{"id": "case_02604", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_02607", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02613", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_02619", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_02620", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02621", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02624", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_02627", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02628", "verdict": "REVIEW", "rules": ["CRE002", "EXE004", "OBS001", "SPEC001"]}
+{"id": "case_02629", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02630", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02631", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_02633", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02634", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_02637", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02638", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02639", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_02644", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02647", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004", "OBS001"]}
+{"id": "case_02648", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02653", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02654", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02658", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02660", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02664", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_02666", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02668", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02669", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_02673", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_02675", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE003", "PER001"]}
+{"id": "case_02678", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_02679", "verdict": "CAUTION", "rules": []}
+{"id": "case_02684", "verdict": "REVIEW", "rules": ["CON001", "SPEC003", "SUP004"]}
+{"id": "case_02686", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXF004", "SPEC003"]}
+{"id": "case_02688", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_02692", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "EXF004", "SPEC003", "SUP004"]}
+{"id": "case_02695", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02699", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02700", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02702", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02703", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_02714", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02715", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXE004"]}
+{"id": "case_02716", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_02719", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02720", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_02721", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PER002"]}
+{"id": "case_02723", "verdict": "ERROR", "rules": []}
+{"id": "case_02724", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_02729", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "EXE004", "SUP004"]}
+{"id": "case_02731", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "SUP004"]}
+{"id": "case_02734", "verdict": "REVIEW", "rules": ["EXE003", "EXE004", "SPEC001"]}
+{"id": "case_02738", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02739", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02744", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON014", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_02747", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_02749", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02752", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_02760", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02763", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02764", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001", "PER001", "SUP004"]}
+{"id": "case_02765", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02768", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02769", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_02770", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02771", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_02774", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_02776", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_02777", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001"]}
+{"id": "case_02778", "verdict": "REVIEW", "rules": ["CON001", "CON004"]}
+{"id": "case_02784", "verdict": "REVIEW", "rules": ["EXE004", "EXF005"]}
+{"id": "case_02788", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "SUP004"]}
+{"id": "case_02792", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02795", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02799", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02805", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02808", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_02812", "verdict": "REVIEW", "rules": ["CRE003"]}
+{"id": "case_02813", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_02815", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004"]}
+{"id": "case_02816", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02822", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02827", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "SUP004"]}
+{"id": "case_02835", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_02836", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_02837", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02843", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "SUP004"]}
+{"id": "case_02846", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_02848", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_02850", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_02852", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001", "SUP004"]}
+{"id": "case_02854", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_02862", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_02867", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02873", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_02875", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_02876", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_02877", "verdict": "REVIEW", "rules": ["OBS001", "SPEC001"]}
+{"id": "case_02887", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02889", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SPEC003"]}
+{"id": "case_02894", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02896", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_02903", "verdict": "CAUTION", "rules": []}
+{"id": "case_02905", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_02906", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02909", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004"]}
+{"id": "case_02910", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02912", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02913", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_02914", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_02922", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02926", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02929", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003"]}
+{"id": "case_02932", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_02933", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_02935", "verdict": "REVIEW", "rules": ["EXE003", "SPEC001"]}
+{"id": "case_02939", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_02946", "verdict": "CLEAR", "rules": []}
+{"id": "case_02956", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02959", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE003", "MEM001", "OBS001"]}
+{"id": "case_02960", "verdict": "REVIEW", "rules": ["CON001", "CON004", "MEM001", "SPEC003", "SUP004"]}
+{"id": "case_02961", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_02966", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004", "EXE008", "SUP004"]}
+{"id": "case_02967", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02969", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "SPEC003"]}
+{"id": "case_02971", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_02972", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_02974", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "SPEC001"]}
+{"id": "case_02976", "verdict": "REVIEW", "rules": ["CRE003", "OBS001", "PER001"]}
+{"id": "case_02979", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_02982", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_02987", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_02990", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_02995", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_02996", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004", "OBS001", "SUP004"]}
+{"id": "case_03001", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_03003", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03006", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "OBS001", "SUP002"]}
+{"id": "case_03009", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_03011", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "SPEC001"]}
+{"id": "case_03018", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_03019", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_03023", "verdict": "REVIEW", "rules": ["CON001", "EXF004"]}
+{"id": "case_03024", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_03025", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_03026", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03027", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_03028", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03030", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE003", "PRV003", "SUP004"]}
+{"id": "case_03033", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03034", "verdict": "CAUTION", "rules": []}
+{"id": "case_03037", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03041", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03046", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_03051", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03052", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_03054", "verdict": "CAUTION", "rules": []}
+{"id": "case_03057", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001", "PER001"]}
+{"id": "case_03059", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03060", "verdict": "CAUTION", "rules": []}
+{"id": "case_03061", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_03063", "verdict": "CAUTION", "rules": []}
+{"id": "case_03064", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004"]}
+{"id": "case_03065", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_03072", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03073", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_03078", "verdict": "REVIEW", "rules": ["CON014", "EXE004", "MEM001", "OBS001", "SPEC001"]}
+{"id": "case_03080", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_03086", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03091", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03093", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_03094", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_03096", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_03097", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_03098", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03101", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_03102", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_03106", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03107", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03111", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03113", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "EXE005"]}
+{"id": "case_03116", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_03119", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_03120", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_03121", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03124", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03125", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE003"]}
+{"id": "case_03128", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_03132", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_03133", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03134", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "MEM001", "SUP004"]}
+{"id": "case_03138", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03139", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_03141", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_03143", "verdict": "CAUTION", "rules": []}
+{"id": "case_03144", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03146", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_03147", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004"]}
+{"id": "case_03148", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03149", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03156", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03157", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03160", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_03163", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "CON012", "CRE003", "EXE004"]}
+{"id": "case_03164", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003", "EXE004"]}
+{"id": "case_03166", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_03171", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_03174", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03176", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03177", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03180", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "MEM001"]}
+{"id": "case_03183", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03184", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03198", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03203", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_03207", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_03210", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXF003", "SUP004"]}
+{"id": "case_03211", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_03213", "verdict": "REVIEW", "rules": ["EXE003", "INJ004"]}
+{"id": "case_03214", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_03215", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03216", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001", "SPEC001"]}
+{"id": "case_03217", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_03221", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_03227", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03228", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_03231", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03233", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003", "OBS001"]}
+{"id": "case_03234", "verdict": "REVIEW", "rules": ["CON001", "EXF004", "SUP004"]}
+{"id": "case_03235", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_03236", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "case_03240", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03241", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_03247", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001"]}
+{"id": "case_03250", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003"]}
+{"id": "case_03252", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_03258", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_03259", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_03260", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_03266", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03268", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_03271", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SPEC003"]}
+{"id": "case_03274", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_03276", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03280", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006"]}
+{"id": "case_03281", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03283", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03287", "verdict": "CAUTION", "rules": []}
+{"id": "case_03288", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03289", "verdict": "ERROR", "rules": []}
+{"id": "case_03290", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "PER001", "SPEC003", "SUP004"]}
+{"id": "case_03291", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03293", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03295", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_03297", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_03302", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "OBS001"]}
+{"id": "case_03304", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "SUP004"]}
+{"id": "case_03307", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03310", "verdict": "REVIEW", "rules": ["CON010", "CON011", "CON012", "EXE004", "SPEC001", "SUP004"]}
+{"id": "case_03313", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_03314", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE003", "SUP004"]}
+{"id": "case_03315", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_03316", "verdict": "REVIEW", "rules": ["EXE004", "MEM001"]}
+{"id": "case_03318", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03328", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03329", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_03330", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03331", "verdict": "REVIEW", "rules": ["EXF005", "SPEC001"]}
+{"id": "case_03333", "verdict": "ERROR", "rules": []}
+{"id": "case_03334", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_03337", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03342", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03344", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03346", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_03348", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03349", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_03354", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03355", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "SPEC003", "SUP004"]}
+{"id": "case_03356", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_03358", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "CRE003"]}
+{"id": "case_03360", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_03361", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_03363", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03364", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03365", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03367", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_03370", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE003"]}
+{"id": "case_03371", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004", "OBS001", "SUP004"]}
+{"id": "case_03372", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03373", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03378", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03381", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03382", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "case_03384", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_03389", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_03390", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_03391", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "SPEC003"]}
+{"id": "case_03394", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03397", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_03399", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_03400", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03401", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_03402", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03405", "verdict": "REVIEW", "rules": ["CRE003"]}
+{"id": "case_03406", "verdict": "CAUTION", "rules": []}
+{"id": "case_03408", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_03411", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_03414", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03415", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_03421", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_03430", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03432", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03434", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_03436", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_03441", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "OBS001"]}
+{"id": "case_03445", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_03448", "verdict": "REVIEW", "rules": ["CON001", "CON012", "SUP004"]}
+{"id": "case_03455", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_03457", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_03462", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03472", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "SPEC003"]}
+{"id": "case_03475", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03478", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "case_03479", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011"]}
+{"id": "case_03486", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03487", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03488", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_03491", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03493", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03494", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03497", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03498", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SPEC003", "SUP004"]}
+{"id": "case_03503", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE008", "SPEC003"]}
+{"id": "case_03509", "verdict": "REVIEW", "rules": ["CON014", "EXF003", "MEM001", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_03510", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03511", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03512", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03517", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_03519", "verdict": "REVIEW", "rules": ["CON001", "CRE002", "EXE004", "EXF004", "OBS001"]}
+{"id": "case_03521", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03523", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03526", "verdict": "REVIEW", "rules": ["CON001", "INJ004", "SUP004"]}
+{"id": "case_03528", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SPEC003", "SUP004"]}
+{"id": "case_03533", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "case_03534", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE006", "MEM001"]}
+{"id": "case_03543", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "SUP004"]}
+{"id": "case_03546", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_03547", "verdict": "REVIEW", "rules": ["CON001", "CON004", "OBS001", "SUP004"]}
+{"id": "case_03548", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_03556", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_03559", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03562", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF004", "OBS001"]}
+{"id": "case_03567", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_03571", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03575", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_03576", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SPEC003", "SUP004"]}
+{"id": "case_03579", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_03580", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CRE003", "MEM001"]}
+{"id": "case_03581", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001", "SUP004"]}
+{"id": "case_03582", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_03583", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03585", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03589", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03592", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "PER001", "SPEC003", "SUP004"]}
+{"id": "case_03593", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03594", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_03595", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03597", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03600", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_03603", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_03608", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03609", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_03611", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001"]}
+{"id": "case_03612", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03616", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001", "SUP004"]}
+{"id": "case_03618", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "PRV002", "SUP004"]}
+{"id": "case_03620", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_03622", "verdict": "REVIEW", "rules": ["CON001", "CON012", "SUP004"]}
+{"id": "case_03625", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_03626", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "SUP004"]}
+{"id": "case_03629", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE003"]}
+{"id": "case_03630", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_03633", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03634", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03635", "verdict": "REVIEW", "rules": ["MEM001", "SPEC001"]}
+{"id": "case_03636", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_03637", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "PER001"]}
+{"id": "case_03641", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_03642", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03644", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_03647", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_03651", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03652", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03653", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "EXF004"]}
+{"id": "case_03654", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03658", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03659", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03660", "verdict": "REVIEW", "rules": ["EXE003", "EXF004", "OBS001"]}
+{"id": "case_03662", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03669", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03673", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_03674", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03679", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_03684", "verdict": "REVIEW", "rules": ["EXF004", "OBS001"]}
+{"id": "case_03685", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_03688", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03689", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03691", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03692", "verdict": "CAUTION", "rules": []}
+{"id": "case_03694", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_03697", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03701", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXE004", "OBS001"]}
+{"id": "case_03702", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_03709", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03712", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_03714", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXE003", "MEM001", "OBS001"]}
+{"id": "case_03717", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_03718", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03722", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03723", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03725", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE003", "OBS001"]}
+{"id": "case_03726", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_03728", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_03732", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_03733", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "SUP004"]}
+{"id": "case_03734", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03740", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "PER001"]}
+{"id": "case_03744", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "SUP004"]}
+{"id": "case_03750", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03751", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03753", "verdict": "REVIEW", "rules": ["CON001", "CON004"]}
+{"id": "case_03757", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE005", "SPEC003"]}
+{"id": "case_03758", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE006", "OBS001"]}
+{"id": "case_03763", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03764", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_03768", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_03772", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03774", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "PRV002"]}
+{"id": "case_03775", "verdict": "CAUTION", "rules": []}
+{"id": "case_03779", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_03780", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_03782", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_03788", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_03790", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "SUP004"]}
+{"id": "case_03793", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03799", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_03801", "verdict": "REVIEW", "rules": ["EXE003", "EXE004", "SPEC001"]}
+{"id": "case_03802", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_03803", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03804", "verdict": "CAUTION", "rules": []}
+{"id": "case_03810", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF005", "SUP004"]}
+{"id": "case_03811", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03814", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_03816", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03818", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_03822", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03826", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001"]}
+{"id": "case_03829", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_03830", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "SUP004"]}
+{"id": "case_03832", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_03836", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03837", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_03840", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_03841", "verdict": "CAUTION", "rules": []}
+{"id": "case_03842", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001", "SUP004"]}
+{"id": "case_03844", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "SUP004"]}
+{"id": "case_03849", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03852", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03854", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_03855", "verdict": "REVIEW", "rules": ["EXF003", "OBS001", "SUP004"]}
+{"id": "case_03858", "verdict": "REVIEW", "rules": ["CON014", "EXE003", "OBS001"]}
+{"id": "case_03861", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_03862", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_03869", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "SUP004"]}
+{"id": "case_03871", "verdict": "REVIEW", "rules": ["EXE008", "OBS001"]}
+{"id": "case_03874", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03875", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_03877", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_03878", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "SPEC003"]}
+{"id": "case_03883", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_03886", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "SPEC001", "SUP004"]}
+{"id": "case_03887", "verdict": "CAUTION", "rules": []}
+{"id": "case_03889", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SUP004"]}
+{"id": "case_03890", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_03896", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_03897", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SUP004"]}
+{"id": "case_03901", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03904", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_03912", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_03913", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE005", "SPEC003"]}
+{"id": "case_03915", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_03923", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_03926", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "PER001"]}
+{"id": "case_03929", "verdict": "REVIEW", "rules": ["CON001", "CON004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_03931", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_03932", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_03933", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03935", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001"]}
+{"id": "case_03936", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CRE003", "PER001", "SUP004"]}
+{"id": "case_03941", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_03945", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_03947", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE008", "SPEC003"]}
+{"id": "case_03952", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_03962", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_03971", "verdict": "REVIEW", "rules": ["CON001", "CON004", "OBS001", "SUP004"]}
+{"id": "case_03976", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_03978", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_03980", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_03986", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "case_03996", "verdict": "CAUTION", "rules": []}
+{"id": "case_04005", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_04007", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "CRE003", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04009", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXF005"]}
+{"id": "case_04010", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04012", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "EXE004", "SUP004"]}
+{"id": "case_04019", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04023", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04027", "verdict": "REVIEW", "rules": ["CON001", "EXE008", "SUP004"]}
+{"id": "case_04028", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006"]}
+{"id": "case_04029", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_04030", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04031", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON014", "CRE003", "MEM001"]}
+{"id": "case_04032", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04046", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "SUP004"]}
+{"id": "case_04048", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_04052", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04062", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_04065", "verdict": "REVIEW", "rules": ["CON010", "CON011", "CON012", "EXE004", "SPEC001", "SUP004"]}
+{"id": "case_04066", "verdict": "REVIEW", "rules": ["OBS001", "SPEC003"]}
+{"id": "case_04068", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04077", "verdict": "REVIEW", "rules": ["MEM001"]}
+{"id": "case_04079", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_04081", "verdict": "REVIEW", "rules": ["CON001", "EXF004", "PER001"]}
+{"id": "case_04082", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_04083", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04086", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04087", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004"]}
+{"id": "case_04093", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE008", "SUP004"]}
+{"id": "case_04098", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04101", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF005", "OBS001", "SUP004"]}
+{"id": "case_04105", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_04117", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04119", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04121", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "SPEC003"]}
+{"id": "case_04122", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE008", "OBS001"]}
+{"id": "case_04123", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04124", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "case_04125", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_04126", "verdict": "REVIEW", "rules": ["EXF005", "OBS001"]}
+{"id": "case_04130", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04136", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_04137", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003", "SUP004"]}
+{"id": "case_04139", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04141", "verdict": "REVIEW", "rules": ["CON001", "CON012"]}
+{"id": "case_04142", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001", "PER001"]}
+{"id": "case_04151", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04154", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04157", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXE004"]}
+{"id": "case_04158", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04160", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_04165", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04168", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04169", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF005"]}
+{"id": "case_04172", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04173", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04174", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04175", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04181", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04183", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04191", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_04194", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04199", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04205", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_04206", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04210", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON014", "CRE003", "PER001"]}
+{"id": "case_04212", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04214", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04216", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_04219", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE005", "SPEC003"]}
+{"id": "case_04223", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004"]}
+{"id": "case_04228", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE006"]}
+{"id": "case_04229", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_04238", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04241", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04243", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04247", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04250", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04251", "verdict": "CAUTION", "rules": []}
+{"id": "case_04253", "verdict": "REVIEW", "rules": ["EXF005", "OBS001"]}
+{"id": "case_04257", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_04258", "verdict": "REVIEW", "rules": ["CON012", "EXF003", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_04260", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_04261", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_04265", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_04269", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04272", "verdict": "REVIEW", "rules": ["CON012", "EXE003", "EXE004", "EXE006", "SPEC001"]}
+{"id": "case_04273", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04274", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04279", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_04283", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04284", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_04287", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04289", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04296", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_04299", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04307", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04308", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04310", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_04312", "verdict": "REVIEW", "rules": ["EXE004", "EXF004", "OBS001"]}
+{"id": "case_04314", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04316", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04319", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04320", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "PRV002"]}
+{"id": "case_04321", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04324", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04331", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04333", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_04334", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE008", "EXF004", "SPEC003", "SUP004"]}
+{"id": "case_04335", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_04337", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04338", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04339", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04345", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_04347", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04348", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_04352", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04355", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04358", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001"]}
+{"id": "case_04361", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04363", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04364", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "PER001"]}
+{"id": "case_04372", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04373", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04374", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "SPEC003"]}
+{"id": "case_04375", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "SUP004"]}
+{"id": "case_04380", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "EXF004"]}
+{"id": "case_04383", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04385", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SPEC003"]}
+{"id": "case_04386", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04387", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_04389", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "OBS001"]}
+{"id": "case_04390", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04391", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXE004"]}
+{"id": "case_04393", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE006", "OBS001"]}
+{"id": "case_04399", "verdict": "REVIEW", "rules": ["CON001", "EXF005"]}
+{"id": "case_04402", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_04404", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXF003", "SUP004"]}
+{"id": "case_04405", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04406", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXF003", "SUP004"]}
+{"id": "case_04408", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04410", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001"]}
+{"id": "case_04411", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_04418", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_04419", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04422", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04425", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "OBS001", "SPEC001"]}
+{"id": "case_04428", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SPEC003", "SUP004"]}
+{"id": "case_04435", "verdict": "REVIEW", "rules": ["CON001", "EXE008", "EXF005", "SUP004"]}
+{"id": "case_04438", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001"]}
+{"id": "case_04443", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04446", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "EXE008", "OBS001", "SUP004"]}
+{"id": "case_04447", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF003", "SUP004"]}
+{"id": "case_04448", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_04455", "verdict": "ERROR", "rules": []}
+{"id": "case_04456", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04458", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04460", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04461", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_04465", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04467", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "PRV002"]}
+{"id": "case_04468", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_04470", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CRE003"]}
+{"id": "case_04475", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_04476", "verdict": "REVIEW", "rules": ["OBS001", "SUP004"]}
+{"id": "case_04479", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON014", "EXF005"]}
+{"id": "case_04481", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_04483", "verdict": "REVIEW", "rules": ["CON001", "CON004", "OBS001", "SUP004"]}
+{"id": "case_04486", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_04487", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_04490", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04495", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004"]}
+{"id": "case_04501", "verdict": "REVIEW", "rules": ["EXE003", "SPEC001", "SUP004"]}
+{"id": "case_04502", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_04504", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04508", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_04511", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04512", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF005"]}
+{"id": "case_04515", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04521", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04525", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04526", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04527", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04529", "verdict": "REVIEW", "rules": ["CON001", "CON014", "INJ004", "MEM001", "OBS001"]}
+{"id": "case_04534", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_04535", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04538", "verdict": "REVIEW", "rules": ["EXF005", "OBS001"]}
+{"id": "case_04548", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04549", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003"]}
+{"id": "case_04554", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SPEC003"]}
+{"id": "case_04557", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004"]}
+{"id": "case_04559", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04560", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CRE003"]}
+{"id": "case_04562", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_04563", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04567", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04568", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_04574", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04575", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_04576", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXF004", "OBS001", "SUP004"]}
+{"id": "case_04577", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04578", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_04580", "verdict": "CAUTION", "rules": []}
+{"id": "case_04587", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_04588", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04589", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04595", "verdict": "REVIEW", "rules": ["CRE003", "OBS001", "PER001"]}
+{"id": "case_04610", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04611", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04614", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04616", "verdict": "REVIEW", "rules": ["MEM001", "SPEC001"]}
+{"id": "case_04620", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04622", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_04623", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04627", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04631", "verdict": "REVIEW", "rules": ["CON001", "MEM001", "SUP004"]}
+{"id": "case_04633", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF005", "OBS001"]}
+{"id": "case_04636", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "PRV002", "SUP004"]}
+{"id": "case_04637", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04639", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04640", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_04641", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04643", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_04644", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_04651", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_04652", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_04658", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_04660", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04661", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_04664", "verdict": "REVIEW", "rules": ["SUP004"]}
+{"id": "case_04670", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "OBS001"]}
+{"id": "case_04673", "verdict": "REVIEW", "rules": ["EXF003", "SUP004"]}
+{"id": "case_04676", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04682", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_04683", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_04687", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_04690", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SPEC003", "SUP004"]}
+{"id": "case_04694", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001"]}
+{"id": "case_04695", "verdict": "REVIEW", "rules": ["CON001", "CON004", "OBS001", "PER001", "PRV003", "SUP004"]}
+{"id": "case_04701", "verdict": "REVIEW", "rules": ["CON001", "EXF005", "OBS001"]}
+{"id": "case_04702", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04704", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_04705", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04706", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_04709", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_04711", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON011", "CON012", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_04713", "verdict": "REVIEW", "rules": ["CON001", "CON014", "MEM001", "OBS001"]}
+{"id": "case_04718", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04720", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "SPEC001"]}
+{"id": "case_04730", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON010", "CON011", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04732", "verdict": "REVIEW", "rules": ["EXF003", "OBS001", "SPEC001", "SUP004"]}
+{"id": "case_04735", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004"]}
+{"id": "case_04736", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_04737", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_04738", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04739", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04744", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04748", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_04753", "verdict": "CAUTION", "rules": []}
+{"id": "case_04754", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_04759", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04769", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04771", "verdict": "REVIEW", "rules": ["OBS001", "SPEC003"]}
+{"id": "case_04772", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04773", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04776", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "SUP004"]}
+{"id": "case_04778", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_04779", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04780", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_04781", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04782", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04783", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004"]}
+{"id": "case_04784", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04787", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_04792", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "EXF006", "OBS001"]}
+{"id": "case_04795", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04798", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04800", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04802", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "SUP004"]}
+{"id": "case_04804", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04805", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_04806", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04807", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04809", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_04810", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04816", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04819", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_04821", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_04826", "verdict": "REVIEW", "rules": ["EXF005", "SPEC001", "SUP004"]}
+{"id": "case_04827", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04828", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_04830", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "EXF005", "OBS001", "SUP004"]}
+{"id": "case_04838", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04839", "verdict": "REVIEW", "rules": ["CON001", "CON012", "CON014", "EXE003", "MEM001"]}
+{"id": "case_04840", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_04842", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_04844", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04848", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_04849", "verdict": "CAUTION", "rules": []}
+{"id": "case_04850", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04851", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04852", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_04855", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04857", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04864", "verdict": "REVIEW", "rules": ["CON012", "CON014", "CRE003", "MEM001", "OBS001", "PER001", "SPEC001"]}
+{"id": "case_04872", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04873", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04877", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003"]}
+{"id": "case_04883", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04884", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04885", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_04888", "verdict": "REVIEW", "rules": ["EXE003"]}
+{"id": "case_04890", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001", "SUP004"]}
+{"id": "case_04891", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04892", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_04893", "verdict": "CAUTION", "rules": []}
+{"id": "case_04897", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04899", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04901", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "OBS001", "PER002"]}
+{"id": "case_04902", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "PER001"]}
+{"id": "case_04908", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_04909", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04917", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE008", "EXF004"]}
+{"id": "case_04918", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_04924", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "EXF004", "SUP004"]}
+{"id": "case_04925", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_04928", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04934", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_04937", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "OBS001"]}
+{"id": "case_04944", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_04945", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04947", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_04948", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_04958", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04959", "verdict": "REVIEW", "rules": ["CON001", "CRE003"]}
+{"id": "case_04960", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_04961", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_04963", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_04965", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_04968", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_04969", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXF005", "PRV003", "SUP004"]}
+{"id": "case_04971", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_04972", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_04973", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04976", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04978", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_04981", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_04983", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04993", "verdict": "REVIEW", "rules": ["EXF005", "OBS001"]}
+{"id": "case_04994", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004", "INJ004", "OBS001"]}
+{"id": "case_04995", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "INJ004", "OBS001"]}
+{"id": "case_04998", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_04999", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_05000", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_05002", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_05007", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON014", "EXE004", "OBS001"]}
+{"id": "case_05008", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05013", "verdict": "CAUTION", "rules": []}
+{"id": "case_05014", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE004", "SUP004"]}
+{"id": "case_05016", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05018", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001", "SUP004"]}
+{"id": "case_05022", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05025", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05026", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05027", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05033", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_05035", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_05038", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05039", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_05041", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05044", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXF005", "OBS001"]}
+{"id": "case_05045", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_05049", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05053", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05062", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_05067", "verdict": "REVIEW", "rules": ["MEM001"]}
+{"id": "case_05069", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_05075", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "EXE006", "OBS001"]}
+{"id": "case_05077", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_05078", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05079", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_05082", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SUP004"]}
+{"id": "case_05083", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_05084", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001"]}
+{"id": "case_05086", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003"]}
+{"id": "case_05090", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_05100", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_05101", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05103", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "OBS001"]}
+{"id": "case_05104", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_05105", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_05106", "verdict": "REVIEW", "rules": ["CON001", "OBS001", "SPEC003"]}
+{"id": "case_05107", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003"]}
+{"id": "case_05112", "verdict": "REVIEW", "rules": ["CON001", "CON011", "EXE003", "EXE004", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_05114", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXF003", "SUP004"]}
+{"id": "case_05116", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001"]}
+{"id": "case_05118", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF003", "OBS001", "SPEC003", "SUP004"]}
+{"id": "case_05121", "verdict": "REVIEW", "rules": ["EXE003", "OBS001"]}
+{"id": "case_05124", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_05125", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE003", "OBS001"]}
+{"id": "case_05129", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05131", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_05132", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "SUP004"]}
+{"id": "case_05133", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05135", "verdict": "REVIEW", "rules": ["CON001", "CRE002", "OBS001"]}
+{"id": "case_05136", "verdict": "REVIEW", "rules": ["EXE003", "OBS001"]}
+{"id": "case_05137", "verdict": "REVIEW", "rules": ["EXE004", "INJ004", "OBS001"]}
+{"id": "case_05138", "verdict": "CAUTION", "rules": []}
+{"id": "case_05142", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_05143", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_05146", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_05149", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05151", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXE003", "OBS001"]}
+{"id": "case_05157", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_05159", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05160", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_05162", "verdict": "CAUTION", "rules": []}
+{"id": "case_05168", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05169", "verdict": "REVIEW", "rules": ["EXE004", "EXF004"]}
+{"id": "case_05170", "verdict": "CAUTION", "rules": []}
+{"id": "case_05176", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05178", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_05182", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_05184", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_05188", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05190", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004"]}
+{"id": "case_05192", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05197", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05198", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05203", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05205", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_05207", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05208", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05209", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001"]}
+{"id": "case_05210", "verdict": "ERROR", "rules": []}
+{"id": "case_05212", "verdict": "CAUTION", "rules": ["SPEC003"]}
+{"id": "case_05215", "verdict": "REVIEW", "rules": ["CON001", "EXE003"]}
+{"id": "case_05217", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_05218", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05220", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXF005"]}
+{"id": "case_05222", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE003", "OBS001"]}
+{"id": "case_05223", "verdict": "REVIEW", "rules": ["CON001", "CON004", "OBS001"]}
+{"id": "case_05225", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05237", "verdict": "CAUTION", "rules": []}
+{"id": "case_05239", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_05240", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05243", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05250", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "EXE005", "OBS001"]}
+{"id": "case_05255", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_05257", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_05259", "verdict": "REVIEW", "rules": ["EXF005"]}
+{"id": "case_05263", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXE004", "PER001", "SUP004"]}
+{"id": "case_05271", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SPEC003", "SUP004"]}
+{"id": "case_05275", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "SPEC001"]}
+{"id": "case_05285", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "SUP004"]}
+{"id": "case_05287", "verdict": "REVIEW", "rules": ["EXE004", "SPEC001"]}
+{"id": "case_05289", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_05295", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_05296", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004"]}
+{"id": "case_05298", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON014", "EXE004", "OBS001"]}
+{"id": "case_05300", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05302", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_05303", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_05304", "verdict": "REVIEW", "rules": ["EXE004", "PER002"]}
+{"id": "case_05305", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "PRV003", "SUP004"]}
+{"id": "case_05308", "verdict": "REVIEW", "rules": ["CON001", "SPEC003"]}
+{"id": "case_05314", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05318", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05320", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SPEC001"]}
+{"id": "case_05322", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05323", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SPEC003"]}
+{"id": "case_05324", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05328", "verdict": "REVIEW", "rules": ["CON001", "CON004", "EXE004", "OBS001", "PRV003", "SUP004"]}
+{"id": "case_05330", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05332", "verdict": "REVIEW", "rules": ["CON012", "EXE004", "SPEC001"]}
+{"id": "case_05340", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_05344", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05348", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001", "OBS001"]}
+{"id": "case_05349", "verdict": "CAUTION", "rules": []}
+{"id": "case_05351", "verdict": "REVIEW", "rules": ["EXE004", "OBS001"]}
+{"id": "case_05353", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05354", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05356", "verdict": "REVIEW", "rules": ["EXE004", "SUP004"]}
+{"id": "case_05358", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05362", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05364", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE003", "INJ004", "OBS001", "SUP004"]}
+{"id": "case_05365", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXF005", "SUP004"]}
+{"id": "case_05367", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "INJ005"]}
+{"id": "case_05370", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_05371", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "MEM001"]}
+{"id": "case_05378", "verdict": "REVIEW", "rules": ["CON001", "CRE003", "EXE004", "SUP004"]}
+{"id": "case_05380", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_05382", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05383", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_05393", "verdict": "REVIEW", "rules": ["CON001", "EXE004"]}
+{"id": "case_05397", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05399", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "case_05402", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05406", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_05409", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05410", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_05419", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_05423", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXF003", "SUP004"]}
+{"id": "case_05432", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_05438", "verdict": "REVIEW", "rules": ["EXE003", "SPEC001"]}
+{"id": "case_05439", "verdict": "REVIEW", "rules": ["CON001", "EXF003", "OBS001", "SUP004"]}
+{"id": "case_05448", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004"]}
+{"id": "case_05451", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05453", "verdict": "REVIEW", "rules": ["CON001", "EXE003", "EXE004", "OBS001", "SUP004"]}
+{"id": "case_05463", "verdict": "REVIEW", "rules": ["EXE004"]}
+{"id": "case_05471", "verdict": "REVIEW", "rules": ["CON001", "CON011", "CON012", "EXF003", "SUP004"]}
+{"id": "case_05472", "verdict": "CAUTION", "rules": []}
+{"id": "case_05473", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05478", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05479", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "OBS001"]}
+{"id": "case_05480", "verdict": "REVIEW", "rules": ["CON001", "CON012", "EXE004", "SUP004"]}
+{"id": "case_05483", "verdict": "REVIEW", "rules": ["EXE004", "OBS001", "SUP004"]}
+{"id": "case_05487", "verdict": "REVIEW", "rules": ["CON001", "EXE004", "SUP004"]}
+{"id": "case_05495", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "EXE004", "EXE006"]}
+{"id": "case_05497", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "CON012", "EXE004"]}
+{"id": "case_05498", "verdict": "REVIEW", "rules": ["EXE004", "EXF004", "OBS001"]}
+{"id": "case_05501", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_05508", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05512", "verdict": "REVIEW", "rules": ["CON001", "CON010", "CON011", "EVA003", "OBS001", "SUP004"]}
+{"id": "case_05514", "verdict": "REVIEW", "rules": ["CON001", "CON012", "SUP004"]}
+{"id": "case_05516", "verdict": "REVIEW", "rules": ["CON001", "CON014", "EXF003", "MEM001", "SUP004"]}
+{"id": "case_05517", "verdict": "REVIEW", "rules": ["CRE003"]}
+{"id": "case_05518", "verdict": "REVIEW", "rules": ["EXF003", "OBS001"]}
+{"id": "case_05519", "verdict": "REVIEW", "rules": ["OBS001"]}
+{"id": "case_05521", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_05522", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_05526", "verdict": "REVIEW", "rules": ["CON001", "OBS001"]}
+{"id": "case_05527", "verdict": "REVIEW", "rules": ["CON001", "CON004"]}
+{"id": "case_05528", "verdict": "CAUTION", "rules": []}
+{"id": "case_05529", "verdict": "REVIEW", "rules": ["CON001", "CON012", "OBS001"]}
+{"id": "case_05530", "verdict": "REVIEW", "rules": ["CON001", "CON012", "SUP004"]}
+{"id": "case_05531", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "SUP004"]}
+{"id": "case_05537", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_05538", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "SUP004"]}
+{"id": "case_05539", "verdict": "CAUTION", "rules": []}
+{"id": "case_05547", "verdict": "REVIEW", "rules": ["CON001", "CON012", "OBS001"]}
+{"id": "case_05548", "verdict": "REVIEW", "rules": ["OBS001", "SPEC001"]}
+{"id": "case_05579", "verdict": "CAUTION", "rules": []}
+{"id": "case_05580", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_05582", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05583", "verdict": "REVIEW", "rules": ["CON001", "CON004"]}
+{"id": "case_05585", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05586", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "SUP004"]}
+{"id": "case_05587", "verdict": "CAUTION", "rules": []}
+{"id": "case_05588", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05589", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05590", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05591", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05592", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05593", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05594", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05595", "verdict": "REVIEW", "rules": ["CON001", "CON004", "PRV003", "SUP004"]}
+{"id": "case_05596", "verdict": "REVIEW", "rules": ["CON001", "PRV003", "SUP004"]}
+{"id": "case_05597", "verdict": "REVIEW", "rules": ["CON001", "SUP004"]}
+{"id": "case_05598", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "PRV003", "SUP004"]}
+{"id": "case_05599", "verdict": "REVIEW", "rules": ["CON001", "CON012", "SUP004"]}
+{"id": "case_05601", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05602", "verdict": "REVIEW", "rules": ["CON001", "CON004", "CON012", "SUP004"]}
+{"id": "case_05603", "verdict": "REVIEW", "rules": ["CON001", "CON004", "SUP004"]}
+{"id": "case_05612", "verdict": "REVIEW", "rules": ["EXE006", "EXF003"]}
+{"id": "case_05613", "verdict": "CAUTION", "rules": []}
+{"id": "case_05624", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05625", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05632", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05633", "verdict": "CAUTION", "rules": []}
+{"id": "case_05647", "verdict": "CAUTION", "rules": []}
+{"id": "case_05648", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05649", "verdict": "CAUTION", "rules": []}
+{"id": "case_05657", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05658", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05659", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05663", "verdict": "REVIEW", "rules": ["EXF003"]}
+{"id": "case_05664", "verdict": "CAUTION", "rules": []}
+{"id": "case_05667", "verdict": "CAUTION", "rules": []}
+{"id": "case_05668", "verdict": "REVIEW", "rules": ["EXF003"]}
+{"id": "case_05669", "verdict": "CAUTION", "rules": []}
+{"id": "case_05672", "verdict": "CAUTION", "rules": []}
+{"id": "case_05675", "verdict": "CAUTION", "rules": []}
+{"id": "case_05677", "verdict": "CAUTION", "rules": []}
+{"id": "case_05681", "verdict": "CAUTION", "rules": []}
+{"id": "case_05682", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05683", "verdict": "CAUTION", "rules": []}
+{"id": "case_05685", "verdict": "CAUTION", "rules": []}
+{"id": "case_05691", "verdict": "CAUTION", "rules": []}
+{"id": "case_05696", "verdict": "CAUTION", "rules": []}
+{"id": "case_05697", "verdict": "CAUTION", "rules": []}
+{"id": "case_05725", "verdict": "CAUTION", "rules": []}
+{"id": "case_05727", "verdict": "CAUTION", "rules": []}
+{"id": "case_05731", "verdict": "CAUTION", "rules": []}
+{"id": "case_05737", "verdict": "CAUTION", "rules": []}
+{"id": "case_05741", "verdict": "CAUTION", "rules": []}
+{"id": "case_05745", "verdict": "CAUTION", "rules": []}
+{"id": "case_05746", "verdict": "CAUTION", "rules": []}
+{"id": "case_05753", "verdict": "CAUTION", "rules": []}
+{"id": "case_05754", "verdict": "REVIEW", "rules": ["CON001"]}
+{"id": "case_05757", "verdict": "CAUTION", "rules": []}
+{"id": "case_05760", "verdict": "REVIEW", "rules": ["EXF003"]}
+{"id": "case_05762", "verdict": "CAUTION", "rules": []}
+{"id": "case_05767", "verdict": "REVIEW", "rules": ["CON001"]}

@@ -149,16 +149,19 @@ benchmark last reported a false-positive rate of 0.000, the external corpus
 was simultaneously producing nine CRITICAL false positives on Anthropic's own
 published skills.
 
-**Measured recall is 0.316** (6 of 19 labelled malicious skills blocked, 95% CI
-[0.154, 0.540]). Two thirds of known-malicious skills were not blocked, which
-is why gating is opt-in rather than the default. Read a finding, not a
-silence: the false-positive rate is low, so a finding is worth acting on, but
-a clean result is weak evidence. Per-rule precision is still unmeasured.
+**Measured recall is 0.271** (775 of 2,859 malicious SkillTrustBench cases
+blocked, 95% CI [0.255, 0.288]), on expert-labelled skills the rules had never
+seen, measured once under a pre-registered protocol. Nearly three in four
+known-malicious skills are not blocked, which is why gating is opt-in rather
+than the default. Read a block, not a silence: 0.040 of normal cases were
+blocked, so a BLOCK is worth acting on; a REVIEW is weak evidence, since three
+in four normal cases get one; and a clean result is weak evidence of anything.
+Per-rule precision is still unmeasured.
 
-The gaps that measurement exposed have since been closed, and the same corpus
-now gives 0.526 — but that corpus shaped the rules, so it can no longer
-measure them. **0.316 is the last independent figure.** A fresh, unseen
-labelled corpus is what would replace it.
+Two earlier figures are superseded. 0.316, on 19 samples, agrees with 0.271.
+0.526, on the same 19 after closing their gaps, measured a corpus that had
+shaped the rules. SkillTrustBench is now spent the same way for any rule
+written with its misses in view.
 
 ## Reserved documentation domains are treated as benign
 

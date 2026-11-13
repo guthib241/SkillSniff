@@ -24,6 +24,18 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **Measured once on skills the rules had never seen, as pre-registered.**
+  SkillTrustBench v1.0, 5,516 expert-labelled cases: malicious recall
+  **0.271**, CI [0.255, 0.288] — below the pre-registered 0.40 floor, so the
+  tool is not fit as a gate and stays advisory by default. False BLOCK rate on
+  normal cases 0.040, CI [0.031, 0.050], so the precision claim stands, for
+  BLOCK only; 73.9% of normal cases get a REVIEW, so a REVIEW is weak
+  evidence. One advance prediction failed: the wild-style families scored
+  highest, not lowest. ClawHub's holdout, as agreement with another scanner:
+  2 of 24 malicious rows blocked, 3.7% of clean rows blocked. Every miss is
+  published by case id in `docs/results/holdout-2026-11-13/`; no rule was
+  changed in response.
+
 - **JavaScript and TypeScript analysis** (`analysis/jsscan.py`): a tokeniser,
   not a parser, so it adds no dependency, and it knows strings, template
   literals, comments and regular expressions from code. It feeds `EXE003`
