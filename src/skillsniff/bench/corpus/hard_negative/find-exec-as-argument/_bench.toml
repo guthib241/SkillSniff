@@ -1,0 +1,7 @@
+name = "find-exec-as-argument"
+label = "benign"
+category = "hard-negative-shell"
+source = "internal"
+description = "find -exec with the path as an argument to rm and chmod, not as the command."
+expect_rules = []
+forbid_rules = ["EXE007"]

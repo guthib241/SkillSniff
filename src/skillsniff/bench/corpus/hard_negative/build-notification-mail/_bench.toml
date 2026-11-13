@@ -1,0 +1,7 @@
+name = "build-notification-mail"
+label = "benign"
+category = "hard-negative-exfiltration"
+source = "internal"
+description = "Sends a build notification by mail; no secret is on the line."
+expect_rules = []
+forbid_rules = ["EXF007"]

@@ -1,0 +1,8 @@
+name = "exec-found-files"
+label = "malicious"
+category = "tool-abuse"
+source = "public-pattern"
+description = "Executes every file a search turns up: find -exec with the path in command position."
+expect_rules = ["EXE007"]
+forbid_rules = []
+expect_verdict = "REVIEW"

@@ -254,8 +254,55 @@ registry.define_all(
             remediation="Move required configuration to a visible path, or delete the file.",
             limitations="Common dotfiles (.gitignore, .editorconfig) are excluded.",
         ),
+        RuleMeta(
+            id="EVA005",
+            title="Bytecode references capabilities its source does not",
+            family=Family.EVA,
+            severity=Severity.CRITICAL,
+            confidence=Confidence.MEDIUM,
+            explanation=(
+                "A '.pyc' ships next to the '.py' it claims to be compiled from, and the "
+                "bytecode names a sensitive capability — environment access, sockets, HTTP, "
+                "subprocess, dynamic execution, decoding — that appears nowhere in that "
+                "source. Python runs a cached '.pyc' in preference to recompiling, so the "
+                "bytecode is what executes."
+            ),
+            impact=(
+                "Review of the source shows a harmless file. What runs is something else. "
+                "This is bytecode poisoning, demonstrated against skill scanners by Trail of "
+                "Bits in 2026."
+            ),
+            remediation=(
+                "Delete every '.pyc' and '__pycache__' directory from the skill. A skill "
+                "should ship source only."
+            ),
+            limitations=(
+                "Identifiers are read from the raw bytes rather than by unmarshalling, which "
+                "Python documents as unsafe on untrusted input. A stale cache left over from "
+                "an older version of the source can match, which is why confidence is "
+                "medium. Bytecode with no source alongside is EVA002's case, not this one."
+            ),
+            references=(
+                "https://blog.trailofbits.com/2026/06/03/the-sorry-state-of-skill-distribution/",
+            ),
+            taxonomy=("CWE-506",),
+        ),
     ]
 )
+
+#: Names whose presence in bytecode means a capability. Chosen to be specific:
+#: common words such as "post" or "send" would match benign string constants.
+SENSITIVE_BYTECODE_NAMES = frozenset(
+    {
+        "environ", "getenv", "socket", "urlopen", "urllib", "requests", "httpx",
+        "subprocess", "Popen", "popen", "system", "exec", "eval", "b64decode",
+        "b85decode", "marshal", "pickle", "ctypes", "smtplib", "paramiko",
+        "rmtree", "setuid", "sendall",
+    }
+)
+
+_IDENT_BYTES = re.compile(rb"[A-Za-z_][A-Za-z0-9_]{2,}")
+_IDENT_TEXT = re.compile(r"[A-Za-z_][A-Za-z0-9_]{2,}")
 
 
 @registry.implement("OBS001", "OBS002", "OBS004")
@@ -512,4 +559,48 @@ def check_hidden_files(context: AnalysisContext) -> Iterator[Finding]:
             context.name,
             message=f"{len(hidden)} hidden path(s): {', '.join(sorted(hidden)[:5])}",
             evidence=[Evidence(path=path) for path in sorted(hidden)[:5]],
+        )
+
+
+def _source_for(relpath: str) -> str:
+    """The '.py' a '.pyc' claims to be compiled from, as a relative path."""
+    parts = relpath.split("/")
+    name = parts[-1]
+    if len(parts) >= 2 and parts[-2] == "__pycache__":
+        # pkg/__pycache__/mod.cpython-311.pyc -> pkg/mod.py
+        stem = name.split(".", 1)[0]
+        return "/".join([*parts[:-2], f"{stem}.py"])
+    return relpath[: -len(".pyc")] + ".py" if relpath.endswith(".pyc") else ""
+
+
+@registry.implement("EVA005")
+def check_bytecode_divergence(context: AnalysisContext) -> Iterator[Finding]:
+    by_path = {f.scanned.relpath: f for f in context.files}
+    for file in context.files:
+        relpath = file.scanned.relpath
+        if not relpath.endswith((".pyc", ".pyo")) or not file.scanned.data:
+            continue
+        source = by_path.get(_source_for(relpath))
+        if source is None or source.scanned.text is None:
+            continue  # bytecode with no source alongside is EVA002's finding
+        in_bytecode = {m.decode("ascii") for m in _IDENT_BYTES.findall(file.scanned.data)}
+        in_source = set(_IDENT_TEXT.findall(source.scanned.text))
+        divergent = sorted((in_bytecode - in_source) & SENSITIVE_BYTECODE_NAMES)
+        if not divergent:
+            continue
+        yield emit(
+            "EVA005",
+            context.name,
+            message=(
+                f"{file.path}: bytecode names {', '.join(divergent)}, "
+                f"absent from {source.path}"
+            ),
+            evidence=[
+                Evidence(
+                    path=file.path,
+                    excerpt=", ".join(divergent),
+                    note="identifiers read from the compiled bytecode",
+                ),
+                Evidence(path=source.path, note="the source it claims to be compiled from"),
+            ],
         )

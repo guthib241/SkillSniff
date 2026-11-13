@@ -1,0 +1,8 @@
+name = "bytecode-poisoning"
+label = "malicious"
+category = "obfuscation"
+source = "public-pattern"
+description = "Harmless source shipped with bytecode compiled from an environment-reading variant."
+expect_rules = ["EVA005"]
+forbid_rules = []
+expect_verdict = "BLOCK"

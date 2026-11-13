@@ -1,6 +1,6 @@
 # Rule catalogue
 
-88 rules in 16 families, generated from the registry by
+93 rules in 16 families, generated from the registry by
 `scripts/gen_rules_doc.py` for SkillSniff 0.2.0. Do not edit by hand.
 
 `skillsniff explain <RULE>` prints any entry below, including its limitations.
@@ -20,16 +20,16 @@ contribute to the security verdict.
 | [`ARC`](#arc) Archive and nested artifact risk | 3 | security |
 | [`CON`](#con) Capability / contract mismatch | 9 | security |
 | [`CRE`](#cre) Credential and secret access | 3 | security |
-| [`EVA`](#eva) Scanner evasion | 4 | security |
-| [`EXE`](#exe) Execution | 6 | security |
-| [`EXF`](#exf) Exfiltration | 5 | security |
+| [`EVA`](#eva) Scanner evasion | 5 | security |
+| [`EXE`](#exe) Execution | 7 | security |
+| [`EXF`](#exf) Exfiltration | 7 | security |
 | [`INJ`](#inj) Prompt / instruction injection | 6 | security |
 | [`MCP`](#mcp) Tool and MCP abuse | 3 | security |
 | [`MEM`](#mem) Memory and state | 2 | security |
 | [`NET`](#net) Network behaviour | 3 | security |
 | [`OBS`](#obs) Obfuscation | 6 | security |
 | [`PER`](#per) Persistence | 2 | security |
-| [`PRV`](#prv) Privilege and safety bypass | 3 | security |
+| [`PRV`](#prv) Privilege and safety bypass | 4 | security |
 | [`QUA`](#qua) Authoring quality | 18 | not security |
 | [`SPEC`](#spec) Specification compliance | 10 | not security |
 | [`SUP`](#sup) Supply chain | 5 | security |
@@ -304,6 +304,22 @@ contribute to the security verdict.
 
 **Cannot detect.** Common dotfiles (.gitignore, .editorconfig) are excluded.
 
+### `EVA005` — Bytecode references capabilities its source does not
+
+**critical** · medium confidence
+
+**Detects.** A '.pyc' ships next to the '.py' it claims to be compiled from, and the bytecode names a sensitive capability — environment access, sockets, HTTP, subprocess, dynamic execution, decoding — that appears nowhere in that source. Python runs a cached '.pyc' in preference to recompiling, so the bytecode is what executes.
+
+**Why it matters.** Review of the source shows a harmless file. What runs is something else. This is bytecode poisoning, demonstrated against skill scanners by Trail of Bits in 2026.
+
+**Fix.** Delete every '.pyc' and '__pycache__' directory from the skill. A skill should ship source only.
+
+**Cannot detect.** Identifiers are read from the raw bytes rather than by unmarshalling, which Python documents as unsafe on untrusted input. A stale cache left over from an older version of the source can match, which is why confidence is medium. Bytecode with no source alongside is EVA002's case, not this one.
+
+**Taxonomy.** `CWE-506`
+
+**References.** [1](https://blog.trailofbits.com/2026/06/03/the-sorry-state-of-skill-distribution/)
+
 ## EXE
 
 **Execution**
@@ -394,6 +410,20 @@ contribute to the security verdict.
 
 **Cannot detect.** Requires an execution verb near the URL within a few lines. A download and a later execution separated across files will not correlate.
 
+### `EXE007` — Executes files located by a search
+
+**high** · high confidence
+
+**Detects.** A 'find … -exec {} …' places the found path itself in command position, so every file the search turns up is executed. The ordinary form, '-exec rm {} \;', passes the path as an argument and does not match.
+
+**Why it matters.** What runs is whatever matches the pattern at the moment of execution, including files that arrive later or are unpacked from an archive. Nothing about it is reviewable from the command.
+
+**Fix.** Name the script to run explicitly, and ship it as reviewable source.
+
+**Cannot detect.** Covers find's -exec and -execdir and 'xargs -I{} {}'. A shell loop that executes each match is not detected.
+
+**Taxonomy.** `CWE-829`
+
 ## EXF
 
 **Exfiltration**
@@ -471,6 +501,36 @@ contribute to the security verdict.
 **Taxonomy.** `CWE-200`
 
 **References.** [1](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
+
+### `EXF006` — Data exfiltrated through a DNS lookup
+
+**high** · medium confidence
+
+**Detects.** A DNS lookup ('nslookup', 'dig', 'host', 'drill') whose queried name is built from data — a variable, a command substitution, or a label named like a secret — so the lookup itself carries the data to whoever runs the domain's nameserver.
+
+**Why it matters.** DNS leaves almost every network, including ones that block HTTP egress, and a lookup does not look like data leaving. Every query delivers its name to the attacker's nameserver.
+
+**Fix.** Remove the lookup, or query a fixed name that carries no data.
+
+**Cannot detect.** Reserved documentation domains (example.com, .example, .test) are excluded as they are by every exfiltration rule, so a sample written against one is not reported. A lookup issued from code rather than a command is not seen.
+
+**Taxonomy.** `CWE-200`, `ATT&CK:T1048.003`
+
+**References.** [1](https://attack.mitre.org/techniques/T1048/003/)
+
+### `EXF007` — Secrets sent by email
+
+**high** · medium confidence
+
+**Detects.** Mail is sent — an 'smtp://' address, sendmail/mail/mutt/swaks/msmtp, or Python's smtplib — on a line that also names a credential, secret, token, password, key file, or '.env'.
+
+**Why it matters.** Credentials leave over a channel most egress monitoring treats as ordinary notification traffic.
+
+**Fix.** Do not mail secrets. Send a notification that carries no credential.
+
+**Cannot detect.** Requires the mail command and the secret on the same line. Documentation domains are excluded. Mail assembled across several lines, or a secret held in a variable with a neutral name, is not connected.
+
+**Taxonomy.** `CWE-200`
 
 ## INJ
 
@@ -843,6 +903,20 @@ contribute to the security verdict.
 **Fix.** Operate at the user's own privilege level. If elevation is genuinely required, state it prominently and require explicit confirmation.
 
 **Cannot detect.** Installation documentation legitimately mentions sudo.
+
+### `PRV004` — Host security controls disabled
+
+**critical** · medium confidence
+
+**Detects.** The skill disables or bypasses a security control on the host itself — antivirus or EDR, the firewall, SELinux or AppArmor, macOS Gatekeeper or System Integrity Protection — by command ('setenforce 0', 'Set-MpPreference -DisableRealtimeMonitoring $true') or by instructing the agent to.
+
+**Why it matters.** Turning off the machine's own defences is a precondition for most follow-on malware, and an agent will do it if told. No legitimate skill needs the host's antivirus off to do its job.
+
+**Fix.** Remove the instruction. If a tool genuinely conflicts with a security product, document the conflict and leave the decision to the user.
+
+**Cannot detect.** Prose that tells the reader *not* to disable a control is excluded by a negation check, and security documentation is downgraded by framing; other phrasings of the same advice may still match.
+
+**Taxonomy.** `CWE-693`
 
 ## QUA
 

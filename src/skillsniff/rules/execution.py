@@ -236,12 +236,124 @@ registry.define_all(
             ),
             limitations="Installation documentation legitimately mentions sudo.",
         ),
+        RuleMeta(
+            id="PRV004",
+            title="Host security controls disabled",
+            family=Family.PRV,
+            severity=Severity.CRITICAL,
+            confidence=Confidence.MEDIUM,
+            explanation=(
+                "The skill disables or bypasses a security control on the host itself — "
+                "antivirus or EDR, the firewall, SELinux or AppArmor, macOS Gatekeeper or "
+                "System Integrity Protection — by command ('setenforce 0', "
+                "'Set-MpPreference -DisableRealtimeMonitoring $true') or by instructing the "
+                "agent to."
+            ),
+            impact=(
+                "Turning off the machine's own defences is a precondition for most follow-on "
+                "malware, and an agent will do it if told. No legitimate skill needs the "
+                "host's antivirus off to do its job."
+            ),
+            remediation=(
+                "Remove the instruction. If a tool genuinely conflicts with a security "
+                "product, document the conflict and leave the decision to the user."
+            ),
+            limitations=(
+                "Prose that tells the reader *not* to disable a control is excluded by a "
+                "negation check, and security documentation is downgraded by framing; other "
+                "phrasings of the same advice may still match."
+            ),
+            taxonomy=("CWE-693",),
+        ),
+        RuleMeta(
+            id="EXE007",
+            title="Executes files located by a search",
+            family=Family.EXE,
+            severity=Severity.HIGH,
+            confidence=Confidence.HIGH,
+            explanation=(
+                "A 'find … -exec {} …' places the found path itself in command position, so "
+                "every file the search turns up is executed. The ordinary form, "
+                "'-exec rm {} \\;', passes the path as an argument and does not match."
+            ),
+            impact=(
+                "What runs is whatever matches the pattern at the moment of execution, "
+                "including files that arrive later or are unpacked from an archive. Nothing "
+                "about it is reviewable from the command."
+            ),
+            remediation="Name the script to run explicitly, and ship it as reviewable source.",
+            limitations=(
+                "Covers find's -exec and -execdir and 'xargs -I{} {}'. A shell loop that "
+                "executes each match is not detected."
+            ),
+            taxonomy=("CWE-829",),
+        ),
     ]
 )
+
+#: Commands that switch off a host security control. Concrete enough that the
+#: match alone is high-confidence evidence.
+HOST_SECURITY_OFF_COMMAND = re.compile(
+    r"\bsetenforce\s+0\b"
+    r"|\bSet-MpPreference\b[^\n]{0,80}-Disable\w*\s+\$?true\b"
+    r"|\bAdd-MpPreference\b[^\n]{0,80}-Exclusion(?:Path|Process|Extension)\b"
+    r"|\bsystemctl\s+(?:stop|disable|mask)\s+(?:firewalld|ufw|apparmor|auditd|clamav\w*)\b"
+    r"|\bufw\s+disable\b"
+    r"|\bnetsh\s+advfirewall\s+set\s+\w+\s+state\s+off\b"
+    r"|\bspctl\s+--master-disable\b"
+    r"|\bcsrutil\s+disable\b",
+    re.IGNORECASE,
+)
+
+#: An instruction, in prose, to switch a host control off.
+HOST_SECURITY_OFF_PROSE = re.compile(
+    r"\b(?:disable|turn\s+off|deactivate|switch\s+off|uninstall|bypass|kill)\s+"
+    r"(?:the\s+|your\s+|any\s+|all\s+)?"
+    r"(?:anti-?virus|AV\b|windows\s+defender|defender|endpoint\s+protection|EDR\b|"
+    r"firewall|SELinux|AppArmor|gatekeeper|system\s+integrity\s+protection|"
+    r"security\s+(?:software|controls?|scanning|features?|protections?))",
+    re.IGNORECASE,
+)
+
+#: Advice *against* the action, within the same clause, before the verb.
+_NEGATED = re.compile(r"\b(?:do\s*n[o']?t|never|avoid|without|refuse\s+to)\b[^.\n]{0,24}$", re.IGNORECASE)
+
+#: The found path in command position: `-exec {} …`, `-execdir {} …`, and the
+#: xargs equivalent. `[^\n|]` rather than excluding ';' because a command that
+#: arrives inside an XML or HTML document carries entity-escaped quotes
+#: (`&quot;`), and those contain a semicolon.
+EXEC_FOUND_FILES = re.compile(
+    r"\bfind\b[^\n|]{0,200}?-exec(?:dir)?\s+[\"']?\{\}"
+    r"|\bxargs\b[^\n|]{0,60}?-I\s*\{\}\s+[\"']?\{\}",
+    re.IGNORECASE,
+)
+
+
+_MARKDOWN_SUFFIXES = frozenset({".md", ".markdown", ".mdx"})
+
+
+def _fenced_lines(text: str) -> set[int]:
+    """1-based numbers of lines inside a fenced code block, fences included.
+
+    One linear pass. Anything per-line that rescans the text is how this tool
+    once took 224 seconds over a file of blank lines.
+    """
+    inside = False
+    lines: set[int] = set()
+    for number, line in enumerate(text.split("\n"), 1):
+        if _scan._FENCE_LINE.match(line):
+            lines.add(number)
+            inside = not inside
+        elif inside:
+            lines.add(number)
+    return lines
 
 
 @registry.implement("EXE001", "EXE002")
 def check_pipe_to_interpreter(context: AnalysisContext) -> Iterator[Finding]:
+    #: (path, line) pairs the tokeniser already reported, so the regex pass
+    #: below can tell what it would be double-counting.
+    tokenised: set[tuple[str, int]] = set()
     for file in context.shell_files():
         shell = file.shell
         assert shell is not None
@@ -251,6 +363,8 @@ def check_pipe_to_interpreter(context: AnalysisContext) -> Iterator[Finding]:
             ("EXE002", shell.decode_to_interpreter),
         ):
             for excerpt, line in entries:
+                if rule_id == "EXE001":
+                    tokenised.add((file.path, line))
                 documented = False
                 if view is not None:
                     offset = _offset_of_line(view.raw, line)
@@ -274,20 +388,39 @@ def check_pipe_to_interpreter(context: AnalysisContext) -> Iterator[Finding]:
                     confidence=Confidence.LOW if documented else None,
                 )
 
-    # The same pattern can arrive inside an encoded region, where the shell
-    # tokeniser never sees it.
+    # The tokeniser only sees shell scripts and fenced shell blocks. The same
+    # pipeline can also arrive as bare prose or inline code in SKILL.md — "run
+    # `curl https://… | bash`" — or inside an encoded region, and an agent will
+    # execute it from any of those. This pass used to skip every raw match on
+    # the assumption the tokeniser had covered it, which was only true for
+    # shell files: a pipeline written as a plain line of markdown was skipped
+    # here and never seen there. Found by kurtpayne/skillscan-security case
+    # a01_curl_bash. Matches are routed through emit_match so prose that frames
+    # the command as an example is still downgraded rather than reported.
+    #
+    # The regex is only trusted where nothing better looked. A whole shell script
+    # belongs to the quote-aware tokeniser, which knows `echo "curl … | bash"`
+    # prints text rather than running it; a Python string belongs to the AST;
+    # and a fenced block in markdown is either tokenised or in another language.
+    # What is left is markdown prose and inline code, which nothing analyses.
     piped = re.compile(
         r"(?:curl|wget)\b[^\n|]{1,200}\|\s*(?:sudo\s+)?(?:ba|z|k)?sh\b", re.IGNORECASE
     )
+    fenced: dict[str, set[int]] = {}
     for match in _scan.scan(context, piped, include_normalized=True, include_decoded=True):
         if match.projection == "raw":
-            continue  # already covered by the tokeniser above
-        yield emit(
-            "EXE001",
-            context.name,
-            message=f"{match.path}: {match.excerpt!r}",
-            evidence=[match.evidence()],
-        )
+            if (match.path, match.line) in tokenised:
+                continue  # the tokeniser already reported this exact line
+            if match.file.scanned.suffix not in _MARKDOWN_SUFFIXES:
+                continue  # a script or a source file: its own analyser is authoritative
+            view = match.file.view
+            if view is None:
+                continue
+            if match.path not in fenced:
+                fenced[match.path] = _fenced_lines(view.raw)
+            if match.line in fenced[match.path]:
+                continue  # inside a fence: tokenised, or code in another language
+        yield _scan.emit_match("EXE001", context.name, match)
 
 
 
@@ -446,8 +579,13 @@ TLS_BYPASS = re.compile(
 
 PRIVILEGE_ESCALATION = re.compile(
     r"(?:^|[\s|;&(])(?:sudo|doas)\s+(?!-h\b|--help\b)"
-    r"|chmod\s+[0-7]?[2-7]?[67][0-7]{2}\b"
-    r"|chmod\s+u\+s\b"
+    # Setuid/setgid modes are four digits led by 4, 2 or 6 (04755 with a
+    # leading zero). The previous ``[0-7]?[2-7]?[67][0-7]{2}`` matched any
+    # three-digit mode starting 6 or 7, so ``chmod 644`` and ``chmod 755`` —
+    # the most ordinary permission changes there are — read as privilege
+    # escalation. Found by the find-exec-as-argument hard negative.
+    r"|chmod\s+0?[246][0-7]{3}\b"
+    r"|chmod\s+[ugoa]*\+[rwxX]*s\b"
     r"|setuid\s*\(",
     re.IGNORECASE | re.MULTILINE,
 )
@@ -462,6 +600,27 @@ def check_privilege(context: AnalysisContext) -> Iterator[Finding]:
     ):
         for match in _scan.scan(context, pattern, limit_per_file=4):
             yield _scan.emit_match(rule_id, context.name, match)
+
+
+@registry.implement("PRV004")
+def check_host_security_disabled(context: AnalysisContext) -> Iterator[Finding]:
+    for match in _scan.scan(context, HOST_SECURITY_OFF_COMMAND, limit_per_file=4):
+        yield _scan.emit_match("PRV004", context.name, match, confidence=Confidence.HIGH)
+    for match in _scan.scan(context, HOST_SECURITY_OFF_PROSE, limit_per_file=4):
+        view = match.file.view
+        if view is not None and match.projection != "decoded":
+            # "Do not disable your firewall" is the advice we want skills to
+            # give. Look back to the start of the clause for a negation.
+            line_start = view.raw.rfind("\n", 0, match.start) + 1
+            if _NEGATED.search(view.raw[line_start : match.start]):
+                continue
+        yield _scan.emit_match("PRV004", context.name, match)
+
+
+@registry.implement("EXE007")
+def check_exec_found_files(context: AnalysisContext) -> Iterator[Finding]:
+    for match in _scan.scan(context, EXEC_FOUND_FILES, limit_per_file=4):
+        yield _scan.emit_match("EXE007", context.name, match)
 
 
 def _offset_of_line(text: str, line: int) -> int:

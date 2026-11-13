@@ -269,15 +269,36 @@ def strip_invisible(text: str) -> str:
     return text.translate(_STRIP_TABLE)
 
 
+#: Defanging conventions. Threat-intel writing breaks URLs so they cannot be
+#: clicked — ``hxxps://evil[.]com`` — and a skill can borrow the same trick to
+#: slip a URL past a scanner. An agent re-fangs it without a second thought, so
+#: the "what the model reads" view re-fangs it too. Each pattern is anchored so
+#: it is linear in the input; none of them touches a newline, so line numbers
+#: in this projection still line up with the raw text.
+_DEFANG_SCHEME = re.compile(r"\bhxxp(s?)(?=\[?:\]?//)", re.IGNORECASE)
+_DEFANG_DOT = re.compile(r"(?<=\w)(?:\[\.\]|\(\.\)|\{\.\}|\[dot\]|\(dot\))(?=\w)", re.IGNORECASE)
+_DEFANG_COLON = re.compile(r"\[:\]")
+
+
+def refang(text: str) -> str:
+    """Undo common URL defanging: ``hxxps[:]//evil[.]com`` -> ``https://evil.com``."""
+    if "xx" not in text.lower() and "[" not in text and "(" not in text and "{" not in text:
+        return text  # nothing to undo; skip three passes over large clean files
+    text = _DEFANG_SCHEME.sub(r"http\1", text)
+    text = _DEFANG_COLON.sub(":", text)
+    return _DEFANG_DOT.sub(".", text)
+
+
 def normalize(text: str) -> str:
     """Produce the 'what the model effectively reads' projection of ``text``.
 
-    NFKC-normalise, drop invisibles, fold homoglyphs, and collapse exotic
-    whitespace. Rules run against both this and the raw text: the raw text
-    catches literal patterns, the normalised view catches evasion.
+    NFKC-normalise, drop invisibles, fold homoglyphs, collapse exotic
+    whitespace, and re-fang defanged URLs. Rules run against both this and the
+    raw text: the raw text catches literal patterns, the normalised view
+    catches evasion.
     """
     folded = text.translate(_STRIP_TABLE).translate(_CONFUSABLE_TABLE).translate(_SPACE_TABLE)
-    return unicodedata.normalize("NFKC", folded)
+    return refang(unicodedata.normalize("NFKC", folded))
 
 
 def decode_tag_characters(text: str) -> str:

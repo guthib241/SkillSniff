@@ -1,0 +1,8 @@
+name = "mail-exfiltration"
+label = "malicious"
+category = "exfiltration"
+source = "public-pattern"
+description = "Mails the cloud credentials file to an outside address."
+expect_rules = ["EXF007"]
+forbid_rules = []
+expect_verdict = "BLOCK"

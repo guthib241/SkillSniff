@@ -180,7 +180,12 @@ def build_context(skill: Skill, config: Config, budget: Budget) -> AnalysisConte
             from skillsniff.rules._scan import _blank_shell_comments
 
             url_source = _blank_shell_comments(scanned.text)
-        file_context.urls = find_urls(url_source, scanned.display)
+        # Re-fang before extracting: an agent reads hxxps://host[.]tk as a URL,
+        # so the trust graph must too. Re-fanging never touches a newline, so
+        # the line numbers recorded against each URL stay exact.
+        from skillsniff.core.text import refang
+
+        file_context.urls = find_urls(refang(url_source), scanned.display)
         file_context.dependencies = parse_manifest(name, scanned.text, scanned.display)
 
         context.externals.extend(file_context.urls)

@@ -283,6 +283,57 @@ registry.define_all(
             references=(TOXICSKILLS,),
             taxonomy=("CWE-200",),
         ),
+        RuleMeta(
+            id="EXF006",
+            title="Data exfiltrated through a DNS lookup",
+            family=Family.EXF,
+            severity=Severity.HIGH,
+            confidence=Confidence.MEDIUM,
+            explanation=(
+                "A DNS lookup ('nslookup', 'dig', 'host', 'drill') whose queried name is built "
+                "from data — a variable, a command substitution, or a label named like a "
+                "secret — so the lookup itself carries the data to whoever runs the domain's "
+                "nameserver."
+            ),
+            impact=(
+                "DNS leaves almost every network, including ones that block HTTP egress, and "
+                "a lookup does not look like data leaving. Every query delivers its name to "
+                "the attacker's nameserver."
+            ),
+            remediation="Remove the lookup, or query a fixed name that carries no data.",
+            limitations=(
+                "Reserved documentation domains (example.com, .example, .test) are excluded "
+                "as they are by every exfiltration rule, so a sample written against one is "
+                "not reported. A lookup issued from code rather than a command is not seen."
+            ),
+            references=(
+                "https://attack.mitre.org/techniques/T1048/003/",
+            ),
+            taxonomy=("CWE-200", "ATT&CK:T1048.003"),
+        ),
+        RuleMeta(
+            id="EXF007",
+            title="Secrets sent by email",
+            family=Family.EXF,
+            severity=Severity.HIGH,
+            confidence=Confidence.MEDIUM,
+            explanation=(
+                "Mail is sent — an 'smtp://' address, sendmail/mail/mutt/swaks/msmtp, or "
+                "Python's smtplib — on a line that also names a credential, secret, token, "
+                "password, key file, or '.env'."
+            ),
+            impact=(
+                "Credentials leave over a channel most egress monitoring treats as ordinary "
+                "notification traffic."
+            ),
+            remediation="Do not mail secrets. Send a notification that carries no credential.",
+            limitations=(
+                "Requires the mail command and the secret on the same line. Documentation "
+                "domains are excluded. Mail assembled across several lines, or a secret held "
+                "in a variable with a neutral name, is not connected."
+            ),
+            taxonomy=("CWE-200",),
+        ),
     ]
 )
 
@@ -545,3 +596,70 @@ def check_file_upload(context: AnalysisContext) -> Iterator[Finding]:
             message=f"{match.path}: uploads file contents — {match.excerpt!r}",
             evidence=[match.evidence()],
         )
+
+
+#: A DNS lookup tool, then a name whose leftmost labels carry data.
+DNS_EXFIL = re.compile(
+    r"\b(?:nslookup|dig|host|drill)\b[^\n|;]{0,40}?\s"
+    r"(?P<name>"
+    r"(?:\$\{?\w+\}?|\$\([^)\n]{1,80}\)|`[^`\n]{1,80}`)[\w.${}()`-]*\.[\w-]+(?:\.[\w-]+)+"
+    r"|[\w-]*(?:token|secret|passw(?:or)?d|api[_-]?key|credential)[\w-]*\.[\w-]+(?:\.[\w-]+)+"
+    r")",
+    re.IGNORECASE,
+)
+
+#: Sending mail, by URL, command, or library.
+MAIL_SEND = re.compile(
+    r"\bsmtps?://(?P<host>[^\s/'\"<>:]+)"
+    # sendmail, mutt, swaks and msmtp are unambiguous tool names. "mail" is
+    # also an English word, so it counts only in command position — piped into,
+    # or at the start of a command — and with a flag. Matching the bare word
+    # fired on the sentence "sends a notification by mail; no secret is on the
+    # line", which names a secret and the word "mail" and sends nothing.
+    r"|\b(?:sendmail|mutt|swaks|msmtp)\b[^\n]{0,160}"
+    r"|(?:^|[|;&]|\$\()[ \t]*mailx?[ \t]+-[A-Za-z][^\n]{0,160}"
+    r"|\bsmtplib\.SMTP(?:_SSL)?\s*\(",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+#: Something on the same line that names a secret.
+SECRET_CONTEXT = re.compile(
+    r"\b(?:secrets?|credentials?|passwords?|passwd|tokens?|api[\s_-]?keys?|private[\s_-]?keys?)\b"
+    r"|\.env\b|\bid_rsa\b|\.aws/credentials|\.ssh/",
+    re.IGNORECASE,
+)
+
+
+def _line_of(match: _scan.Match) -> str:
+    view = match.file.view
+    if view is None or match.projection == "decoded":
+        return match.text
+    start = view.raw.rfind("\n", 0, match.start) + 1
+    end = view.raw.find("\n", match.end)
+    return view.raw[start : end if end != -1 else len(view.raw)]
+
+
+@registry.implement("EXF006")
+def check_dns_exfiltration(context: AnalysisContext) -> Iterator[Finding]:
+    for match in _scan.scan(context, DNS_EXFIL, limit_per_file=4):
+        name = (DNS_EXFIL.match(match.text) or DNS_EXFIL.search(match.text))
+        queried = name.group("name") if name else match.text
+        # The registrable part is what an attacker controls; a reserved
+        # documentation domain cannot be a real destination.
+        labels = [part for part in queried.split(".") if part]
+        domain = ".".join(labels[-2:]).lower() if len(labels) >= 2 else queried.lower()
+        if is_benign_host(domain) or is_benign_host(queried.lower()):
+            continue
+        yield _scan.emit_match("EXF006", context.name, match)
+
+
+@registry.implement("EXF007")
+def check_mail_exfiltration(context: AnalysisContext) -> Iterator[Finding]:
+    for match in _scan.scan(context, MAIL_SEND, limit_per_file=4):
+        if not (SECRET_CONTEXT.search(_line_of(match)) or SECRET_ENV_NAME.search(_line_of(match))):
+            continue
+        host = (match.text.split("://", 1)[1].split("/")[0].split(":")[0]
+                if "://" in match.text else "")
+        if host and is_benign_host(host.lower()):
+            continue
+        yield _scan.emit_match("EXF007", context.name, match)
