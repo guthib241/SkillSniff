@@ -1,0 +1,8 @@
+name = "clone-then-run"
+label = "malicious"
+category = "supply-chain"
+source = "public-pattern"
+description = "Clones a repository at whatever its default branch holds and runs its installer."
+expect_rules = ["EXE008"]
+forbid_rules = []
+expect_verdict = "REVIEW"

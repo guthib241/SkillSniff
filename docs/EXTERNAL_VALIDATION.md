@@ -382,6 +382,95 @@ Anything they reveal becomes a documented miss and, at most, a roadmap entry.
 
 ---
 
+## Development work on ClawHub, before the holdout
+
+Pre-registration 2 set ClawHub's `train` and `validation` splits aside for
+development, "chiefly for false positives on rows ClawScan judged clean". This
+is what that work found and changed. Everything here happened before any
+holdout sample was downloaded, and every figure in it is on the development
+split, which the changes were made against. **None of it is a measurement.**
+
+Scope: the 4,806 development rows whose bundle contains JavaScript, TypeScript
+or Python, or an extensionless script with a shebang — the rows the new
+JavaScript analysis and the Python changes could affect. ClawScan labels them
+2,589 clean, 2,196 suspicious and 21 malicious.
+
+### A property of the dataset: every SKILL.md is one line
+
+ClawHub stores `skill_md_content` with its newlines removed: 3,000 of the
+first 3,000 training rows are a single line. Bundled files keep theirs. For
+this dataset, then, every rule reading `SKILL.md` sees one line: code fences
+cannot be found, frontmatter cannot be parsed, and a per-line window runs
+across what were separate sections. That is not a property of real skills, so
+ClawHub agreement figures say less about SkillSniff's handling of `SKILL.md`
+than they appear to, in both directions. The protocol is unchanged — the rows
+are scanned as published — and the holdout result carries this caveat.
+
+### False BLOCKs on rows ClawScan judged clean
+
+When this work began, SkillSniff blocked **443 of 2,589** clean development
+rows (17.1%). In 291 of them a blocking finding sat in a bundled file, where
+the line structure is intact, so the cause was not only the flattening.
+Reading the findings showed mostly matching defects. For `MEM001` and
+`PER001` the match was right and the severity was the question: they blocked
+on a capability, and now block only when what is written is an attack
+(a judgement, stated as one in the CHANGELOG):
+
+| Rule | Clean rows it blocked | What it was actually matching |
+|---|---|---|
+| `CRE001` | 105 | `.env` inside `os.environ`, `.kube` inside `.Kubernetes-…`, "credentials" in docstrings and regular expressions, and a skill reading its own `.env` |
+| `EXF002` | 111 | `nc` inside `async`, "curl … API_KEY" in a sentence, and tokens in `Authorization` headers |
+| `MEM001` | 77 | integration guides saying "add this to your `AGENTS.md`" |
+| `PER002` | 75 | the bare words `crontab`, `.service` (a CSS class), `.plist` (an iOS `Info.plist`) |
+| `PER001` | 64 | documented `export` lines for `~/.bashrc` |
+| `PRV001` | 35 | Chromium's `--no-sandbox`, the YOLO model's `--yolo`, prompts inside scripts |
+
+A row can carry several. The fixes are listed in the CHANGELOG; each has a
+regression test and a counterweight showing the attack it exists for still
+fires at full severity.
+
+### After the fixes, on the same rows
+
+| ClawScan label | Rows | Blocked before | Blocked after | Flagged before | Flagged after |
+|---|---|---|---|---|---|
+| clean | 2,589 | 443 (17.1%) | **118 (4.6%)** | 1,597 (61.7%) | 1,574 (60.8%) |
+| suspicious | 2,196 | 622 | 234 | 1,748 | 1,759 |
+| malicious | 21 | 3 | **0** | 14 | 14 |
+
+"Flagged" is BLOCK or REVIEW. Most of what stopped blocking moved to REVIEW,
+where a person still decides: the capability rules — credential access with
+network egress, shell execution, persistence — ask for that by design, which is
+also why roughly 60% of rows ClawScan calls clean are still flagged. That is
+disagreement with another scanner's threshold, not a measured error rate.
+
+**The three malicious rows that stopped blocking were blocked for the wrong
+reason.** One by a reference document mentioning `LaunchAgents`, one by
+Chromium's `--no-sandbox`, one by a code comment containing "credentials" —
+each a false-positive class removed here. All three are still flagged, now on
+the findings that bear on them: code run from an unpinned clone, obfuscation,
+and supply-chain findings. Reporting 3 → 0 without that would hide the cause;
+reporting it as a recall loss would misstate it.
+
+What still blocks clean rows: a credential sent in a request body or query
+string (`EXF001` 22 rows, `EXF002` 21) — an IndexNow key, a maps key, an OAuth
+client secret, indistinguishable from exfiltration without knowing the
+service; `curl … | sh` installers (`EXE001`, 16); credential-store reads
+(`CRE001`, 21); injection phrasing (`INJ001`, 14); agent flags and
+instruction-level bypasses (`PRV001`, 12); MCP configuration writes (`MCP001`,
+10). These are left as they are: each is the shape its rule exists for, and
+loosening them on development data is how a benchmark gets bought.
+
+### What the new JavaScript analysis added
+
+On the same rows, the JavaScript analysis added CRITICAL `EXF001` findings on
+seven clean rows before the fixes above. Three were authentication shapes it
+did not yet recognise (an SMTP transport's `auth`, a request built from a
+`URL` object) and are fixed. The rest send a credential to its own service in
+a request body or query string — an IndexNow key, a maps API key, an OAuth
+client secret — which the Python rule also reports, by design: a secret in a
+payload is not distinguishable from exfiltration without knowing the service.
+They are left as they are and counted.
+
 ## What this measures, and what it does not
 
 **Measured.** The false-positive side. `anthropics/skills` is a public,

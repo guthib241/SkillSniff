@@ -1,6 +1,6 @@
 # Rule catalogue
 
-93 rules in 16 families, generated from the registry by
+94 rules in 16 families, generated from the registry by
 `scripts/gen_rules_doc.py` for SkillSniff 0.2.0. Do not edit by hand.
 
 `skillsniff explain <RULE>` prints any entry below, including its limitations.
@@ -21,7 +21,7 @@ contribute to the security verdict.
 | [`CON`](#con) Capability / contract mismatch | 9 | security |
 | [`CRE`](#cre) Credential and secret access | 3 | security |
 | [`EVA`](#eva) Scanner evasion | 5 | security |
-| [`EXE`](#exe) Execution | 7 | security |
+| [`EXE`](#exe) Execution | 8 | security |
 | [`EXF`](#exf) Exfiltration | 7 | security |
 | [`INJ`](#inj) Prompt / instruction injection | 6 | security |
 | [`MCP`](#mcp) Tool and MCP abuse | 3 | security |
@@ -358,13 +358,13 @@ contribute to the security verdict.
 
 **high** · high confidence
 
-**Detects.** A subprocess is created with shell=True, or via os.system/os.popen. Detected from the Python AST, so the keyword appearing in a comment or string does not match.
+**Detects.** A subprocess is created with shell=True, or via os.system/os.popen; in JavaScript or TypeScript, through child_process.exec/execSync, spawn or execFile with shell: true or sh -c, shelljs, or a zx/execa/Bun $`…` template. Detected from the Python AST and the JavaScript token stream, so the call appearing in a comment, string, or regular expression does not match.
 
 **Why it matters.** Any value interpolated into the command string is interpreted by the shell. If any part of it derives from file contents, a filename, or model output, that is command injection.
 
 **Fix.** Pass an argument list — subprocess.run(['git', 'status']) — which never invokes a shell and needs no quoting.
 
-**Cannot detect.** Python only, from the AST. The equivalent in JavaScript, Ruby, or a shell wrapper is not detected by this rule.
+**Cannot detect.** Python and JavaScript/TypeScript only. JavaScript is tokenised, not parsed: a callee reached through a wrapper function, a re-export from another file, or a computed property is missed. Ruby, Perl, and shell wrappers are not covered by this rule.
 
 **Taxonomy.** `CWE-78`
 
@@ -374,13 +374,13 @@ contribute to the security verdict.
 
 **high** · high confidence
 
-**Detects.** eval, exec, compile, or an equivalent is called on a non-literal value; or pickle/marshal is used to load data. Detected from the AST.
+**Detects.** eval, exec, compile, or an equivalent is called on a non-literal value; or pickle/marshal is used to load data. In JavaScript or TypeScript: eval, new Function, the vm module, or setTimeout/setInterval given a string built at runtime. Detected from the Python AST and the JavaScript token stream; a call on a plain string literal is not reported.
 
 **Why it matters.** Whatever the value evaluates to becomes executable code. pickle.loads on untrusted input is arbitrary code execution by design, not by accident.
 
 **Fix.** Parse data with json or ast.literal_eval. If dispatch is needed, use an explicit mapping of allowed operations.
 
-**Cannot detect.** Python only, from the AST. Dynamic execution in another language, or via a library that evaluates strings internally, is not detected.
+**Cannot detect.** Python and JavaScript/TypeScript only. Dynamic execution in another language, or via a library that evaluates strings internally, is not detected. Bundled third-party code that compiles code at runtime (schema validators, template engines) is reported, because it does.
 
 **Taxonomy.** `CWE-502`, `CWE-95`
 
@@ -424,6 +424,20 @@ contribute to the security verdict.
 
 **Taxonomy.** `CWE-829`
 
+### `EXE008` — Code from an unpinned clone is executed
+
+**high** · medium confidence
+
+**Detects.** A repository is cloned and code inside it is then run: a script in the checkout, the project's build or install hooks after changing into it, or a pip install of the checkout. The link is followed from the clone's directory to what runs, so a clone followed by unrelated commands is not reported, and neither is one pinned to a full commit hash first.
+
+**Why it matters.** Whatever the repository holds at install time runs with the agent's privileges. It is 'curl | sh' over git: the repository's owner, or anyone who compromises it, decides what executes, and it can change after review.
+
+**Fix.** Pin the clone to a full commit hash ('git checkout <40-hex sha>') before running anything from it, or ship the code inside the skill where it can be reviewed.
+
+**Cannot detect.** Shell scripts and fenced shell blocks only, followed across one file. A clone made by code, or a directory held in a variable, is not followed. A tag or branch is not treated as a pin, because either can be moved. Ordinary setup instructions take this shape too; the finding asks for a pin, not removal.
+
+**Taxonomy.** `CWE-494`
+
 ## EXF
 
 **Exfiltration**
@@ -432,13 +446,13 @@ contribute to the security verdict.
 
 **critical** · high confidence
 
-**Detects.** Dataflow analysis of the Python AST found a value originating at an environment read, credential file, or keyring lookup reaching an outbound network call. The flow is followed through assignments, f-strings, containers and concatenation.
+**Detects.** Dataflow analysis found a secret reaching an outbound network call: a value from an environment variable whose name marks it as a secret (TOKEN, SECRET, API_KEY, PASSWORD…), the whole environment, a credential file, or a keyring lookup. Python is read from the AST and the flow followed through assignments, f-strings, containers and concatenation; JavaScript and TypeScript from the token stream, through assignments, destructuring, template literals, object literals and containers, into fetch, axios, http(s), sockets, mail transports, DNS lookups, or a shelled-out curl.
 
 **Why it matters.** This is exfiltration: a credential the agent holds is transmitted to a remote party. It is the single highest-severity finding this tool produces because the evidence is behavioural rather than lexical.
 
 **Fix.** Remove the transmission. If a credential must reach a service, it should be sent only to that service's documented endpoint over TLS, and the skill should state plainly which credential goes where.
 
-**Cannot detect.** Intraprocedural and Python-only. A flow that crosses a function boundary, passes through a class attribute, or is written in another language is not tracked here — the pattern-based EXF002 provides weaker coverage for those.
+**Cannot detect.** Intraprocedural, per file, and limited to Python and JavaScript/TypeScript. A flow that crosses a function boundary or a file, passes through a class attribute other than this.x, or is written in another language is not tracked here — the pattern-based EXF002 provides weaker coverage for those. A secret stored under a neutral variable name is not recognised as one. A credential sent as an authentication header to a fixed host is reported at LOW, whatever the host: the rule cannot tell a service's own endpoint from a look-alike.
 
 **Taxonomy.** `CWE-201`
 
@@ -506,7 +520,7 @@ contribute to the security verdict.
 
 **high** · medium confidence
 
-**Detects.** A DNS lookup ('nslookup', 'dig', 'host', 'drill') whose queried name is built from data — a variable, a command substitution, or a label named like a secret — so the lookup itself carries the data to whoever runs the domain's nameserver.
+**Detects.** A DNS lookup ('nslookup', 'dig', 'host', 'drill') whose queried name is built from data — a variable, a command substitution, or a label named like a secret — so the lookup itself carries the data to whoever runs the domain's nameserver. CRITICAL when the data is shown to be a secret (a secret-named variable, a credential file, the environment) and the domain is real; HIGH when only the shape is.
 
 **Why it matters.** DNS leaves almost every network, including ones that block HTTP egress, and a lookup does not look like data leaving. Every query delivers its name to the attacker's nameserver.
 
@@ -522,7 +536,7 @@ contribute to the security verdict.
 
 **high** · medium confidence
 
-**Detects.** Mail is sent — an 'smtp://' address, sendmail/mail/mutt/swaks/msmtp, or Python's smtplib — on a line that also names a credential, secret, token, password, key file, or '.env'.
+**Detects.** Mail is sent — an 'smtp://' address, sendmail/mail/mutt/swaks/msmtp, or Python's smtplib — on a line that also names a credential, secret, token, password, key file, or '.env'. CRITICAL when both halves are shown on the line: a concrete secret (a secret-named variable or a credential file) and an outside recipient or SMTP host; HIGH when only the secret is named.
 
 **Why it matters.** Credentials leave over a channel most egress monitoring treats as ordinary notification traffic.
 
@@ -680,9 +694,9 @@ contribute to the security verdict.
 
 ### `MEM001` — Agent instruction file modification
 
-**critical** · medium confidence
+**high** · medium confidence
 
-**Detects.** The skill writes to a file that provides standing instructions to the agent — CLAUDE.md, AGENTS.md, .cursorrules, a memory file, or an agent settings file.
+**Detects.** The skill writes to a file that provides standing instructions to the agent — CLAUDE.md, AGENTS.md, .cursorrules, a memory file, or an agent settings file. Reported CRITICAL when what is written removes the user's oversight ('without asking', 'always approve', 'ignore previous instructions') or is a payload; HIGH otherwise, because integration guides routinely say 'add this to your AGENTS.md'.
 
 **Why it matters.** The skill is rewriting the agent's own instructions. Content placed there is loaded in every future session as trusted context, which converts a single execution into permanent influence over the agent.
 
@@ -834,9 +848,9 @@ contribute to the security verdict.
 
 ### `PER001` — Shell profile modification
 
-**critical** · medium confidence
+**high** · medium confidence
 
-**Detects.** The skill writes to a shell startup file (.bashrc, .zshrc, .profile and similar). Requires both a profile path and a write verb nearby.
+**Detects.** The skill writes to a shell startup file (.bashrc, .zshrc, .profile and similar). Requires both a profile path and a write verb nearby. Reported CRITICAL when the line written is itself a payload — a fetch piped to a shell, a decoded blob, a reverse shell, a program in /tmp, an alias over sudo or ssh — and HIGH otherwise: adding an export line is ordinary setup.
 
 **Why it matters.** Anything added there executes on every future shell the user opens, indefinitely, with no further involvement from the skill or the agent. It survives uninstalling the skill.
 
@@ -848,15 +862,15 @@ contribute to the security verdict.
 
 ### `PER002` — Scheduled task or autostart registration
 
-**critical** · medium confidence
+**high** · medium confidence
 
-**Detects.** The skill registers a cron job, systemd unit, launch agent, Windows Run key, scheduled task, or Git hook.
+**Detects.** The skill registers a cron job, systemd unit, launch agent, Windows Run key, scheduled task, or Git hook: crontab fed a file or stdin, a write into a cron or autostart directory, systemctl enable, launchctl load, schtasks /create. Naming a mechanism is not registering one. Reported CRITICAL when the registered command is itself a payload (a fetch piped to a shell, a program in /tmp, a reverse shell), HIGH otherwise: a scheduled report is ordinary.
 
 **Why it matters.** Code runs on a schedule or on an event, independent of the agent and outside any session the user is watching.
 
 **Fix.** Do not install background execution. Perform work in the foreground when invoked.
 
-**Cannot detect.** Matches known scheduler and autostart mechanisms across Linux, macOS and Windows. A platform-specific mechanism outside that set is not detected.
+**Cannot detect.** Matches known scheduler and autostart mechanisms across Linux, macOS and Windows. A platform-specific mechanism outside that set is not detected, and neither is a payload that is assembled on a different line from the registration.
 
 **Taxonomy.** `MITRE-T1053`
 

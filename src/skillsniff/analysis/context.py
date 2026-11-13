@@ -22,6 +22,7 @@ from skillsniff.analysis.instructions import (
     infer_from_description,
     infer_from_instructions,
 )
+from skillsniff.analysis.jsscan import JS_SUFFIXES, JsAnalysis, analyze_javascript
 from skillsniff.analysis.pyast import PyAnalysis, analyze_python
 from skillsniff.analysis.shell import ShellAnalysis, parse_shell, shell_blocks
 from skillsniff.core.config import Config
@@ -33,6 +34,17 @@ from skillsniff.model.finding import Evidence
 from skillsniff.model.skill import Skill
 
 SHELL_SUFFIXES = frozenset({".sh", ".bash", ".zsh", ".ksh"})
+#: Interpreters whose shebang marks an extensionless script as JavaScript.
+_JS_INTERPRETERS = ("node", "deno", "bun", "zx", "tsx", "ts-node")
+
+
+def _is_js_script(text: str) -> bool:
+    if not text.startswith("#!"):
+        return False
+    first = text.split("\n", 1)[0]
+    return any(name in first.split("/")[-1].split() for name in _JS_INTERPRETERS) or any(
+        f"/{name}" in first for name in _JS_INTERPRETERS
+    )
 
 
 @dataclass
@@ -42,6 +54,7 @@ class FileContext:
     scanned: ScannedFile
     view: TextView | None = None
     python: PyAnalysis | None = None
+    js: JsAnalysis | None = None
     shell: ShellAnalysis | None = None
     urls: list[ExternalResource] = field(default_factory=list)
     dependencies: list[Dependency] = field(default_factory=list)
@@ -103,6 +116,9 @@ class AnalysisContext:
     def shell_files(self) -> Iterator[FileContext]:
         yield from (f for f in self.files if f.shell is not None)
 
+    def js_files(self) -> Iterator[FileContext]:
+        yield from (f for f in self.files if f.js is not None)
+
     def entry_evidence(self, line: int | None = None, excerpt: str = "") -> Evidence:
         return Evidence(path=self.entry_path, line=line, excerpt=excerpt)
 
@@ -144,6 +160,14 @@ def build_context(skill: Skill, config: Config, budget: Budget) -> AnalysisConte
                     CoverageReason.UNPARSEABLE,
                     file_context.python.syntax_error,
                 )
+        elif suffix in JS_SUFFIXES or _is_js_script(scanned.text):
+            file_context.js = analyze_javascript(scanned.text, scanned.display)
+            if file_context.js.truncated:
+                budget.note_gap(
+                    scanned.display,
+                    CoverageReason.ANALYSIS_TRUNCATED,
+                    file_context.js.truncated,
+                )
         elif suffix in SHELL_SUFFIXES or scanned.text.startswith("#!"):
             file_context.shell = parse_shell(scanned.text, scanned.display)
 
@@ -170,13 +194,20 @@ def build_context(skill: Skill, config: Config, budget: Budget) -> AnalysisConte
                 merged.network_sends.extend(block.network_sends)
                 merged.installers.extend(block.installers)
                 merged.destructive.extend(block.destructive)
+            # A clone in one block and its build in the next is the usual way a
+            # README is written, so the link is followed across the file's blocks.
+            from skillsniff.analysis.shell import find_clone_runs
+
+            merged.clone_runs = find_clone_runs(merged.commands)
             if merged.commands:
                 file_context.shell = merged
 
         # A URL inside a shell comment is documentation about a URL, not a
         # reference to one, so it must not become an external-resource edge.
         url_source = scanned.text
-        if suffix in SHELL_SUFFIXES or scanned.text.startswith("#!"):
+        # (A JavaScript file with a shebang is not a shell script: ``#`` is not
+        # its comment character, so blanking ``#`` lines would hide real code.)
+        if (suffix in SHELL_SUFFIXES or scanned.text.startswith("#!")) and file_context.js is None:
             from skillsniff.rules._scan import _blank_shell_comments
 
             url_source = _blank_shell_comments(scanned.text)
@@ -241,6 +272,8 @@ def _collect_capabilities(context: AnalysisContext) -> None:
     for file_context in context.files:
         if file_context.python is not None:
             surface.extend(file_context.python.observations)
+        if file_context.js is not None:
+            surface.extend(file_context.js.observations)
         if file_context.shell is not None:
             surface.extend(file_context.shell.observations)
 

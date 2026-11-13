@@ -18,6 +18,7 @@ from collections.abc import Iterator
 
 from skillsniff.analysis.context import AnalysisContext
 from skillsniff.analysis.external import is_benign_host
+from skillsniff.analysis.pyast import credential_kind, is_secret_name
 from skillsniff.model.finding import Confidence, Evidence, Finding, Severity
 from skillsniff.rules import _scan
 from skillsniff.rules.base import Family, RuleMeta, emit, registry
@@ -40,12 +41,17 @@ CREDENTIAL_PATH = re.compile(
 )
 
 #: An explicit read of a credential path — the verb is what raises confidence.
+#: Escapes that occur in regular expressions and never in a shell command line.
+_REGEX_ESCAPE = re.compile(r"\\[sdwSDWb]|\(\?[:=!<]")
+
 CREDENTIAL_READ = re.compile(
     r"\b(?:cat|less|more|head|tail|strings|cp|scp|rsync|tar|zip|base64|xxd|"
     r"open|read|read_text|read_bytes|readFile|readFileSync|load|slurp|Get-Content)\b"
     r"[^\n]{0,60}"
-    r"(?:\.ssh/|\.aws/|id_rsa|id_ed25519|\.netrc|\.npmrc|\.pypirc|credentials|"
-    r"\.gnupg|keychain|/etc/shadow)",
+    # "credentials" and "keychain" as paths, not words: "Load KUPID
+    # credentials" in a docstring is not a read of a credential store.
+    r"(?:\.ssh/|\.aws/|id_rsa|id_ed25519|\.netrc|\.npmrc|\.pypirc|"
+    r"(?:\.aws/|/)credentials\b|\.gnupg|Keychains?/|\.keychain(?:-db)?\b|/etc/shadow)",
     re.IGNORECASE,
 )
 
@@ -173,9 +179,14 @@ registry.define_all(
             severity=Severity.CRITICAL,
             confidence=Confidence.HIGH,
             explanation=(
-                "Dataflow analysis of the Python AST found a value originating at an environment "
-                "read, credential file, or keyring lookup reaching an outbound network call. The "
-                "flow is followed through assignments, f-strings, containers and concatenation."
+                "Dataflow analysis found a secret reaching an outbound network call: a value "
+                "from an environment variable whose name marks it as a secret (TOKEN, SECRET, "
+                "API_KEY, PASSWORD…), the whole environment, a credential file, or a keyring "
+                "lookup. Python is read from the AST and the flow followed through assignments, "
+                "f-strings, containers and concatenation; JavaScript and TypeScript from the "
+                "token stream, through assignments, destructuring, template literals, object "
+                "literals and containers, into fetch, axios, http(s), sockets, mail transports, "
+                "DNS lookups, or a shelled-out curl."
             ),
             impact=(
                 "This is exfiltration: a credential the agent holds is transmitted to a remote "
@@ -188,9 +199,13 @@ registry.define_all(
                 "state plainly which credential goes where."
             ),
             limitations=(
-                "Intraprocedural and Python-only. A flow that crosses a function boundary, "
-                "passes through a class attribute, or is written in another language is not "
-                "tracked here — the pattern-based EXF002 provides weaker coverage for those."
+                "Intraprocedural, per file, and limited to Python and JavaScript/TypeScript. A "
+                "flow that crosses a function boundary or a file, passes through a class "
+                "attribute other than this.x, or is written in another language is not tracked "
+                "here — the pattern-based EXF002 provides weaker coverage for those. A secret "
+                "stored under a neutral variable name is not recognised as one. A credential "
+                "sent as an authentication header to a fixed host is reported at LOW, whatever "
+                "the host: the rule cannot tell a service's own endpoint from a look-alike."
             ),
             references=(TOXICSKILLS, CWE_200),
             taxonomy=("CWE-201",),
@@ -293,7 +308,9 @@ registry.define_all(
                 "A DNS lookup ('nslookup', 'dig', 'host', 'drill') whose queried name is built "
                 "from data — a variable, a command substitution, or a label named like a "
                 "secret — so the lookup itself carries the data to whoever runs the domain's "
-                "nameserver."
+                "nameserver. CRITICAL when the data is shown to be a secret (a secret-named "
+                "variable, a credential file, the environment) and the domain is real; HIGH "
+                "when only the shape is."
             ),
             impact=(
                 "DNS leaves almost every network, including ones that block HTTP egress, and "
@@ -320,7 +337,9 @@ registry.define_all(
             explanation=(
                 "Mail is sent — an 'smtp://' address, sendmail/mail/mutt/swaks/msmtp, or "
                 "Python's smtplib — on a line that also names a credential, secret, token, "
-                "password, key file, or '.env'."
+                "password, key file, or '.env'. CRITICAL when both halves are shown on the "
+                "line: a concrete secret (a secret-named variable or a credential file) and an "
+                "outside recipient or SMTP host; HIGH when only the secret is named."
             ),
             impact=(
                 "Credentials leave over a channel most egress monitoring treats as ordinary "
@@ -352,19 +371,35 @@ def check_credential_access(context: AnalysisContext) -> Iterator[Finding]:
 
     # High confidence: a read verb next to a credential path.
     for match in _scan.scan(context, CREDENTIAL_READ, limit_per_file=6):
+        if _REGEX_ESCAPE.search(match.text):
+            continue  # a regular expression that mentions the path, not a read of it
         reported.add((match.path, match.line))
         yield _scan.emit_match(
             "CRE001", context.name, match, confidence=Confidence.HIGH
         )
 
-    # Structural: the AST saw a credential path literal in the source.
-    for file in context.python_files():
-        analysis = file.python
-        assert analysis is not None
+    # Structural: the AST, or the JavaScript token stream, saw a credential path
+    # literal in the source (in JavaScript, only one passed to a file read).
+    for file in context.files:
+        analysis = file.python or file.js
+        if analysis is None:
+            continue
         for value, line in analysis.credential_paths:
             if (file.path, line) in reported:
                 continue
             reported.add((file.path, line))
+            if credential_kind(value) == "project":
+                # The skill's own .env or OAuth client file: where its own key
+                # lives, not a store that belongs to the user.
+                yield emit(
+                    "CRE001",
+                    context.name,
+                    message=f"{file.path}: reads a project secret file {value!r}",
+                    evidence=[file.evidence(line=line, excerpt=value[:120])],
+                    severity=Severity.MEDIUM,
+                    confidence=Confidence.MEDIUM,
+                )
+                continue
             yield emit(
                 "CRE001",
                 context.name,
@@ -424,9 +459,10 @@ def check_env_dump(context: AnalysisContext) -> Iterator[Finding]:
 
 @registry.implement("EXF001")
 def check_taint_flows(context: AnalysisContext) -> Iterator[Finding]:
-    for file in context.python_files():
-        analysis = file.python
-        assert analysis is not None
+    for file in context.files:
+        analysis = file.python or file.js
+        if analysis is None:
+            continue
         for flow in analysis.taint_flows:
             # Sending a token in an Authorization header to a literal endpoint is
             # authentication, which is what credentials are *for*. Reporting it
@@ -444,7 +480,7 @@ def check_taint_flows(context: AnalysisContext) -> Iterator[Finding]:
                     evidence=[
                         file.evidence(
                             line=flow.sink_line,
-                            excerpt=f"{flow.sink}(…, headers=…{flow.variable}…)",
+                            excerpt=f"{flow.sink}(… headers … {flow.variable} …)",
                             note="credential used as an auth header, not sent as payload",
                         )
                     ],
@@ -479,13 +515,40 @@ SENDER = re.compile(
     # invocation. A bare \bhttp\b matched the prose "HTTP/2 protocol error" and
     # then swallowed 200 characters of documentation, which is how this rule
     # reported a credential exfiltration in a page about HTTP headers.
-    r"(?:curl|wget|httpie|nc|ncat|socat)\b[^\n]{0,200}"
+    #
+    # The tool must open a word and be followed by something a command takes
+    # (an option, a URL, a quoted or variable argument): without the leading
+    # \b, "nc" matched inside "sync", "async" and "func"; without the shape,
+    # "use curl for calls … API_KEY" in a sentence was a request.
+    r"\b(?:curl|wget|httpie)\b(?=[ \t]+(?:-|https?://|['\"$]|\{))[^\n]{0,200}"
+    r"|\b(?:nc|ncat|socat)\b(?=[ \t]+(?:-\w|\$|[\w.-]+[ \t]+\d))[^\n]{0,200}"
     r"|\bhttp\s+(?:(?:GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\b|https?://|:)[^\n]{0,200}"
     r"|(?:requests|httpx|axios|fetch)\s*\.?\s*(?:post|put|patch|request)\s*\([^\n]{0,200}",
     re.IGNORECASE,
 )
 
 _URL_IN = re.compile(r"https?://([^\s/'\"$)]+)", re.IGNORECASE)
+
+#: Where a credential is authentication rather than payload: a request header
+#: (curl -H/--header, a headers= or headers: mapping) or curl's -u user:pass.
+_AUTH_SPAN = re.compile(
+    r"(?:-H|--header)[ \t]*=?[ \t]*(?P<q>[\"'])[^\n]*?(?P=q)"
+    r"|(?:-u|--user)[ \t]+\S+"
+    r"|\bheaders?[ \t]*[=:][ \t]*\{[^{}\n]*\}",
+    re.IGNORECASE,
+)
+_SECRET_REFERENCE = re.compile(
+    r"os\.environ|process\.env|printenv|" + SECRET_ENV_NAME.pattern, SECRET_ENV_NAME.flags
+)
+
+
+def _only_in_auth_position(text: str) -> bool:
+    """Every secret in ``text`` sits inside a header or a basic-auth argument."""
+    spans = [m.span() for m in _AUTH_SPAN.finditer(text)]
+    secrets = [m.span() for m in _SECRET_REFERENCE.finditer(text)]
+    return bool(secrets) and all(
+        any(lo <= start and end <= hi for lo, hi in spans) for start, end in secrets
+    )
 
 
 @registry.implement("EXF002")
@@ -501,14 +564,27 @@ def check_secret_to_network(context: AnalysisContext) -> Iterator[Finding]:
             continue
 
         secret = SECRET_ENV_NAME.search(text)
+        name = secret.group(0) if secret else "environment data"
+        if _only_in_auth_position(text):
+            # A token in an Authorization header is what tokens are for. Same
+            # judgement as EXF001: visible, at LOW, never blocking.
+            yield emit(
+                "EXF002",
+                context.name,
+                message=(
+                    f"{match.path}: {name} is sent as an authentication header"
+                    + (f" to {host}" if host else "")
+                    + " — review that the endpoint is the credential's own service"
+                ),
+                evidence=[match.evidence()],
+                severity=Severity.LOW,
+                confidence=Confidence.LOW,
+            )
+            continue
         yield emit(
             "EXF002",
             context.name,
-            message=(
-                f"{match.path}: network request carries "
-                f"{secret.group(0) if secret else 'environment data'}"
-                + (f" to {host}" if host else "")
-            ),
+            message=f"{match.path}: network request carries {name}" + (f" to {host}" if host else ""),
             evidence=[match.evidence()],
         )
 
@@ -561,7 +637,7 @@ FILE_UPLOAD = re.compile(
 #: Commands whose only output is a description of the machine. Sending any of
 #: these somewhere is reconnaissance regardless of what the payload is called.
 RECON = re.compile(
-    r"(?:curl|wget|httpie|nc|ncat|socat)\b[^\n]{0,200}"
+    r"\b(?:curl|wget|httpie|nc|ncat|socat)\b[^\n]{0,200}"
     r"(?:\$\(|`)\s*(?:uname|whoami|hostname|id|w|who|arch|uptime|sw_vers|"
     r"systeminfo|lsb_release|ifconfig|ipconfig|ps|last|groups)\b",
     re.IGNORECASE,
@@ -639,6 +715,28 @@ def _line_of(match: _scan.Match) -> str:
     return view.raw[start : end if end != -1 else len(view.raw)]
 
 
+#: A shell variable reference, for judging what a command carries by the name.
+_VARIABLE = re.compile(r"\$\{?([A-Za-z_]\w*)")
+#: A mail recipient, whose domain is the destination.
+_RECIPIENT = re.compile(r"\b[\w.+-]+@((?:[\w-]+\.)+[A-Za-z]{2,})\b")
+#: Command substitution that dumps the environment.
+_ENV_SUBSTITUTION = re.compile(r"(?:\$\(|`)[^)`]*\b(?:env|printenv)\b")
+
+
+def _carries_secret(text: str) -> str:
+    """The secret ``text`` evidently carries — a secret-named variable, a credential
+    file, or the environment — or "" when the data is not shown to be a secret."""
+    for name in _VARIABLE.findall(text):
+        if is_secret_name(name):
+            return f"${name}"
+    path = CREDENTIAL_PATH.search(text)
+    if path:
+        return path.group(0)
+    if _ENV_SUBSTITUTION.search(text):
+        return "the environment"
+    return ""
+
+
 @registry.implement("EXF006")
 def check_dns_exfiltration(context: AnalysisContext) -> Iterator[Finding]:
     for match in _scan.scan(context, DNS_EXFIL, limit_per_file=4):
@@ -650,16 +748,44 @@ def check_dns_exfiltration(context: AnalysisContext) -> Iterator[Finding]:
         domain = ".".join(labels[-2:]).lower() if len(labels) >= 2 else queried.lower()
         if is_benign_host(domain) or is_benign_host(queried.lower()):
             continue
+        # Both halves evidenced — a secret in the name, a real domain to
+        # receive it — is exfiltration, not a lookup that happens to use data.
+        secret = _carries_secret(queried)
+        if secret:
+            yield _scan.emit_match(
+                "EXF006",
+                context.name,
+                match,
+                message=f"{match.path}: a DNS lookup carries {secret} to {domain}",
+                severity=Severity.CRITICAL,
+            )
+            continue
         yield _scan.emit_match("EXF006", context.name, match)
 
 
 @registry.implement("EXF007")
 def check_mail_exfiltration(context: AnalysisContext) -> Iterator[Finding]:
     for match in _scan.scan(context, MAIL_SEND, limit_per_file=4):
-        if not (SECRET_CONTEXT.search(_line_of(match)) or SECRET_ENV_NAME.search(_line_of(match))):
+        line = _line_of(match)
+        if not (SECRET_CONTEXT.search(line) or SECRET_ENV_NAME.search(line)):
             continue
         host = (match.text.split("://", 1)[1].split("/")[0].split(":")[0]
                 if "://" in match.text else "")
         if host and is_benign_host(host.lower()):
+            continue
+        # A concrete secret on the line and an outside recipient: the mail is
+        # shown to leave with the credential. A secret *word* near a mail
+        # command, with nowhere shown to send it, stays HIGH.
+        secret = _carries_secret(line)
+        recipients = [d.lower() for d in _RECIPIENT.findall(line) if not is_benign_host(d.lower())]
+        destination = host if host and not is_benign_host(host.lower()) else (recipients[0] if recipients else "")
+        if secret and destination:
+            yield _scan.emit_match(
+                "EXF007",
+                context.name,
+                match,
+                message=f"{match.path}: mails {secret} to {destination}",
+                severity=Severity.CRITICAL,
+            )
             continue
         yield _scan.emit_match("EXF007", context.name, match)

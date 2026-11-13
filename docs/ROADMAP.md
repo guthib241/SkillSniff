@@ -16,7 +16,12 @@ Working, tested, and covered by the benchmark corpus.
 - **Security rules** — 59 rules across 14 security families
 - **Python AST analysis** — capability extraction, `shell=True`, dynamic eval,
   and intraprocedural taint-lite dataflow with authentication-shape recognition
-- **Shell analysis** — quote-aware tokenising, pipeline analysis, comment stripping
+- **JavaScript / TypeScript analysis** — a linear tokeniser (not a parser) feeding
+  shell execution (`EXE003`), dynamic eval (`EXE004`), taint-lite dataflow into
+  network calls, sockets and shelled-out `curl` (`EXF001`), credential-file reads
+  (`CRE001`), and the capability surface
+- **Shell analysis** — quote-aware tokenising, pipeline analysis, comment
+  stripping, and clone-then-run (`EXE008`)
 - **Unicode threat analysis** — zero-width, bidi, tag characters, variation
   selectors, private-use, mixed-script homoglyphs
 - **Recursive decoding** — base64, base32, hex, percent, escapes, Unicode tags,
@@ -33,7 +38,7 @@ Working, tested, and covered by the benchmark corpus.
 - **Lock / verify** — content hashes, capability snapshot, provenance, graded change detection
 - **Behavioural diff** — capability, dependency, external and verdict deltas
 - **Policy engine** — deterministic, testable, every decision names its clause
-- **SkillSniffBench** — 52-case corpus, precision/recall/F1, per-category and per-source metrics
+- **SkillSniffBench** — 56-case corpus, precision/recall/F1, per-category and per-source metrics
 - **Linear cost in line count** — four patterns used `^\s*` under
   `re.MULTILINE`, which made a file of blank lines quadratic (224 s for
   100,000). Now single-digit milliseconds, with a regression test that pads a
@@ -58,8 +63,9 @@ Working, tested, and covered by the benchmark corpus.
 
 Designed and intended, not yet built.
 
-- **Non-Python AST analysis** — JavaScript and TypeScript first, since they are
-  the second most common bundled language. Currently pattern-only.
+- **Structural analysis for Ruby, Go and Rust** — pattern-only today.
+  JavaScript and TypeScript are tokenised; a full parser would add
+  interprocedural flow and computed-property resolution.
 - **Interprocedural dataflow** — the taint analysis stops at function
   boundaries; call-graph propagation would materially raise `EXF001` recall.
 - **Attestation** — sign a lockfile so a verified skill can be proven verified.

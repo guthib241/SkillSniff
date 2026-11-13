@@ -39,6 +39,9 @@ class CoverageReason(str, Enum):
     TIME_BUDGET_EXCEEDED = "time-budget-exceeded"
     UNREADABLE = "unreadable"
     UNPARSEABLE = "unparseable"
+    #: A language analyser stopped early on pathological input. The pattern
+    #: scanners still read the file; the structural analysis did not finish.
+    ANALYSIS_TRUNCATED = "analysis-truncated"
     BINARY = "binary"
     ENCRYPTED_ARCHIVE = "encrypted-archive"
     UNSAFE_PATH = "unsafe-path"

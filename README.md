@@ -156,7 +156,8 @@ broken scanner cannot show up as a passing build.
 Not just `SKILL.md`. Every artifact that reaches the agent:
 
 - **Instructions** — the body, and every referenced document under `references/`
-- **Bundled code** — Python via AST (not regex), shell via a quote-aware tokeniser
+- **Bundled code** — Python via AST (not regex), JavaScript and TypeScript via a tokeniser that knows
+  strings, templates, comments and regexes from code, shell via a quote-aware tokeniser
 - **Dependencies** — `requirements.txt`, `package.json`, `pyproject.toml`, and npm install hooks
 - **External references** — every URL, classified by how much it can change after review
 - **Archives** — inside `.zip` and `.tar.*`, recursively, in memory, never extracted
@@ -278,7 +279,7 @@ inspect.**
 
 ## Rule taxonomy
 
-93 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
+94 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
 of them, including what it *cannot* detect.
 
 | | | | |
@@ -324,7 +325,7 @@ Every decision names the clause that produced it. See
 
 ## Measured results
 
-On **SkillSniffBench**, the 52-case corpus in `src/skillsniff/bench/corpus`:
+On **SkillSniffBench**, the 56-case corpus in `src/skillsniff/bench/corpus`:
 
 | Metric | Value |
 | --- | --- |
@@ -452,8 +453,10 @@ because it is exactly what a self-authored corpus structurally cannot surface.
   executes them. It cannot tell you what a skill does at runtime.
 - **English-centric.** Injection and instruction detection match English
   phrasing. The same attack in another language is largely undetected.
-- **Python-only dataflow.** The taint analysis behind EXF001 is intraprocedural
-  and Python-only. JavaScript, Ruby and shell get weaker, pattern-based coverage.
+- **Intraprocedural dataflow, two languages.** The taint analysis behind EXF001
+  covers Python (from the AST) and JavaScript/TypeScript (from a tokeniser, not a
+  parser), within one function's reach and one file. Ruby, Go and shell get
+  weaker, pattern-based coverage.
 - **No network, no model.** External references are classified structurally, not
   fetched. There is no LLM in the loop: the optional semantic and behavioural
   layers exist as tested *contracts* with no provider and no runner behind them

@@ -26,7 +26,7 @@ import tarfile
 import zipfile
 from dataclasses import dataclass
 
-from skillsniff.core.fs import ScannedFile, classify, looks_binary, safe_member_path
+from skillsniff.core.fs import ScannedFile, classify_content, looks_binary, safe_member_path
 from skillsniff.core.limits import Budget, CoverageReason
 
 #: Individual members larger than this are not read even if the archive fits.
@@ -143,7 +143,7 @@ def expand(
 def _make_entry(name: str, data: bytes, container: str, depth: int) -> ScannedFile:
     import hashlib
 
-    kind = classify(name)
+    kind = classify_content(name, data)
     text: str | None = None
     if kind == "text" and not looks_binary(data):
         text = data.decode("utf-8", errors="replace")

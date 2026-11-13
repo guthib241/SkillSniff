@@ -21,7 +21,7 @@ is that it reports how often it is wrong. Three kinds of entry appear below:
 
 | Claim | Kind | Source |
 |---|---|---|
-| 93 rules | DERIVED | `python -m skillsniff rules \| tail -2`; `scripts/gen_rules_doc.py` prints `93 rules, 16 families` |
+| 94 rules | DERIVED | `python -m skillsniff rules \| tail -2`; `scripts/gen_rules_doc.py` prints `94 rules, 16 families` |
 | 16 families | DERIVED | same |
 | SARIF 2.1.0 | CITED | [OASIS SARIF 2.1.0 specification](https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html) |
 | Python 3.11+ | DERIVED | `requires-python = ">=3.11"` in `pyproject.toml`; CI runs 3.11, 3.12, 3.13 |
@@ -34,9 +34,9 @@ Measured 2026-11-13, SkillSniff 0.2.0, Python 3.11.18, one core. Reproduce with
 
 | Claim | Kind | Source |
 |---|---|---|
-| 52 cases | DERIVED | `ls src/skillsniff/bench/corpus/*/ \| wc -l` — 33 malicious, 4 benign, 15 hard negatives |
-| 33 true positives | MEASURED | `python -m skillsniff benchmark` |
-| 19 true negatives | MEASURED | same (4 benign + 15 hard negatives) |
+| 56 cases | DERIVED | `ls src/skillsniff/bench/corpus/*/ \| wc -l` — 35 malicious, 4 benign, 17 hard negatives |
+| 35 true positives | MEASURED | `python -m skillsniff benchmark` |
+| 21 true negatives | MEASURED | same (4 benign + 17 hard negatives) |
 | precision 1.000 | MEASURED | same |
 | recall 1.000 | MEASURED | same |
 | F1 1.000 | MEASURED | same |
@@ -115,26 +115,48 @@ skills**; the independent figure is the 0.316 above.
 `cuhk-zhuque/SkillTrustBench` and `OpenClaw/clawhub-security-signals` (both on
 Hugging Face) and the skillscan.sh benchmark. `huggingface.co` and
 `skillscan.sh` each return 403 to CONNECT at this session's egress proxy.
-Nothing was substituted for them.
+Nothing was substituted for them. (That was the first measurement. Both
+Hugging Face datasets became reachable afterwards and are the subject of
+pre-registration 2; skillscan.sh remains unmeasured.)
+
+## ClawHub development split (train + validation) — not a measurement
+
+Rows bundling JavaScript, TypeScript, Python or a shebang script: 4,806
+(2,589 clean, 2,196 suspicious, 21 malicious by ClawScan's label). The rules
+were changed against these rows, so every figure here is development data.
+Reproduced with the scripts described in `docs/EXTERNAL_VALIDATION.md`,
+*Development work on ClawHub, before the holdout*.
+
+| Claim | Kind | Source |
+|---|---|---|
+| 3,000 / 3,000 sampled `skill_md_content` values are a single line | MEASURED | first 3,000 rows of `data/train.jsonl` at `69dcbd32` |
+| 443 / 2,589 clean rows blocked before (17.1%) | MEASURED | scan at commit `4827b20` |
+| 118 / 2,589 clean rows blocked after (4.6%) | MEASURED | scan of this change |
+| 291 of the 443 had a blocking finding in a bundled file | MEASURED | same scan as the 443 |
+| 3 / 21 malicious rows blocked before, 0 after; 14 / 21 flagged both times | MEASURED | same two scans |
 
 **Per-rule precision is still unmeasured.** Recall now has a number; precision
 per rule does not, because that needs labels this project does not have.
 
 ## Performance
 
-Measured 2026-09-09 except where noted, Python 3.11.15, one core, median of 7
-runs. Table in [docs/LIMITATIONS.md](docs/LIMITATIONS.md); each row is
-regression-tested.
+Measured 2026-11-13, Python 3.11.18, x86_64, one core, median of 7 runs, by
+`python scripts/perf_table.py`, which generates every input shape. Table in
+[docs/LIMITATIONS.md](docs/LIMITATIONS.md). The earlier 2026-09-09 figures had
+no script behind them and are withdrawn rather than compared.
 
 | Claim | Kind | Source |
 |---|---|---|
-| 1.8 ms minimal skill | MEASURED | `docs/LIMITATIONS.md` performance table |
-| 43 ms typical skill | MEASURED | same |
-| 1.2 s large skill (70 files, ~2 MB) | MEASURED | same |
-| 417 ms archive with 200 entries | MEASURED | same |
-| 1.7 s for one 1 MB line | MEASURED | same |
-| 5 ms for 100 encoded regions | MEASURED | same |
-| ~111 MB peak RSS | MEASURED | same |
+| 3.4 ms minimal skill | MEASURED | `scripts/perf_table.py` |
+| 134 ms typical skill (10 files) | MEASURED | same |
+| 4.9 s large skill (70 files, ~2 MB) | MEASURED | same |
+| 252 ms archive with 200 entries | MEASURED | same |
+| 1.6 s for one 1 MB line | MEASURED | same |
+| 44 ms for 100 encoded regions | MEASURED | same |
+| 2.8 s for one 1 MB minified JavaScript file | MEASURED | same |
+| 205 ms for a script padded with 100,000 blank lines | MEASURED | same |
+| ~115 MB peak RSS | MEASURED | same |
+| no timing regression from this change (4.94 s before, 5.05 s after, same input) | MEASURED | the large-skill shape timed against both trees |
 
 ## External research
 

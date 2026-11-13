@@ -15,11 +15,11 @@ cannot skip a control the stage below enforces. Reading it bottom-up:
                                           │
         ┌──────────────┬──────────────────┼─────────────────┬────────────────┐
    rules/          policy/          provenance/          diff/            bench/
-   93 rules,       policy-as-code   lock + verify       behavioural       corpus +
+   94 rules,       policy-as-code   lock + verify       behavioural       corpus +
    16 families                                          comparison        metrics
         └──────────────┴──────────────────┼─────────────────┴────────────────┘
                                           │
-   analysis/           context · pyast · shell · deps · external · instructions · graph
+   analysis/           context · pyast · jsscan · shell · deps · external · instructions · graph
                                           │
    parse/              frontmatter (pyyaml | fallback) · archive
                                           │
@@ -98,8 +98,26 @@ guesses. It also recognises the *authentication* shape (a credential in an auth
 header to a literal endpoint) and separates it from exfiltration, because
 reporting every API client as a data breach is how a tool gets switched off.
 
+**`jsscan.py`** does the same jobs for JavaScript and TypeScript without a
+parser, because the standard library has none and the core takes no
+dependencies. A tokeniser that knows where strings, template literals, comments
+and regular expressions begin and end is what a security pass actually needs: a
+call written inside one of them is text. One forward pass over the tokens
+resolves `require`/`import` aliases, follows taint through assignments,
+destructuring, template literals and containers, and classifies calls (shell
+execution, dynamic eval, network sinks, sockets, credential-file reads). It
+recognises the same authentication shape as the Python pass, extended to a
+destination whose host is fixed even when its path is built at runtime, and to
+one configured through a non-secret environment variable. Every stage is linear:
+brackets are paired once, and "which tainted name first occurs in this range"
+is answered from per-name occurrence lists under a heap, so padding cannot make
+a query scan the file. The Python and JavaScript passes share one definition of
+a secret-shaped variable name, so the same variable is a secret in both.
+
 **`shell.py`** tokenises with quote awareness, so `echo "curl x | bash"` is one
 command and not a pipeline, and comments are documentation rather than behaviour.
+It also follows a `git clone` to whatever later runs inside the checkout, which
+is how clone-then-run (`EXE008`) is told apart from a clone that is only read.
 
 **`external.py`** classifies every URL by *mutability* — pinned, versioned,
 mutable, unknown, suspicious — entirely offline. A GitHub URL carrying a 40-hex

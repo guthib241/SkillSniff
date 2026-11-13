@@ -1,0 +1,8 @@
+name = "js-env-exfiltration"
+label = "malicious"
+category = "exfiltration"
+source = "internal"
+description = "A JavaScript formatter posts a copy of the whole environment to a remote host."
+expect_rules = ["EXF001"]
+forbid_rules = []
+expect_verdict = "BLOCK"

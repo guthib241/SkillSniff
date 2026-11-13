@@ -21,6 +21,8 @@ from __future__ import annotations
 
 import ast
 import re
+from collections import deque
+from collections.abc import Iterator
 from dataclasses import dataclass, field
 
 from skillsniff.model.capability import Capability, Observation, Source
@@ -170,16 +172,86 @@ NETWORK_SINKS = frozenset(
 #: Environment variable names that indicate a credential rather than config.
 SECRET_NAME_RE = re.compile(
     r"TOKEN|SECRET|PASSWORD|PASSWD|API[_-]?KEY|APIKEY|CREDENTIAL|PRIVATE[_-]?KEY"
-    r"|ACCESS[_-]?KEY|AUTH|SESSION[_-]?KEY|CLIENT[_-]?SECRET",
+    # AUTH as a word of its own: inside SMTP_REJECT_UNAUTHORIZED, OAUTH_URL or
+    # GIT_AUTHOR_NAME it names a setting, not a secret. AUTHORIZATION, the
+    # header's value, still counts.
+    r"|(?<![A-Za-z])AUTH(?!OR(?!IZATION))"
+    r"|ACCESS[_-]?KEY|SESSION[_-]?KEY|CLIENT[_-]?SECRET",
     re.IGNORECASE,
 )
 
-#: Filenames whose presence in a path literal implies credential access.
-CREDENTIAL_PATH_MARKERS = (
-    ".ssh", ".aws", ".gnupg", ".kube", ".docker/config", "id_rsa", "id_ed25519",
-    ".netrc", ".npmrc", ".pypirc", "credentials", "secrets", ".env",
-    "keychain", "cookies.sqlite", "login data",
+#: A word that names a secret on its own: OPENAI_KEY, DB_PASS, GH_PAT, DB_PWD.
+_SECRET_WORD_RE = re.compile(r"(?:^|[_-])(?:KEY|PASS|PAT)(?:$|[_-])|[_-]PWD$", re.IGNORECASE)
+
+#: Suffixes that make a credential-sounding name describe something else: where
+#: the service is (OAUTH_URL, AUTH_DOMAIN), what it is called (GIT_AUTHOR_NAME),
+#: or how it behaves (TOKEN_TIMEOUT). The value is configuration, not a secret.
+_NOT_SECRET_SUFFIX_RE = re.compile(
+    r"[_-](?:URLS?|URIS?|HOST|HOSTNAME|ENDPOINT|DOMAIN|PATH|DIR|FILE|MODE|NAME|EMAIL|"
+    r"ENABLED|REGION|PROVIDER|TYPE|VERSION|TIMEOUT|PORT|LENGTH|ALGORITHM|FORMAT|TTL|SCOPES?)$",
+    re.IGNORECASE,
 )
+
+
+def is_secret_name(name: str) -> bool:
+    """Whether an environment variable's name says its value is a secret.
+
+    Shared by the Python and JavaScript analysers, so the same variable is a
+    secret in both. Reading ``API_URL`` from the environment is configuration:
+    treating every environment read as a secret made an ordinary configured
+    endpoint look like credential exfiltration.
+    """
+    if not (SECRET_NAME_RE.search(name) or _SECRET_WORD_RE.search(name)):
+        return False
+    return not _NOT_SECRET_SUFFIX_RE.search(name)
+
+
+#: Calls that read one environment variable, named by their first argument.
+_ENV_GETTERS = frozenset({"os.getenv", "os.environ.get"})
+
+#: Path components naming a credential store that belongs to the user or the
+#: system rather than to the skill: reading one reaches beyond the skill.
+_SYSTEM_CREDENTIAL_PARTS = frozenset(
+    {".ssh", ".aws", ".gnupg", ".kube", ".netrc", ".npmrc", ".pypirc", ".git-credentials",
+     "id_rsa", "id_ed25519", "id_ecdsa", "id_dsa", "cookies.sqlite", "login data", "keychains"}
+)
+_SYSTEM_CREDENTIAL_PAIRS = frozenset(
+    {(".docker", "config.json"), (".config", "gh"), (".config", "gcloud"), (".azure", "accesstokens.json"),
+     ("etc", "shadow"), ("etc", "sudoers"), ("etc", "passwd")}
+)
+#: A secret file a project keeps for itself: its .env, its OAuth client file.
+_PROJECT_SECRET_FILE = re.compile(
+    r"^(?:\.env(?:\.[\w-]+)?|credentials(?:\.json)?|secrets(?:\.(?:json|ya?ml|toml))?|"
+    r"service[_-]account\.json|client[_-]secrets?(?:[\w-]*)\.json)$"
+)
+#: A string that is a regular expression, not a path.
+_REGEX_SHAPED = re.compile(r"\\[sdwSDW.\[\]()]|\(\?|\|")
+
+
+def credential_kind(value: str) -> str | None:
+    """Classify a path literal: "system", "project", or None for no credential.
+
+    Matches whole path components. The substring test this replaces read
+    ``os\\.environ`` as ``.env``, ``.Kubernetes-Encyclopedia`` as ``.kube``,
+    and any docstring or regular expression mentioning "credentials" as a path
+    to one; CRE001 was a blocking finding on 105 rows of ClawHub's development
+    split that ClawScan judged clean.
+    """
+    text = value.strip()
+    if not text or len(text) > 300 or "\n" in text or _REGEX_SHAPED.search(text):
+        return None
+    lowered = text.lower()
+    if any(ch.isspace() for ch in lowered) and "login data" not in lowered:
+        return None  # prose, not a path
+    parts = [p for p in re.split(r"[\\/]+", lowered) if p not in ("", "~", ".", "..")]
+    for index, part in enumerate(parts):
+        if part in _SYSTEM_CREDENTIAL_PARTS or part.endswith((".keychain", ".keychain-db")):
+            return "system"
+        if index + 1 < len(parts) and (part, parts[index + 1]) in _SYSTEM_CREDENTIAL_PAIRS:
+            return "system"
+    if parts and any(_PROJECT_SECRET_FILE.match(part) for part in parts):
+        return "project"
+    return None
 
 
 @dataclass
@@ -307,7 +379,7 @@ class _Visitor(ast.NodeVisitor):
         if dotted in ("os.getenv", "os.environ.get") and node.args:
             first = node.args[0]
             if isinstance(first, ast.Constant) and isinstance(first.value, str):
-                if SECRET_NAME_RE.search(first.value):
+                if is_secret_name(first.value):
                     self.result.observations.append(
                         Observation(
                             capability=Capability.CREDENTIAL_HANDLING,
@@ -411,7 +483,7 @@ class _Visitor(ast.NodeVisitor):
                     detail=f"reads environment variable {key!r}" if key else "reads the environment",
                 )
             )
-            if key and SECRET_NAME_RE.search(key):
+            if key and is_secret_name(key):
                 self.result.observations.append(
                     Observation(
                         capability=Capability.CREDENTIAL_HANDLING,
@@ -444,25 +516,60 @@ class _Visitor(ast.NodeVisitor):
                 self.tainted[node.target.id] = origin
         self.generic_visit(node)
 
+    def _secret_read(self, node: ast.AST) -> str | None:
+        """Classify ``node`` as a read of a secret source.
+
+        Returns the source's description when ``node`` reads a secret, ``""``
+        when it reads a named, non-secret environment variable (configuration,
+        such as ``API_URL``), and None when it is not a source read at all. The
+        caller must not descend into a node classified ``""``: its child
+        ``os.environ`` would otherwise count as a read of the whole environment.
+        """
+        if isinstance(node, ast.Call):
+            dotted = _resolve(_dotted(node.func), self.aliases)
+            if dotted in _ENV_GETTERS or dotted.endswith(".getenv"):
+                first = node.args[0] if node.args else None
+                if isinstance(first, ast.Constant) and isinstance(first.value, str):
+                    return dotted if is_secret_name(first.value) else ""
+                return dotted  # a name chosen at runtime may be any secret
+            if dotted in SECRET_SOURCES:
+                return dotted
+            return None
+        if isinstance(node, ast.Subscript):
+            base = _resolve(_dotted(node.value), self.aliases)
+            if base in SECRET_SOURCES:
+                if isinstance(node.slice, ast.Constant) and isinstance(node.slice.value, str):
+                    return base if is_secret_name(node.slice.value) else ""
+                return base
+            return None
+        if isinstance(node, ast.Attribute | ast.Name):
+            dotted = _resolve(_dotted(node), self.aliases)
+            if dotted in SECRET_SOURCES:
+                return dotted
+        return None
+
+    def _tainted_nodes(self, node: ast.AST) -> Iterator[tuple[ast.AST, tuple[str, int], str]]:
+        """Each (node, origin, variable) under ``node`` that carries a secret, breadth first."""
+        queue = deque([node])
+        while queue:
+            child = queue.popleft()
+            if isinstance(child, ast.Name) and child.id in self.tainted:
+                yield child, self.tainted[child.id], child.id
+                continue
+            source = self._secret_read(child)
+            if source:
+                yield child, (source, getattr(child, "lineno", 0)), source
+                continue
+            if source == "":
+                continue  # configuration such as os.environ["API_URL"]
+            queue.extend(ast.iter_child_nodes(child))
+
     def _taint_origin(self, node: ast.AST | None) -> tuple[str, int] | None:
         """Return (source_name, line) if ``node`` derives from a secret source."""
         if node is None:
             return None
-        for child in ast.walk(node):
-            if isinstance(child, ast.Call):
-                dotted = _resolve(_dotted(child.func), self.aliases)
-                if dotted in SECRET_SOURCES or dotted.endswith(".getenv"):
-                    return dotted, child.lineno
-            if isinstance(child, ast.Subscript):
-                base = _resolve(_dotted(child.value), self.aliases)
-                if base in SECRET_SOURCES:
-                    return base, child.lineno
-            if isinstance(child, ast.Attribute | ast.Name):
-                dotted = _resolve(_dotted(child), self.aliases)
-                if dotted in SECRET_SOURCES:
-                    return dotted, getattr(child, "lineno", 0)
-            if isinstance(child, ast.Name) and child.id in self.tainted:
-                return self.tainted[child.id]
+        for _child, origin, _variable in self._tainted_nodes(node):
+            return origin
         return None
 
     def _check_taint_sink(self, dotted: str, node: ast.Call) -> None:
@@ -478,28 +585,7 @@ class _Visitor(ast.NodeVisitor):
         if not is_sink:
             return
 
-        for child in ast.walk(node):
-            origin: tuple[str, int] | None = None
-            variable = ""
-            if isinstance(child, ast.Name) and child.id in self.tainted:
-                origin = self.tainted[child.id]
-                variable = child.id
-            elif isinstance(child, ast.Subscript):
-                base = _resolve(_dotted(child.value), self.aliases)
-                if base in SECRET_SOURCES:
-                    origin = (base, child.lineno)
-                    variable = base
-            elif isinstance(child, ast.Call):
-                inner = _resolve(_dotted(child.func), self.aliases)
-                if inner in SECRET_SOURCES or inner.endswith(".getenv"):
-                    origin = (inner, child.lineno)
-                    variable = inner
-            elif isinstance(child, ast.Attribute):
-                inner = _resolve(_dotted(child), self.aliases)
-                if inner in SECRET_SOURCES:
-                    origin = (inner, child.lineno)
-                    variable = inner
-
+        for child, origin, variable in self._tainted_nodes(node):
             if origin:
                 self.result.taint_flows.append(
                     TaintFlow(
@@ -554,10 +640,7 @@ class _Visitor(ast.NodeVisitor):
     def visit_Constant(self, node: ast.Constant) -> None:
         if isinstance(node.value, str) and node.value:
             self.result.string_literals.append((node.value, node.lineno))
-            lowered = node.value.lower()
-            if any(marker in lowered for marker in CREDENTIAL_PATH_MARKERS) and (
-                "/" in node.value or "\\" in node.value or lowered.startswith(".")
-            ):
+            if credential_kind(node.value) is not None:
                 self.result.credential_paths.append((node.value, node.lineno))
                 self.result.observations.append(
                     Observation(
