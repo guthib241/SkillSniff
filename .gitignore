@@ -221,3 +221,11 @@ __marimo__/
 dist/
 skillsniff.lock.json
 *.sarif
+
+# The benchmark corpus ships bytecode on purpose: the bytecode-poisoning case is
+# a .pyc that disagrees with the source beside it. It is test data, read as
+# bytes and never imported or executed, and the corpus is excluded from the
+# wheel. Without these lines it existed on the author's disk and nowhere else,
+# so the case passed locally and failed in CI.
+!src/skillsniff/bench/corpus/**/__pycache__/
+!src/skillsniff/bench/corpus/**/*.pyc
