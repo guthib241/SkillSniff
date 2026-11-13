@@ -293,6 +293,95 @@ exhausts the scan.
   `re.MULTILINE`; 100,000 blank lines now cost single-digit milliseconds
   rather than minutes, and `csv-summarizer` scans in 301 ms instead of 224 s.
 
+## Pre-registration 2: an independent measurement on SkillTrustBench and ClawHub
+
+**Committed 2026-11-13, before any sample from either dataset was downloaded.**
+Only the dataset cards and the official evaluator's source were read; the
+evaluator was read, not executed. This section is in its own commit so git
+history shows it predates every result.
+
+The previous figure, 0.316, is now spent: its corpus shaped the rules. This
+measurement exists to replace it with one taken on skills the rules have never
+seen.
+
+### Corpora
+
+| Dataset | Pin | Licence | Labels |
+|---|---|---|---|
+| [`cuhk-zhuque/SkillTrustBench`](https://huggingface.co/datasets/cuhk-zhuque/SkillTrustBench) v1.0, 5,520 cases | `ef338a55117c6039de7f408c24b3f05eedf0a6e3` | CC-BY-NC-SA-4.0 | **expert-generated** judgments: normal, suspicious, malicious |
+| [`OpenClaw/clawhub-security-signals`](https://huggingface.co/datasets/OpenClaw/clawhub-security-signals), 67,453 rows | `69dcbd323c155312fb000ec89ea0b1efdf6a5757` | MIT | **silver**: ClawScan's automated, LLM-produced verdict |
+
+SkillTrustBench is non-commercial and share-alike. It is downloaded at measure
+time and **never committed** to this repository; only aggregate results and
+case identifiers with this tool's verdicts are published.
+
+The two are not equivalent and are reported separately, never pooled.
+SkillTrustBench measures **recall against expert ground truth**. ClawHub
+measures **agreement with another automated scanner**: its own card calls the
+label silver-standard, its content is sanitized with secrets and runnable
+artifacts removed, and 72.8% of its 206 malicious rows were flagged by
+VirusTotal, i.e. by malware evidence a text scanner may never be shown.
+
+### Holdout and development
+
+- **Holdout, scanned exactly once:** all of SkillTrustBench, plus ClawHub's
+  `test` and `eval_holdout` splits. Not downloaded, opened, or scanned until
+  the rule work in this change is committed. The commit that is scanned is
+  recorded with the results.
+- **Development, used freely:** ClawHub's `train` and `validation` splits. New
+  rules may be checked against them, chiefly for false positives on rows
+  ClawScan judged clean.
+- **Excluded as contaminated:** SkillTrustBench's 4
+  `external_overtly_malicious_skills` cases are the Trail of Bits samples this
+  project already tuned against. They are scanned and reported on their own,
+  and excluded from every headline figure.
+
+### Metrics
+
+Mirrors the official evaluator (`tools/scanner_benchmark/evaluate_predictions.py`
+at the pin), so the figures are comparable with other scanners' published runs.
+
+Verdict mapping: `BLOCK` to malicious, `REVIEW` to suspicious, `CAUTION` and
+`CLEAR` to normal. **`INCONCLUSIVE` maps to normal**, meaning not detected, so
+it can never count toward any recall. It is reported separately as a coverage
+figure.
+
+- **Primary — malicious recall:** malicious cases predicted malicious, i.e.
+  blocked. Wilson 95% CI.
+- **Non-normal recall:** malicious or suspicious cases predicted anything but
+  normal.
+- **False BLOCK rate on normal cases**, with a Wilson CI.
+- Per-source (`injected`, `injected_d11`, `wild`, …) and per-risk-label
+  (`T01`–`T09`) breakdowns, the confusion matrix, macro-F1, and the **complete
+  list of missed malicious cases** as data.
+
+### Expected outcome
+
+Lower than the contaminated 0.526, and plausibly close to the old 0.316.
+Expect `injected_d11` — built to resist evaluation — and the `wild` families
+to score lowest. Expect the false BLOCK rate on normal cases to be low, below
+0.05, given 0 / 20 on Anthropic's skills; if it is not, that is the more
+important finding.
+
+### Interpretation rules, fixed now
+
+| Malicious recall on SkillTrustBench | Conclusion |
+|---|---|
+| ≥ 0.70 | Fit to block. The advisory default may be revisited. |
+| 0.40 – 0.69 | Advisory only. Default stays advisory. |
+| < 0.40 | Not fit as a gate. Default stays advisory, and the README says so. |
+
+**Falsification of the precision claim:** the README says a finding is
+usually right. If the false BLOCK rate on SkillTrustBench `normal` cases
+exceeds 0.05, that claim is withdrawn and rewritten to the measured rate.
+
+### Anti-tuning commitment
+
+No rule is added or changed in response to holdout results inside this change.
+Anything they reveal becomes a documented miss and, at most, a roadmap entry.
+
+---
+
 ## What this measures, and what it does not
 
 **Measured.** The false-positive side. `anthropics/skills` is a public,
