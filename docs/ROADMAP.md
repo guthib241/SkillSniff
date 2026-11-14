@@ -72,6 +72,20 @@ Designed and intended, not yet built.
   escalation could raise blocking recall; it must be developed on other data
   and measured on a holdout nobody has looked at, because SkillTrustBench is
   spent for that question once its misses have been read.
+- **Decide whether fetch-and-execute is decisive** (`EXE001`). Piping remote
+  content into a shell is CRITICAL by design, so it blocks. On
+  MaliciousSkillBench's source-disjoint split, 33 of the 49 false BLOCKs were
+  that rule on installer lines in real published skills, and Cisco's scanner
+  reports the same shape among its own false positives. Separating a vendor
+  installer from a dropper needs evidence about the destination, not a lower
+  number. It must be developed on other data: any change to `EXE001` made
+  with that split's false BLOCKs in view makes the split contaminated for
+  SkillSniff.
+- **A measured provider for the semantic layer.** On the same split, Cisco's
+  LLM judge is what separates its 33.7% recall from its rules' 7.7%, and most
+  of what SkillSniff misses there is malicious instruction, not code. The
+  contract below exists; a provider would need its own pre-registered
+  measurement on data neither stage has been developed against.
 - **Interprocedural dataflow** — the taint analysis stops at function
   boundaries; call-graph propagation would materially raise `EXF001` recall.
 - **Attestation** — sign a lockfile so a verified skill can be proven verified.

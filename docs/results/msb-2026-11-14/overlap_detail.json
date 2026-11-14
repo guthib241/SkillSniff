@@ -1,0 +1,19 @@
+{
+  "development_rows_scanned": 4806,
+  "matching_a_row_the_development_work_scanned": {
+    "identities": 245,
+    "by_label_and_source": {
+      "benign SRC011": 5,
+      "malicious SRC009": 240
+    }
+  },
+  "matching_only_rows_it_never_scanned": {
+    "identities": 282,
+    "by_label_and_source": {
+      "benign SRC011": 65,
+      "malicious SRC009": 213,
+      "malicious SRC011": 4
+    }
+  },
+  "all_overlapping": 527
+}

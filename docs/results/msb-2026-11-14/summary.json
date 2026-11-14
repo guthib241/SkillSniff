@@ -1,0 +1,2526 @@
+{
+  "protocol": "docs/EXTERNAL_VALIDATION.md, Pre-registration 3",
+  "dataset": "ProtectSkills/MaliciousSkillBench@d4b42ce5766a6e0359c987cf59c1007cb3795a90",
+  "split": "source_disjoint, test members",
+  "scanned_commit": "de6291bb6060d980bf8f241251a128cf30c860a5",
+  "src_tree": "770e3fdca89ecda55340b39a8f4455b41add122f",
+  "src_identical_to": "a27142e",
+  "started": "2026-11-14T10:39:50Z",
+  "public_skill_text_used": 0,
+  "independence": {
+    "method": "SHA-256 of the text with all whitespace removed, whole and first 300 characters",
+    "repository_skill_md": {
+      "texts_compared": 60,
+      "exact": [],
+      "same_opening": []
+    },
+    "clawhub_development_rows": {
+      "texts_compared": 57338,
+      "exact": [
+        "ASB04_007586",
+        "ASB04_007653",
+        "ASB04_007719",
+        "ASB04_007743",
+        "ASB04_007753",
+        "ASB04_007909",
+        "ASB04_007915",
+        "ASB04_007963",
+        "ASB04_008151",
+        "ASB04_008202",
+        "ASB04_008236",
+        "ASB04_008529",
+        "ASB04_008535",
+        "ASB04_008570",
+        "ASB04_008572",
+        "ASB04_008625",
+        "ASB04_008686",
+        "ASB04_008714",
+        "ASB04_008735",
+        "ASB04_008736",
+        "ASB04_008745",
+        "ASB04_008774",
+        "ASB04_008780",
+        "ASB04_008793",
+        "ASB04_008854",
+        "ASB04_008944",
+        "ASB04_008979",
+        "ASB04_009069",
+        "ASB04_009082",
+        "ASB04_009102",
+        "ASB04_009170",
+        "ASB04_009199",
+        "ASB04_009262",
+        "ASB04_009401",
+        "ASB04_009472",
+        "ASB04_009510",
+        "ASB04_009531",
+        "ASB04_009555",
+        "ASB04_009575",
+        "ASB04_009594",
+        "ASB04_009617"
+      ],
+      "same_opening": [
+        "ASB04_000018",
+        "ASB04_000025",
+        "ASB04_000038",
+        "ASB04_000047",
+        "ASB04_000049",
+        "ASB04_000067",
+        "ASB04_000084",
+        "ASB04_000087",
+        "ASB04_000091",
+        "ASB04_000098",
+        "ASB04_000105",
+        "ASB04_000110",
+        "ASB04_000169",
+        "ASB04_000188",
+        "ASB04_000196",
+        "ASB04_000204",
+        "ASB04_000226",
+        "ASB04_000238",
+        "ASB04_000246",
+        "ASB04_000291",
+        "ASB04_000307",
+        "ASB04_000322",
+        "ASB04_000323",
+        "ASB04_000347",
+        "ASB04_000348",
+        "ASB04_000349",
+        "ASB04_000362",
+        "ASB04_000375",
+        "ASB04_000377",
+        "ASB04_000391",
+        "ASB04_000409",
+        "ASB04_000437",
+        "ASB04_000476",
+        "ASB04_000487",
+        "ASB04_000498",
+        "ASB04_000499",
+        "ASB04_000523",
+        "ASB04_000540",
+        "ASB04_000542",
+        "ASB04_000545",
+        "ASB04_000557",
+        "ASB04_000583",
+        "ASB04_000604",
+        "ASB04_000618",
+        "ASB04_000622",
+        "ASB04_000630",
+        "ASB04_000646",
+        "ASB04_000647",
+        "ASB04_000688",
+        "ASB04_000692",
+        "ASB04_000719",
+        "ASB04_000752",
+        "ASB04_000762",
+        "ASB04_000764",
+        "ASB04_000789",
+        "ASB04_000791",
+        "ASB04_000806",
+        "ASB04_000820",
+        "ASB04_000827",
+        "ASB04_000834",
+        "ASB04_000839",
+        "ASB04_000849",
+        "ASB04_000854",
+        "ASB04_000881",
+        "ASB04_000885",
+        "ASB04_000887",
+        "ASB04_000888",
+        "ASB04_000895",
+        "ASB04_000896",
+        "ASB04_000900",
+        "ASB04_000901",
+        "ASB04_000904",
+        "ASB04_000913",
+        "ASB04_000921",
+        "ASB04_000922",
+        "ASB04_000942",
+        "ASB04_000949",
+        "ASB04_000969",
+        "ASB04_000976",
+        "ASB04_001010",
+        "ASB04_001019",
+        "ASB04_001028",
+        "ASB04_001035",
+        "ASB04_001047",
+        "ASB04_001056",
+        "ASB04_001063",
+        "ASB04_001094",
+        "ASB04_001100",
+        "ASB04_001107",
+        "ASB04_001127",
+        "ASB04_001138",
+        "ASB04_001139",
+        "ASB04_001141",
+        "ASB04_001158",
+        "ASB04_001188",
+        "ASB04_001213",
+        "ASB04_001253",
+        "ASB04_001256",
+        "ASB04_001290",
+        "ASB04_001297",
+        "ASB04_001309",
+        "ASB04_001366",
+        "ASB04_001394",
+        "ASB04_001405",
+        "ASB04_001410",
+        "ASB04_001418",
+        "ASB04_001444",
+        "ASB04_001458",
+        "ASB04_001498",
+        "ASB04_001528",
+        "ASB04_001532",
+        "ASB04_001568",
+        "ASB04_001574",
+        "ASB04_001583",
+        "ASB04_001584",
+        "ASB04_001597",
+        "ASB04_001611",
+        "ASB04_001613",
+        "ASB04_001616",
+        "ASB04_001641",
+        "ASB04_001650",
+        "ASB04_001681",
+        "ASB04_001703",
+        "ASB04_001728",
+        "ASB04_001744",
+        "ASB04_001747",
+        "ASB04_001748",
+        "ASB04_001755",
+        "ASB04_001776",
+        "ASB04_001778",
+        "ASB04_001826",
+        "ASB04_001850",
+        "ASB04_001852",
+        "ASB04_001894",
+        "ASB04_001897",
+        "ASB04_001903",
+        "ASB04_001924",
+        "ASB04_001934",
+        "ASB04_001940",
+        "ASB04_001954",
+        "ASB04_001962",
+        "ASB04_001974",
+        "ASB04_002008",
+        "ASB04_002018",
+        "ASB04_002021",
+        "ASB04_002034",
+        "ASB04_002041",
+        "ASB04_002085",
+        "ASB04_002124",
+        "ASB04_002126",
+        "ASB04_002144",
+        "ASB04_002154",
+        "ASB04_002167",
+        "ASB04_002204",
+        "ASB04_002205",
+        "ASB04_002220",
+        "ASB04_002231",
+        "ASB04_002235",
+        "ASB04_002238",
+        "ASB04_002311",
+        "ASB04_002316",
+        "ASB04_002319",
+        "ASB04_002324",
+        "ASB04_002325",
+        "ASB04_002331",
+        "ASB04_002332",
+        "ASB04_002342",
+        "ASB04_002343",
+        "ASB04_002345",
+        "ASB04_002381",
+        "ASB04_002383",
+        "ASB04_002386",
+        "ASB04_002397",
+        "ASB04_002411",
+        "ASB04_002412",
+        "ASB04_002419",
+        "ASB04_002424",
+        "ASB04_002449",
+        "ASB04_002454",
+        "ASB04_002469",
+        "ASB04_002484",
+        "ASB04_002499",
+        "ASB04_002506",
+        "ASB04_002525",
+        "ASB04_002547",
+        "ASB04_002562",
+        "ASB04_002572",
+        "ASB04_002577",
+        "ASB04_002586",
+        "ASB04_002595",
+        "ASB04_002605",
+        "ASB04_002628",
+        "ASB04_002680",
+        "ASB04_002687",
+        "ASB04_002712",
+        "ASB04_002719",
+        "ASB04_002734",
+        "ASB04_002762",
+        "ASB04_002777",
+        "ASB04_002817",
+        "ASB04_002822",
+        "ASB04_002837",
+        "ASB04_002850",
+        "ASB04_002878",
+        "ASB04_002903",
+        "ASB04_002945",
+        "ASB04_002947",
+        "ASB04_002951",
+        "ASB04_002971",
+        "ASB04_002972",
+        "ASB04_002999",
+        "ASB04_003006",
+        "ASB04_003023",
+        "ASB04_003052",
+        "ASB04_003061",
+        "ASB04_003086",
+        "ASB04_003093",
+        "ASB04_003095",
+        "ASB04_003102",
+        "ASB04_003110",
+        "ASB04_003119",
+        "ASB04_003120",
+        "ASB04_003134",
+        "ASB04_003139",
+        "ASB04_003147",
+        "ASB04_003148",
+        "ASB04_003183",
+        "ASB04_003190",
+        "ASB04_003209",
+        "ASB04_003237",
+        "ASB04_003240",
+        "ASB04_003265",
+        "ASB04_003281",
+        "ASB04_003289",
+        "ASB04_003296",
+        "ASB04_003338",
+        "ASB04_003339",
+        "ASB04_003344",
+        "ASB04_003380",
+        "ASB04_003435",
+        "ASB04_003459",
+        "ASB04_003480",
+        "ASB04_003510",
+        "ASB04_003516",
+        "ASB04_003586",
+        "ASB04_003611",
+        "ASB04_003624",
+        "ASB04_003634",
+        "ASB04_003694",
+        "ASB04_003710",
+        "ASB04_003732",
+        "ASB04_003746",
+        "ASB04_003761",
+        "ASB04_003779",
+        "ASB04_003783",
+        "ASB04_003791",
+        "ASB04_003798",
+        "ASB04_003812",
+        "ASB04_003844",
+        "ASB04_003854",
+        "ASB04_003894",
+        "ASB04_003895",
+        "ASB04_003910",
+        "ASB04_003921",
+        "ASB04_003924",
+        "ASB04_003941",
+        "ASB04_004004",
+        "ASB04_004011",
+        "ASB04_004070",
+        "ASB04_004081",
+        "ASB04_004109",
+        "ASB04_004114",
+        "ASB04_004132",
+        "ASB04_004135",
+        "ASB04_004140",
+        "ASB04_004209",
+        "ASB04_004221",
+        "ASB04_004245",
+        "ASB04_004258",
+        "ASB04_004270",
+        "ASB04_004272",
+        "ASB04_004291",
+        "ASB04_004298",
+        "ASB04_004310",
+        "ASB04_004352",
+        "ASB04_004353",
+        "ASB04_004357",
+        "ASB04_004362",
+        "ASB04_004366",
+        "ASB04_004367",
+        "ASB04_004373",
+        "ASB04_004393",
+        "ASB04_004401",
+        "ASB04_004448",
+        "ASB04_004461",
+        "ASB04_004470",
+        "ASB04_004476",
+        "ASB04_004507",
+        "ASB04_004531",
+        "ASB04_004552",
+        "ASB04_004558",
+        "ASB04_004578",
+        "ASB04_004595",
+        "ASB04_004622",
+        "ASB04_004652",
+        "ASB04_004667",
+        "ASB04_004687",
+        "ASB04_004702",
+        "ASB04_004705",
+        "ASB04_004708",
+        "ASB04_004712",
+        "ASB04_004726",
+        "ASB04_004741",
+        "ASB04_004742",
+        "ASB04_004769",
+        "ASB04_004770",
+        "ASB04_004797",
+        "ASB04_004805",
+        "ASB04_004827",
+        "ASB04_004847",
+        "ASB04_004866",
+        "ASB04_004872",
+        "ASB04_004899",
+        "ASB04_004902",
+        "ASB04_004906",
+        "ASB04_004959",
+        "ASB04_004978",
+        "ASB04_004984",
+        "ASB04_004996",
+        "ASB04_005019",
+        "ASB04_005031",
+        "ASB04_005054",
+        "ASB04_005084",
+        "ASB04_005096",
+        "ASB04_005107",
+        "ASB04_005109",
+        "ASB04_005130",
+        "ASB04_005166",
+        "ASB04_005168",
+        "ASB04_005183",
+        "ASB04_005309",
+        "ASB04_005322",
+        "ASB04_005327",
+        "ASB04_005338",
+        "ASB04_005339",
+        "ASB04_005360",
+        "ASB04_005394",
+        "ASB04_005398",
+        "ASB04_005405",
+        "ASB04_005449",
+        "ASB04_005468",
+        "ASB04_005475",
+        "ASB04_005507",
+        "ASB04_005516",
+        "ASB04_005555",
+        "ASB04_005597",
+        "ASB04_005600",
+        "ASB04_005611",
+        "ASB04_005646",
+        "ASB04_005652",
+        "ASB04_005671",
+        "ASB04_005672",
+        "ASB04_005683",
+        "ASB04_005753",
+        "ASB04_005761",
+        "ASB04_005765",
+        "ASB04_005798",
+        "ASB04_005813",
+        "ASB04_005828",
+        "ASB04_005889",
+        "ASB04_005897",
+        "ASB04_005900",
+        "ASB04_005901",
+        "ASB04_005953",
+        "ASB04_005971",
+        "ASB04_005986",
+        "ASB04_006004",
+        "ASB04_006015",
+        "ASB04_006016",
+        "ASB04_006025",
+        "ASB04_006030",
+        "ASB04_006044",
+        "ASB04_006052",
+        "ASB04_006086",
+        "ASB04_006094",
+        "ASB04_006101",
+        "ASB04_006116",
+        "ASB04_006128",
+        "ASB04_006136",
+        "ASB04_006150",
+        "ASB04_006231",
+        "ASB04_006260",
+        "ASB04_006312",
+        "ASB04_006319",
+        "ASB04_006331",
+        "ASB04_006333",
+        "ASB04_006385",
+        "ASB04_006392",
+        "ASB04_006420",
+        "ASB04_006422",
+        "ASB04_006430",
+        "ASB04_006447",
+        "ASB04_006448",
+        "ASB04_006473",
+        "ASB04_006483",
+        "ASB04_006494",
+        "ASB04_006506",
+        "ASB04_006516",
+        "ASB04_006519",
+        "ASB04_006526",
+        "ASB04_006538",
+        "ASB04_006547",
+        "ASB04_006589",
+        "ASB04_006597",
+        "ASB04_006601",
+        "ASB04_006616",
+        "ASB04_006630",
+        "ASB04_006645",
+        "ASB04_006654",
+        "ASB04_006809",
+        "ASB04_006845",
+        "ASB04_006861",
+        "ASB04_006878",
+        "ASB04_006891",
+        "ASB04_006900",
+        "ASB04_006944",
+        "ASB04_006952",
+        "ASB04_006954",
+        "ASB04_007008",
+        "ASB04_007009",
+        "ASB04_007027",
+        "ASB04_007036",
+        "ASB04_007047",
+        "ASB04_007058",
+        "ASB04_007126",
+        "ASB04_007139",
+        "ASB04_007153",
+        "ASB04_007162",
+        "ASB04_007185",
+        "ASB04_007236",
+        "ASB04_007241",
+        "ASB04_007247",
+        "ASB04_007261",
+        "ASB04_007291",
+        "ASB04_007295",
+        "ASB04_007307",
+        "ASB04_007331",
+        "ASB04_007358",
+        "ASB04_007359",
+        "ASB04_007401",
+        "ASB04_007415",
+        "ASB04_007417",
+        "ASB04_007418",
+        "ASB04_007431",
+        "ASB04_007478",
+        "ASB04_007482",
+        "ASB04_007505",
+        "ASB04_007527",
+        "ASB04_007586",
+        "ASB04_007653",
+        "ASB04_007719",
+        "ASB04_007743",
+        "ASB04_007753",
+        "ASB04_007829",
+        "ASB04_007852",
+        "ASB04_007909",
+        "ASB04_007915",
+        "ASB04_007963",
+        "ASB04_008063",
+        "ASB04_008125",
+        "ASB04_008134",
+        "ASB04_008151",
+        "ASB04_008157",
+        "ASB04_008202",
+        "ASB04_008212",
+        "ASB04_008236",
+        "ASB04_008257",
+        "ASB04_008258",
+        "ASB04_008279",
+        "ASB04_008308",
+        "ASB04_008478",
+        "ASB04_008529",
+        "ASB04_008535",
+        "ASB04_008570",
+        "ASB04_008572",
+        "ASB04_008625",
+        "ASB04_008636",
+        "ASB04_008645",
+        "ASB04_008654",
+        "ASB04_008678",
+        "ASB04_008686",
+        "ASB04_008714",
+        "ASB04_008735",
+        "ASB04_008736",
+        "ASB04_008745",
+        "ASB04_008774",
+        "ASB04_008780",
+        "ASB04_008793",
+        "ASB04_008800",
+        "ASB04_008854",
+        "ASB04_008882",
+        "ASB04_008944",
+        "ASB04_008955",
+        "ASB04_008979",
+        "ASB04_009069",
+        "ASB04_009082",
+        "ASB04_009090",
+        "ASB04_009102",
+        "ASB04_009135",
+        "ASB04_009170",
+        "ASB04_009199",
+        "ASB04_009213",
+        "ASB04_009262",
+        "ASB04_009346",
+        "ASB04_009401",
+        "ASB04_009440",
+        "ASB04_009472",
+        "ASB04_009510",
+        "ASB04_009514",
+        "ASB04_009531",
+        "ASB04_009555",
+        "ASB04_009575",
+        "ASB04_009583",
+        "ASB04_009590",
+        "ASB04_009594",
+        "ASB04_009617",
+        "ASB04_009708"
+      ]
+    }
+  },
+  "all": {
+    "cases": 1384,
+    "operating_points": {
+      "block": {
+        "tp": 25,
+        "fp": 49,
+        "fn": 814,
+        "tn": 496,
+        "recall": {
+          "hits": 25,
+          "total": 839,
+          "rate": 0.0298,
+          "wilson95": [
+            0.0203,
+            0.0436
+          ]
+        },
+        "false_positive_rate": {
+          "hits": 49,
+          "total": 545,
+          "rate": 0.0899,
+          "wilson95": [
+            0.0687,
+            0.1169
+          ]
+        },
+        "precision": {
+          "hits": 25,
+          "total": 74,
+          "rate": 0.3378,
+          "wilson95": [
+            0.2405,
+            0.4512
+          ]
+        },
+        "f1": 0.0548
+      },
+      "block_or_review": {
+        "tp": 363,
+        "fp": 252,
+        "fn": 476,
+        "tn": 293,
+        "recall": {
+          "hits": 363,
+          "total": 839,
+          "rate": 0.4327,
+          "wilson95": [
+            0.3995,
+            0.4664
+          ]
+        },
+        "false_positive_rate": {
+          "hits": 252,
+          "total": 545,
+          "rate": 0.4624,
+          "wilson95": [
+            0.4209,
+            0.5044
+          ]
+        },
+        "precision": {
+          "hits": 363,
+          "total": 615,
+          "rate": 0.5902,
+          "wilson95": [
+            0.5509,
+            0.6284
+          ]
+        },
+        "f1": 0.4993
+      },
+      "block_review_or_caution": {
+        "tp": 538,
+        "fp": 370,
+        "fn": 301,
+        "tn": 175,
+        "recall": {
+          "hits": 538,
+          "total": 839,
+          "rate": 0.6412,
+          "wilson95": [
+            0.6082,
+            0.673
+          ]
+        },
+        "false_positive_rate": {
+          "hits": 370,
+          "total": 545,
+          "rate": 0.6789,
+          "wilson95": [
+            0.6386,
+            0.7167
+          ]
+        },
+        "precision": {
+          "hits": 538,
+          "total": 908,
+          "rate": 0.5925,
+          "wilson95": [
+            0.5602,
+            0.624
+          ]
+        },
+        "f1": 0.6159
+      }
+    },
+    "against_cisco_at_matched_fpr": [
+      {
+        "cisco": "Rules only, balanced, MEDIUM+",
+        "cisco_recall": 0.08,
+        "cisco_false_positive_rate": 0.042,
+        "cisco_precision_derived": 0.7457,
+        "cisco_f1_derived": 0.1445,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 25,
+          "total": 839,
+          "rate": 0.0298,
+          "wilson95": [
+            0.0203,
+            0.0436
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 49,
+          "total": 545,
+          "rate": 0.0899,
+          "wilson95": [
+            0.0687,
+            0.1169
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 25,
+          "total": 74,
+          "rate": 0.3378,
+          "wilson95": [
+            0.2405,
+            0.4512
+          ]
+        },
+        "skillsniff_f1": 0.0548,
+        "cisco_recall_against_skillsniff_interval": "above"
+      },
+      {
+        "cisco": "Rules only, balanced, HIGH+",
+        "cisco_recall": 0.077,
+        "cisco_false_positive_rate": 0.04,
+        "cisco_precision_derived": 0.7477,
+        "cisco_f1_derived": 0.1396,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 25,
+          "total": 839,
+          "rate": 0.0298,
+          "wilson95": [
+            0.0203,
+            0.0436
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 49,
+          "total": 545,
+          "rate": 0.0899,
+          "wilson95": [
+            0.0687,
+            0.1169
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 25,
+          "total": 74,
+          "rate": 0.3378,
+          "wilson95": [
+            0.2405,
+            0.4512
+          ]
+        },
+        "skillsniff_f1": 0.0548,
+        "cisco_recall_against_skillsniff_interval": "above"
+      },
+      {
+        "cisco": "Rules + Gemma 4 26B judge, balanced, MEDIUM+",
+        "cisco_recall": 0.667,
+        "cisco_false_positive_rate": 0.154,
+        "cisco_precision_derived": 0.8696,
+        "cisco_f1_derived": 0.7549,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 25,
+          "total": 839,
+          "rate": 0.0298,
+          "wilson95": [
+            0.0203,
+            0.0436
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 49,
+          "total": 545,
+          "rate": 0.0899,
+          "wilson95": [
+            0.0687,
+            0.1169
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 25,
+          "total": 74,
+          "rate": 0.3378,
+          "wilson95": [
+            0.2405,
+            0.4512
+          ]
+        },
+        "skillsniff_f1": 0.0548,
+        "cisco_recall_against_skillsniff_interval": "above"
+      },
+      {
+        "cisco": "Rules + Gemma 4 26B judge, balanced, HIGH+",
+        "cisco_recall": 0.337,
+        "cisco_false_positive_rate": 0.064,
+        "cisco_precision_derived": 0.8902,
+        "cisco_f1_derived": 0.4889,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 25,
+          "total": 839,
+          "rate": 0.0298,
+          "wilson95": [
+            0.0203,
+            0.0436
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 49,
+          "total": 545,
+          "rate": 0.0899,
+          "wilson95": [
+            0.0687,
+            0.1169
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 25,
+          "total": 74,
+          "rate": 0.3378,
+          "wilson95": [
+            0.2405,
+            0.4512
+          ]
+        },
+        "skillsniff_f1": 0.0548,
+        "cisco_recall_against_skillsniff_interval": "above"
+      }
+    ],
+    "verdicts": {
+      "malicious": {
+        "BLOCK": 25,
+        "REVIEW": 338,
+        "CAUTION": 175,
+        "CLEAR": 301,
+        "INCONCLUSIVE": 0,
+        "ERROR": 0,
+        "NO_SKILL": 0
+      },
+      "benign": {
+        "BLOCK": 49,
+        "REVIEW": 203,
+        "CAUTION": 118,
+        "CLEAR": 175,
+        "INCONCLUSIVE": 0,
+        "ERROR": 0,
+        "NO_SKILL": 0
+      }
+    },
+    "by_source": {
+      "SRC009 SkillHarm": {
+        "malicious": 728,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 1,
+            "total": 728,
+            "rate": 0.0014,
+            "wilson95": [
+              0.0002,
+              0.0077
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 295,
+            "total": 728,
+            "rate": 0.4052,
+            "wilson95": [
+              0.3701,
+              0.4413
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 441,
+            "total": 728,
+            "rate": 0.6058,
+            "wilson95": [
+              0.5698,
+              0.6406
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "SRC011 ATR Skill Security Benchmark": {
+        "malicious": 21,
+        "benign": 455,
+        "block": {
+          "recall": {
+            "hits": 10,
+            "total": 21,
+            "rate": 0.4762,
+            "wilson95": [
+              0.2834,
+              0.6763
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 31,
+            "total": 455,
+            "rate": 0.0681,
+            "wilson95": [
+              0.0484,
+              0.0951
+            ]
+          }
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 21,
+            "total": 21,
+            "rate": 1.0,
+            "wilson95": [
+              0.8454,
+              1.0
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 234,
+            "total": 455,
+            "rate": 0.5143,
+            "wilson95": [
+              0.4684,
+              0.5599
+            ]
+          }
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 21,
+            "total": 21,
+            "rate": 1.0,
+            "wilson95": [
+              0.8454,
+              1.0
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 308,
+            "total": 455,
+            "rate": 0.6769,
+            "wilson95": [
+              0.6326,
+              0.7183
+            ]
+          }
+        }
+      },
+      "SRC012 SkillFortifyBench": {
+        "malicious": 90,
+        "benign": 90,
+        "block": {
+          "recall": {
+            "hits": 14,
+            "total": 90,
+            "rate": 0.1556,
+            "wilson95": [
+              0.095,
+              0.2443
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 18,
+            "total": 90,
+            "rate": 0.2,
+            "wilson95": [
+              0.1304,
+              0.2941
+            ]
+          }
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 47,
+            "total": 90,
+            "rate": 0.5222,
+            "wilson95": [
+              0.4202,
+              0.6224
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 18,
+            "total": 90,
+            "rate": 0.2,
+            "wilson95": [
+              0.1304,
+              0.2941
+            ]
+          }
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 76,
+            "total": 90,
+            "rate": 0.8444,
+            "wilson95": [
+              0.7557,
+              0.905
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 62,
+            "total": 90,
+            "rate": 0.6889,
+            "wilson95": [
+              0.5872,
+              0.7751
+            ]
+          }
+        }
+      }
+    },
+    "by_attack_category": {
+      "(no attack category mapped)": {
+        "malicious": 602,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 2,
+            "total": 602,
+            "rate": 0.0033,
+            "wilson95": [
+              0.0009,
+              0.012
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 239,
+            "total": 602,
+            "rate": 0.397,
+            "wilson95": [
+              0.3587,
+              0.4366
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 368,
+            "total": 602,
+            "rate": 0.6113,
+            "wilson95": [
+              0.5718,
+              0.6494
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Instruction / Goal / Memory Manipulation": {
+        "malicious": 75,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 2,
+            "total": 75,
+            "rate": 0.0267,
+            "wilson95": [
+              0.0073,
+              0.0921
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 33,
+            "total": 75,
+            "rate": 0.44,
+            "wilson95": [
+              0.3333,
+              0.5525
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 45,
+            "total": 75,
+            "rate": 0.6,
+            "wilson95": [
+              0.4869,
+              0.7034
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Resource / Availability Abuse": {
+        "malicious": 62,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 0,
+            "total": 62,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              0.0583
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 34,
+            "total": 62,
+            "rate": 0.5484,
+            "wilson95": [
+              0.4253,
+              0.6658
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 39,
+            "total": 62,
+            "rate": 0.629,
+            "wilson95": [
+              0.5046,
+              0.7384
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Data Exfiltration / Disclosure": {
+        "malicious": 52,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 10,
+            "total": 52,
+            "rate": 0.1923,
+            "wilson95": [
+              0.108,
+              0.319
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 28,
+            "total": 52,
+            "rate": 0.5385,
+            "wilson95": [
+              0.405,
+              0.6666
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 44,
+            "total": 52,
+            "rate": 0.8462,
+            "wilson95": [
+              0.7248,
+              0.9199
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Privilege / Tool / Authority Abuse": {
+        "malicious": 27,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 4,
+            "total": 27,
+            "rate": 0.1481,
+            "wilson95": [
+              0.0592,
+              0.3248
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 14,
+            "total": 27,
+            "rate": 0.5185,
+            "wilson95": [
+              0.3399,
+              0.6926
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 27,
+            "total": 27,
+            "rate": 1.0,
+            "wilson95": [
+              0.8754,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Dependency / Supply-Chain Abuse": {
+        "malicious": 8,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 0,
+            "total": 8,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              0.3244
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 2,
+            "total": 8,
+            "rate": 0.25,
+            "wilson95": [
+              0.0715,
+              0.5907
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 2,
+            "total": 8,
+            "rate": 0.25,
+            "wilson95": [
+              0.0715,
+              0.5907
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Execution / Code Delivery": {
+        "malicious": 7,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 4,
+            "total": 7,
+            "rate": 0.5714,
+            "wilson95": [
+              0.2505,
+              0.8418
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 7,
+            "total": 7,
+            "rate": 1.0,
+            "wilson95": [
+              0.6457,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 7,
+            "total": 7,
+            "rate": 1.0,
+            "wilson95": [
+              0.6457,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Credential Access": {
+        "malicious": 4,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 2,
+            "total": 4,
+            "rate": 0.5,
+            "wilson95": [
+              0.15,
+              0.85
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 4,
+            "total": 4,
+            "rate": 1.0,
+            "wilson95": [
+              0.5101,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 4,
+            "total": 4,
+            "rate": 1.0,
+            "wilson95": [
+              0.5101,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Persistence / Control": {
+        "malicious": 1,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 0,
+            "total": 1,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              0.7935
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Defense Evasion / Obfuscation": {
+        "malicious": 1,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      }
+    },
+    "rules_at_high_or_above": {
+      "SUP004": {
+        "malicious": 247,
+        "benign": 155
+      },
+      "CON001": {
+        "malicious": 201,
+        "benign": 85
+      },
+      "OBS001": {
+        "malicious": 17,
+        "benign": 45
+      },
+      "EXE001": {
+        "malicious": 7,
+        "benign": 33
+      },
+      "CON011": {
+        "malicious": 17,
+        "benign": 16
+      },
+      "CON004": {
+        "malicious": 12,
+        "benign": 18
+      },
+      "PER001": {
+        "malicious": 24,
+        "benign": 1
+      },
+      "CRE003": {
+        "malicious": 10,
+        "benign": 4
+      },
+      "MEM001": {
+        "malicious": 1,
+        "benign": 13
+      },
+      "EXE006": {
+        "malicious": 1,
+        "benign": 11
+      },
+      "OBS005": {
+        "malicious": 12,
+        "benign": 0
+      },
+      "CON012": {
+        "malicious": 5,
+        "benign": 6
+      },
+      "PRV003": {
+        "malicious": 6,
+        "benign": 5
+      },
+      "CON010": {
+        "malicious": 0,
+        "benign": 9
+      },
+      "MCP001": {
+        "malicious": 0,
+        "benign": 7
+      },
+      "CRE001": {
+        "malicious": 5,
+        "benign": 1
+      },
+      "EXF004": {
+        "malicious": 6,
+        "benign": 0
+      },
+      "INJ001": {
+        "malicious": 0,
+        "benign": 5
+      },
+      "CON014": {
+        "malicious": 0,
+        "benign": 4
+      },
+      "EXF003": {
+        "malicious": 2,
+        "benign": 2
+      },
+      "PRV001": {
+        "malicious": 1,
+        "benign": 3
+      },
+      "EXF005": {
+        "malicious": 1,
+        "benign": 2
+      },
+      "CRE002": {
+        "malicious": 0,
+        "benign": 1
+      },
+      "EXE005": {
+        "malicious": 0,
+        "benign": 1
+      },
+      "INJ003": {
+        "malicious": 1,
+        "benign": 0
+      },
+      "INJ004": {
+        "malicious": 1,
+        "benign": 0
+      },
+      "OBS003": {
+        "malicious": 1,
+        "benign": 0
+      },
+      "PER002": {
+        "malicious": 0,
+        "benign": 1
+      }
+    },
+    "errors": [],
+    "median_ms_per_skill": 19.4
+  },
+  "scan_wall_seconds": 9.6,
+  "workers": 4,
+  "excluding_overlap": {
+    "cases": 857,
+    "operating_points": {
+      "block": {
+        "tp": 22,
+        "fp": 44,
+        "fn": 360,
+        "tn": 431,
+        "recall": {
+          "hits": 22,
+          "total": 382,
+          "rate": 0.0576,
+          "wilson95": [
+            0.0383,
+            0.0857
+          ]
+        },
+        "false_positive_rate": {
+          "hits": 44,
+          "total": 475,
+          "rate": 0.0926,
+          "wilson95": [
+            0.0697,
+            0.1221
+          ]
+        },
+        "precision": {
+          "hits": 22,
+          "total": 66,
+          "rate": 0.3333,
+          "wilson95": [
+            0.2316,
+            0.4534
+          ]
+        },
+        "f1": 0.0982
+      },
+      "block_or_review": {
+        "tp": 126,
+        "fp": 214,
+        "fn": 256,
+        "tn": 261,
+        "recall": {
+          "hits": 126,
+          "total": 382,
+          "rate": 0.3298,
+          "wilson95": [
+            0.2846,
+            0.3785
+          ]
+        },
+        "false_positive_rate": {
+          "hits": 214,
+          "total": 475,
+          "rate": 0.4505,
+          "wilson95": [
+            0.4064,
+            0.4955
+          ]
+        },
+        "precision": {
+          "hits": 126,
+          "total": 340,
+          "rate": 0.3706,
+          "wilson95": [
+            0.321,
+            0.4231
+          ]
+        },
+        "f1": 0.349
+      },
+      "block_review_or_caution": {
+        "tp": 215,
+        "fp": 323,
+        "fn": 167,
+        "tn": 152,
+        "recall": {
+          "hits": 215,
+          "total": 382,
+          "rate": 0.5628,
+          "wilson95": [
+            0.5127,
+            0.6117
+          ]
+        },
+        "false_positive_rate": {
+          "hits": 323,
+          "total": 475,
+          "rate": 0.68,
+          "wilson95": [
+            0.6367,
+            0.7204
+          ]
+        },
+        "precision": {
+          "hits": 215,
+          "total": 538,
+          "rate": 0.3996,
+          "wilson95": [
+            0.3591,
+            0.4416
+          ]
+        },
+        "f1": 0.4674
+      }
+    },
+    "against_cisco_at_matched_fpr": [
+      {
+        "cisco": "Rules only, balanced, MEDIUM+",
+        "cisco_recall": 0.08,
+        "cisco_false_positive_rate": 0.042,
+        "cisco_precision_derived": 0.7457,
+        "cisco_f1_derived": 0.1445,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 22,
+          "total": 382,
+          "rate": 0.0576,
+          "wilson95": [
+            0.0383,
+            0.0857
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 44,
+          "total": 475,
+          "rate": 0.0926,
+          "wilson95": [
+            0.0697,
+            0.1221
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 22,
+          "total": 66,
+          "rate": 0.3333,
+          "wilson95": [
+            0.2316,
+            0.4534
+          ]
+        },
+        "skillsniff_f1": 0.0982,
+        "cisco_recall_against_skillsniff_interval": "inside"
+      },
+      {
+        "cisco": "Rules only, balanced, HIGH+",
+        "cisco_recall": 0.077,
+        "cisco_false_positive_rate": 0.04,
+        "cisco_precision_derived": 0.7477,
+        "cisco_f1_derived": 0.1396,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 22,
+          "total": 382,
+          "rate": 0.0576,
+          "wilson95": [
+            0.0383,
+            0.0857
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 44,
+          "total": 475,
+          "rate": 0.0926,
+          "wilson95": [
+            0.0697,
+            0.1221
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 22,
+          "total": 66,
+          "rate": 0.3333,
+          "wilson95": [
+            0.2316,
+            0.4534
+          ]
+        },
+        "skillsniff_f1": 0.0982,
+        "cisco_recall_against_skillsniff_interval": "inside"
+      },
+      {
+        "cisco": "Rules + Gemma 4 26B judge, balanced, MEDIUM+",
+        "cisco_recall": 0.667,
+        "cisco_false_positive_rate": 0.154,
+        "cisco_precision_derived": 0.8696,
+        "cisco_f1_derived": 0.7549,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 22,
+          "total": 382,
+          "rate": 0.0576,
+          "wilson95": [
+            0.0383,
+            0.0857
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 44,
+          "total": 475,
+          "rate": 0.0926,
+          "wilson95": [
+            0.0697,
+            0.1221
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 22,
+          "total": 66,
+          "rate": 0.3333,
+          "wilson95": [
+            0.2316,
+            0.4534
+          ]
+        },
+        "skillsniff_f1": 0.0982,
+        "cisco_recall_against_skillsniff_interval": "above"
+      },
+      {
+        "cisco": "Rules + Gemma 4 26B judge, balanced, HIGH+",
+        "cisco_recall": 0.337,
+        "cisco_false_positive_rate": 0.064,
+        "cisco_precision_derived": 0.8902,
+        "cisco_f1_derived": 0.4889,
+        "skillsniff_point": "block",
+        "skillsniff_recall": {
+          "hits": 22,
+          "total": 382,
+          "rate": 0.0576,
+          "wilson95": [
+            0.0383,
+            0.0857
+          ]
+        },
+        "skillsniff_false_positive_rate": {
+          "hits": 44,
+          "total": 475,
+          "rate": 0.0926,
+          "wilson95": [
+            0.0697,
+            0.1221
+          ]
+        },
+        "skillsniff_precision": {
+          "hits": 22,
+          "total": 66,
+          "rate": 0.3333,
+          "wilson95": [
+            0.2316,
+            0.4534
+          ]
+        },
+        "skillsniff_f1": 0.0982,
+        "cisco_recall_against_skillsniff_interval": "above"
+      }
+    ],
+    "verdicts": {
+      "malicious": {
+        "BLOCK": 22,
+        "REVIEW": 104,
+        "CAUTION": 89,
+        "CLEAR": 167,
+        "INCONCLUSIVE": 0,
+        "ERROR": 0,
+        "NO_SKILL": 0
+      },
+      "benign": {
+        "BLOCK": 44,
+        "REVIEW": 170,
+        "CAUTION": 109,
+        "CLEAR": 152,
+        "INCONCLUSIVE": 0,
+        "ERROR": 0,
+        "NO_SKILL": 0
+      }
+    },
+    "by_source": {
+      "SRC009 SkillHarm": {
+        "malicious": 275,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 1,
+            "total": 275,
+            "rate": 0.0036,
+            "wilson95": [
+              0.0006,
+              0.0203
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 62,
+            "total": 275,
+            "rate": 0.2255,
+            "wilson95": [
+              0.18,
+              0.2784
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 122,
+            "total": 275,
+            "rate": 0.4436,
+            "wilson95": [
+              0.3861,
+              0.5027
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "SRC011 ATR Skill Security Benchmark": {
+        "malicious": 17,
+        "benign": 385,
+        "block": {
+          "recall": {
+            "hits": 7,
+            "total": 17,
+            "rate": 0.4118,
+            "wilson95": [
+              0.2161,
+              0.6399
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 26,
+            "total": 385,
+            "rate": 0.0675,
+            "wilson95": [
+              0.0465,
+              0.0971
+            ]
+          }
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 17,
+            "total": 17,
+            "rate": 1.0,
+            "wilson95": [
+              0.8157,
+              1.0
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 196,
+            "total": 385,
+            "rate": 0.5091,
+            "wilson95": [
+              0.4593,
+              0.5587
+            ]
+          }
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 17,
+            "total": 17,
+            "rate": 1.0,
+            "wilson95": [
+              0.8157,
+              1.0
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 261,
+            "total": 385,
+            "rate": 0.6779,
+            "wilson95": [
+              0.6297,
+              0.7226
+            ]
+          }
+        }
+      },
+      "SRC012 SkillFortifyBench": {
+        "malicious": 90,
+        "benign": 90,
+        "block": {
+          "recall": {
+            "hits": 14,
+            "total": 90,
+            "rate": 0.1556,
+            "wilson95": [
+              0.095,
+              0.2443
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 18,
+            "total": 90,
+            "rate": 0.2,
+            "wilson95": [
+              0.1304,
+              0.2941
+            ]
+          }
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 47,
+            "total": 90,
+            "rate": 0.5222,
+            "wilson95": [
+              0.4202,
+              0.6224
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 18,
+            "total": 90,
+            "rate": 0.2,
+            "wilson95": [
+              0.1304,
+              0.2941
+            ]
+          }
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 76,
+            "total": 90,
+            "rate": 0.8444,
+            "wilson95": [
+              0.7557,
+              0.905
+            ]
+          },
+          "false_positive_rate": {
+            "hits": 62,
+            "total": 90,
+            "rate": 0.6889,
+            "wilson95": [
+              0.5872,
+              0.7751
+            ]
+          }
+        }
+      }
+    },
+    "by_attack_category": {
+      "(no attack category mapped)": {
+        "malicious": 218,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 2,
+            "total": 218,
+            "rate": 0.0092,
+            "wilson95": [
+              0.0025,
+              0.0328
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 48,
+            "total": 218,
+            "rate": 0.2202,
+            "wilson95": [
+              0.1703,
+              0.2798
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 100,
+            "total": 218,
+            "rate": 0.4587,
+            "wilson95": [
+              0.3939,
+              0.525
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Data Exfiltration / Disclosure": {
+        "malicious": 52,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 10,
+            "total": 52,
+            "rate": 0.1923,
+            "wilson95": [
+              0.108,
+              0.319
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 28,
+            "total": 52,
+            "rate": 0.5385,
+            "wilson95": [
+              0.405,
+              0.6666
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 44,
+            "total": 52,
+            "rate": 0.8462,
+            "wilson95": [
+              0.7248,
+              0.9199
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Instruction / Goal / Memory Manipulation": {
+        "malicious": 35,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 2,
+            "total": 35,
+            "rate": 0.0571,
+            "wilson95": [
+              0.0158,
+              0.1861
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 13,
+            "total": 35,
+            "rate": 0.3714,
+            "wilson95": [
+              0.2317,
+              0.5366
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 17,
+            "total": 35,
+            "rate": 0.4857,
+            "wilson95": [
+              0.3299,
+              0.6443
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Resource / Availability Abuse": {
+        "malicious": 33,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 0,
+            "total": 33,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              0.1043
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 12,
+            "total": 33,
+            "rate": 0.3636,
+            "wilson95": [
+              0.2219,
+              0.5338
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 16,
+            "total": 33,
+            "rate": 0.4848,
+            "wilson95": [
+              0.325,
+              0.6478
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Privilege / Tool / Authority Abuse": {
+        "malicious": 27,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 4,
+            "total": 27,
+            "rate": 0.1481,
+            "wilson95": [
+              0.0592,
+              0.3248
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 14,
+            "total": 27,
+            "rate": 0.5185,
+            "wilson95": [
+              0.3399,
+              0.6926
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 27,
+            "total": 27,
+            "rate": 1.0,
+            "wilson95": [
+              0.8754,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Dependency / Supply-Chain Abuse": {
+        "malicious": 8,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 0,
+            "total": 8,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              0.3244
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 2,
+            "total": 8,
+            "rate": 0.25,
+            "wilson95": [
+              0.0715,
+              0.5907
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 2,
+            "total": 8,
+            "rate": 0.25,
+            "wilson95": [
+              0.0715,
+              0.5907
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Credential Access": {
+        "malicious": 4,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 2,
+            "total": 4,
+            "rate": 0.5,
+            "wilson95": [
+              0.15,
+              0.85
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 4,
+            "total": 4,
+            "rate": 1.0,
+            "wilson95": [
+              0.5101,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 4,
+            "total": 4,
+            "rate": 1.0,
+            "wilson95": [
+              0.5101,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Execution / Code Delivery": {
+        "malicious": 3,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 1,
+            "total": 3,
+            "rate": 0.3333,
+            "wilson95": [
+              0.0615,
+              0.7923
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 3,
+            "total": 3,
+            "rate": 1.0,
+            "wilson95": [
+              0.4385,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 3,
+            "total": 3,
+            "rate": 1.0,
+            "wilson95": [
+              0.4385,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Persistence / Control": {
+        "malicious": 1,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 0,
+            "total": 1,
+            "rate": 0.0,
+            "wilson95": [
+              0.0,
+              0.7935
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      },
+      "Defense Evasion / Obfuscation": {
+        "malicious": 1,
+        "benign": 0,
+        "block": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_or_review": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        },
+        "block_review_or_caution": {
+          "recall": {
+            "hits": 1,
+            "total": 1,
+            "rate": 1.0,
+            "wilson95": [
+              0.2065,
+              1.0
+            ]
+          },
+          "false_positive_rate": null
+        }
+      }
+    },
+    "rules_at_high_or_above": {
+      "SUP004": {
+        "malicious": 42,
+        "benign": 131
+      },
+      "CON001": {
+        "malicious": 58,
+        "benign": 76
+      },
+      "OBS001": {
+        "malicious": 5,
+        "benign": 35
+      },
+      "EXE001": {
+        "malicious": 7,
+        "benign": 30
+      },
+      "CON011": {
+        "malicious": 17,
+        "benign": 15
+      },
+      "CON004": {
+        "malicious": 8,
+        "benign": 16
+      },
+      "CRE003": {
+        "malicious": 10,
+        "benign": 4
+      },
+      "MEM001": {
+        "malicious": 1,
+        "benign": 10
+      },
+      "EXE006": {
+        "malicious": 1,
+        "benign": 9
+      },
+      "CON010": {
+        "malicious": 0,
+        "benign": 9
+      },
+      "OBS005": {
+        "malicious": 9,
+        "benign": 0
+      },
+      "PER001": {
+        "malicious": 8,
+        "benign": 1
+      },
+      "PRV003": {
+        "malicious": 6,
+        "benign": 3
+      },
+      "MCP001": {
+        "malicious": 0,
+        "benign": 7
+      },
+      "CRE001": {
+        "malicious": 5,
+        "benign": 1
+      },
+      "EXF004": {
+        "malicious": 6,
+        "benign": 0
+      },
+      "CON012": {
+        "malicious": 1,
+        "benign": 4
+      },
+      "PRV001": {
+        "malicious": 1,
+        "benign": 3
+      },
+      "CON014": {
+        "malicious": 0,
+        "benign": 3
+      },
+      "EXF003": {
+        "malicious": 2,
+        "benign": 1
+      },
+      "INJ001": {
+        "malicious": 0,
+        "benign": 3
+      },
+      "EXF005": {
+        "malicious": 1,
+        "benign": 1
+      },
+      "CRE002": {
+        "malicious": 0,
+        "benign": 1
+      },
+      "EXE005": {
+        "malicious": 0,
+        "benign": 1
+      },
+      "INJ003": {
+        "malicious": 1,
+        "benign": 0
+      },
+      "INJ004": {
+        "malicious": 1,
+        "benign": 0
+      },
+      "OBS003": {
+        "malicious": 1,
+        "benign": 0
+      },
+      "PER002": {
+        "malicious": 0,
+        "benign": 1
+      }
+    },
+    "errors": [],
+    "median_ms_per_skill": 14.1
+  },
+  "finished": "2026-11-14T10:40:20Z"
+}

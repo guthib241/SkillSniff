@@ -1,0 +1,301 @@
+{"benchmark_id": "ASB04_000018", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000091", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000140", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000144", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000146", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000169", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_000192", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000196", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000307", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000326", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000348", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000377", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000409", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000440", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_000487", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000498", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000499", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000523", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000542", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000559", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000641", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000646", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000676", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000688", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000719", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_000751", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000762", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000767", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000827", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000834", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000839", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000865", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000888", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_000921", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001014", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_001061", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001094", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001100", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001107", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001119", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001127", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001153", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_001207", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001236", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001273", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_001281", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001359", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001374", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001394", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001404", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001420", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001436", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Dependency / Supply-Chain Abuse"]}
+{"benchmark_id": "ASB04_001484", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001490", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001498", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_001522", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_001528", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001569", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_001597", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001616", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001631", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001652", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_001664", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001677", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001719", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_001728", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001744", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001772", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001776", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001778", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001779", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_001826", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001835", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001838", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_001903", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001932", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001951", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001962", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_001974", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_001981", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Dependency / Supply-Chain Abuse"]}
+{"benchmark_id": "ASB04_002008", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_002034", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002041", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002062", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002078", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002155", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002205", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002206", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_002231", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002233", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002238", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_002292", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002316", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002331", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002342", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002345", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002381", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002383", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002386", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002391", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_002412", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_002431", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002437", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002525", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002608", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002680", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_002683", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_002762", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002777", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002784", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002822", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002853", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002860", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002878", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002905", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_002911", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_002916", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_003052", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003058", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003061", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_003064", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_003070", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003091", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003094", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003102", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003105", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_003123", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_003159", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_003240", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003257", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003270", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_003306", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003322", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003338", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003339", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003365", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003372", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003406", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003428", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_003459", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003480", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003510", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003566", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003578", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003634", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003689", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_003746", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003783", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003790", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_003791", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003798", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003814", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003835", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003849", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003894", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003895", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003898", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003903", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003913", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003921", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003931", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003933", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_003958", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004011", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004014", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_004140", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_004174", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004205", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004258", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_004274", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004286", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004291", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_004357", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004362", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004373", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004393", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004394", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004424", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_004447", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_004458", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_004470", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004493", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004531", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004557", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_004592", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Dependency / Supply-Chain Abuse"]}
+{"benchmark_id": "ASB04_004604", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004649", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004687", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004690", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004720", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004738", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004741", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_004742", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004761", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004769", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004795", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004805", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_004847", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004862", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004872", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004891", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_004899", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_004906", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_004984", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_005030", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Dependency / Supply-Chain Abuse"]}
+{"benchmark_id": "ASB04_005054", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005068", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_005104", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005172", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005253", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005299", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005309", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005315", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_005322", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005327", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005347", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Dependency / Supply-Chain Abuse"]}
+{"benchmark_id": "ASB04_005354", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005403", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005483", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_005506", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005514", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005516", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005551", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005595", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_005597", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005600", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005625", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005652", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005672", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005722", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Dependency / Supply-Chain Abuse"]}
+{"benchmark_id": "ASB04_005745", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005753", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005765", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005769", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005793", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005813", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005818", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005831", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_005878", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005893", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005930", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005970", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005971", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_005992", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006050", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_006086", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006105", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006136", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006150", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006268", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006312", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006319", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006360", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006382", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006392", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006414", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006476", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006483", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006494", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006506", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006521", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_006534", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006545", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006579", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006590", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006601", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006621", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006624", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_006629", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006685", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006688", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_006750", "label": "1", "source_id": "SRC012", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Data Exfiltration / Disclosure"]}
+{"benchmark_id": "ASB04_006753", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_006809", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_006845", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006847", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006892", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006940", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006952", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_006954", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007008", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007027", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007042", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007058", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007070", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007107", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007114", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_007123", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007126", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007139", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007153", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007241", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007264", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007286", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007291", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007295", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007392", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007426", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}
+{"benchmark_id": "ASB04_007431", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Resource / Availability Abuse"]}
+{"benchmark_id": "ASB04_007478", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": []}
+{"benchmark_id": "ASB04_007481", "label": "1", "source_id": "SRC009", "verdict": "CLEAR", "coverage": "HIGH", "rules": {}, "attack_categories": ["Instruction / Goal / Memory Manipulation"]}

@@ -32,6 +32,7 @@ identifiers, labels and this tool's verdicts are written out.
     python scripts/msb_eval.py --cache ~/.cache/skillsniff-msb --out docs/results/msb-2026-11-14 \\
         --clawhub-dev ~/.cache/clawhub/train.jsonl ~/.cache/clawhub/validation.jsonl
     python scripts/msb_eval.py --render docs/results/msb-2026-11-14/summary.json
+    python scripts/msb_eval.py --overlap-detail --cache ... --out ... --clawhub-dev ...
 
 The run refuses to start unless ``src/`` is committed and identical to the
 tree the pre-registration fixed, and refuses to overwrite an earlier result:
@@ -53,7 +54,7 @@ import time
 from collections import Counter, defaultdict
 from collections.abc import Iterable
 from concurrent.futures import ProcessPoolExecutor
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "src"))
@@ -215,6 +216,63 @@ def independence(rows: list[dict], clawhub_dev: list[Path]) -> dict:
     else:
         report["clawhub_development_rows"] = "not run (no --clawhub-dev files given)"
     return report
+
+
+#: The ClawHub development rows the false-positive work before pre-registration 2
+#: actually scanned: those whose bundle holds JavaScript, TypeScript or Python, or
+#: an extensionless script with a shebang. This re-derives exactly the 4,806 rows
+#: that work used, from the dataset alone.
+_CODE_SUFFIXES = frozenset({".py", ".js", ".mjs", ".cjs", ".jsx", ".ts", ".mts", ".cts", ".tsx"})
+
+
+def _development_scope(bundle: list[dict] | None) -> bool:
+    for item in bundle or ():
+        suffix = PurePosixPath(item.get("path") or "").suffix.lower()
+        if suffix in _CODE_SUFFIXES or (not suffix and (item.get("content") or "").startswith("#!")):
+            return True
+    return False
+
+
+def overlap_detail(cache: Path, clawhub_dev: list[Path]) -> dict:
+    """Split the ClawHub overlap by whether the development work scanned the matching row.
+
+    Added after the measurement, to say precisely what the overlap is; it scans
+    nothing and changes no recorded figure.
+    """
+    rows = load_test_rows(cache)
+    exact: dict[str, set[str]] = defaultdict(set)
+    opening: dict[str, set[str]] = defaultdict(set)
+    for row in rows:
+        full, head = _keys(row["text"])
+        exact[full].add(row["benchmark_id"])
+        opening[head].add(row["benchmark_id"])
+    scanned: set[str] = set()
+    unscanned: set[str] = set()
+    in_scope = 0
+    for path in clawhub_dev:
+        with path.open(encoding="utf-8") as fh:
+            for line in fh:
+                record = json.loads(line)
+                is_scoped = _development_scope(record.get("skill_bundle_content"))
+                in_scope += is_scoped
+                text = record.get("skill_md_content")
+                if not isinstance(text, str) or not text:
+                    continue
+                full, head = _keys(text)
+                matched = exact.get(full, set()) | opening.get(head, set())
+                (scanned if is_scoped else unscanned).update(matched)
+    label = {r["benchmark_id"]: ("malicious" if r["label"] == "1" else "benign", r["source_id"]) for r in rows}
+
+    def describe(ids: set[str]) -> dict:
+        counts = Counter(f"{kind} {source}" for kind, source in (label[i] for i in ids))
+        return {"identities": len(ids), "by_label_and_source": dict(sorted(counts.items()))}
+
+    return {
+        "development_rows_scanned": in_scope,
+        "matching_a_row_the_development_work_scanned": describe(scanned),
+        "matching_only_rows_it_never_scanned": describe(unscanned - scanned),
+        "all_overlapping": len(scanned | unscanned),
+    }
 
 
 # -- scanning, in worker processes ------------------------------------------------------
@@ -496,9 +554,19 @@ def main() -> int:
                         help="ClawHub development JSONL files, for the overlap audit")
     parser.add_argument("--workers", type=int, default=os.cpu_count() or 2)
     parser.add_argument("--render", type=Path, help="print the Markdown tables for an existing summary.json")
+    parser.add_argument("--overlap-detail", action="store_true",
+                        help="split the ClawHub overlap by development scope; scans nothing")
     args = parser.parse_args()
     if args.render:
         print(render(json.loads(args.render.read_text())))
+        return 0
+    if args.overlap_detail:
+        if not args.cache or not args.out or not args.clawhub_dev:
+            parser.error("--overlap-detail needs --cache, --out and --clawhub-dev")
+        ensure_files(args.cache)
+        detail = overlap_detail(args.cache, args.clawhub_dev)
+        (args.out / "overlap_detail.json").write_text(json.dumps(detail, indent=2) + "\n")
+        print(json.dumps(detail, indent=2))
         return 0
     if not args.cache or not args.out:
         parser.error("--cache and --out are required to measure")

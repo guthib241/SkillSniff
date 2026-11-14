@@ -387,9 +387,11 @@ So **`skillsniff scan` is advisory by default** and exits 0. Gating is opt-in
 via `--fail-on`, `--strict`, or `fail_on` in a config file; the GitHub Action
 and pre-commit hook pass a severity explicitly, so both still gate.
 
-Read a block, not a silence. **When SkillSniff blocks, it is usually right**:
-828 of its 893 blocks on SkillTrustBench were malicious or suspicious, and it
-blocked none of Anthropic's skills. **A REVIEW is weak evidence**: three in
+Read a block, not a silence, and read a block knowing which skills it was
+measured on. **On SkillTrustBench a block was usually right**: 828 of its
+893 blocks were malicious or suspicious, and it blocked none of Anthropic's
+skills. **On the benchmark below it was usually wrong**: 49 of 74 blocks fell
+on benign skills. **A REVIEW is weak evidence**: three in
 four of SkillTrustBench's normal cases get one. Most missed malicious skills
 are among them — 1,972 of the 2,084 misses were flagged REVIEW, usually for
 dynamic evaluation, obfuscation or a supply-chain finding the gate does not
@@ -414,6 +416,47 @@ strings, commented-out dangerous commands, `localhost` URLs, placeholder
 credentials, and an API client that legitimately sends a token in an
 `Authorization` header. Without those, firing on everything would score
 perfectly.
+
+### Against Cisco's skill-scanner, on the same skills: worse
+
+Measured once, on 14 November 2026, under a protocol committed before the
+data was downloaded, on the benchmark split
+[Cisco AI Defense's skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)
+publishes its own figures against: MaliciousSkillBench's source-disjoint test
+split, 839 malicious and 545 benign skills, `SKILL.md` text only
+([results](docs/EXTERNAL_VALIDATION.md#results-of-pre-registration-3)). The
+Cisco rows are Cisco's published figures.
+
+| On the same 1,384 skills | Malicious caught | Benign flagged |
+| --- | --- | --- |
+| SkillSniff, BLOCK | 3.0% | 9.0% |
+| SkillSniff, BLOCK or REVIEW | 43.3% | 46.2% |
+| Cisco skill-scanner, rules only, HIGH and above | 7.7% | 4.0% |
+| Cisco skill-scanner, rules + Gemma 4 26B judge, HIGH and above | 33.7% | 6.4% |
+| Cisco skill-scanner, rules + Gemma 4 26B judge, MEDIUM and above | 66.7% | 15.4% |
+
+**On this benchmark Cisco's scanner is better in every configuration it
+reports, its rules alone included, and with an LLM judge it catches far
+more.** SkillSniff's verdicts barely separate the two halves of the split. It
+blocked more benign skills (49) than malicious ones (25), mostly for
+`curl … | bash` installer lines in real published skills, which it treats as
+decisive by design. Most of the malicious half is SkillHarm's automatically
+built attacks, written as instructions rather than code, and SkillSniff
+blocks 1 of those 728.
+
+One thing favours Cisco, and is stated rather than leaned on: its rules were
+tuned on this dataset's development data, which SkillSniff had never seen.
+One thing makes SkillSniff's figures less independent than intended: 527 of
+the test skills share their opening with ClawHub development rows, 245 of
+them rows this project's false-positive work scanned. Without those 527,
+SkillSniff blocks 5.8% of malicious skills and 9.3% of benign ones. The
+conclusion is the same.
+
+**As a malware detector on its own, SkillSniff is not competitive.** What it
+offers that this benchmark does not measure is the rest of this README: no
+runtime dependencies (Cisco's scanner declares 23), no model in the loop, and
+`lock`, `verify`, `diff` and `baseline` for noticing when an approved skill
+changes.
 
 ## Reference skills
 

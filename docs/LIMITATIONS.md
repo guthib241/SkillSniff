@@ -154,10 +154,20 @@ published skills.
 blocked, 95% CI [0.255, 0.288]), on expert-labelled skills the rules had never
 seen, measured once under a pre-registered protocol. Nearly three in four
 known-malicious skills are not blocked, which is why gating is opt-in rather
-than the default. Read a block, not a silence: 0.040 of normal cases were
-blocked, so a BLOCK is worth acting on; a REVIEW is weak evidence, since three
-in four normal cases get one; and a clean result is weak evidence of anything.
-Per-rule precision is still unmeasured.
+than the default. Read a block, not a silence, but do not read even a block
+without asking what population it was measured on. On SkillTrustBench 0.040
+of normal cases were blocked and a BLOCK was worth acting on. On
+MaliciousSkillBench's source-disjoint split, 0.090 of benign skills were
+blocked and 49 of 74 blocks were wrong, mostly `EXE001` on `curl | bash`
+installer lines in real published skills. A REVIEW is weak evidence, since
+three in four normal cases get one; and a clean result is weak evidence of
+anything. Per-rule precision is still unmeasured.
+
+**Against another scanner on the same skills, SkillSniff loses.** On the split
+Cisco's skill-scanner publishes against, SkillSniff blocks 3.0% of malicious
+skills at a 9.0% false-positive rate; Cisco's rules alone catch 7.7% at 4.0%,
+and with an LLM judge 33.7% at 6.4%. See
+[Results of pre-registration 3](EXTERNAL_VALIDATION.md#results-of-pre-registration-3).
 
 Two earlier figures are superseded. 0.316, on 19 samples, agrees with 0.271.
 0.526, on the same 19 after closing their gaps, measured a corpus that had
