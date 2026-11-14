@@ -328,13 +328,13 @@ contribute to the security verdict.
 
 **critical** · high confidence
 
-**Detects.** A network fetch is piped into a shell or interpreter — the 'curl … | bash' pattern. Detected by tokenising the pipeline, so a quoted or commented example does not match.
+**Detects.** A network fetch is piped into a shell or interpreter that runs it — the 'curl … | bash' pattern. Detected by tokenising the pipeline, so a quoted or commented example does not match, and through wrappers such as sudo, env and nohup, which run the interpreter exactly as the bare command would. An interpreter given a program of its own reads the response as data, but only two such cases are exempt, because only they can be checked: Python's json.tool module, and inline Python that provably parses its input and executes none of it.
 
 **Why it matters.** Whatever the server returns at the moment of execution runs with the agent's full privileges. The content reviewed today is not necessarily the content that runs tomorrow, and the server can serve different content per client.
 
 **Fix.** Download to a file, verify it against a published checksum, review it, then execute. Or vendor the script into the skill so it is reviewable.
 
-**Cannot detect.** Detects pipelines the shell tokeniser can see: bundled scripts, fenced blocks, and decoded regions. A pipeline assembled at runtime from variables is not resolved.
+**Cannot detect.** Detects pipelines the shell tokeniser can see: bundled scripts, fenced blocks, and decoded regions. A pipeline assembled at runtime from variables is not resolved. A pipe into a script path is treated as running the response, since what the script does with it is not visible here; a quoted inline program spanning several lines is not tokenised whole and is treated the same way. The Python exemptions are withdrawn wherever the same text defines a function or alias named after Python, sets PYTHONINSPECT, or changes PATH.
 
 **Taxonomy.** `CWE-494`
 

@@ -160,7 +160,8 @@ of normal cases were blocked and a BLOCK was worth acting on. On
 MaliciousSkillBench's source-disjoint split, 0.090 of benign skills were
 blocked and 49 of 74 blocks were wrong. 33 of them were `EXE001`: vendor
 install scripts piped to a shell, which it blocks by design, and
-`curl … | python -m json.tool`, which executes nothing and is a defect. A
+`curl … | python -m json.tool`, which executes nothing — a defect, since
+fixed, though the figures are not re-scored. A
 REVIEW is weak evidence, since
 three in four normal cases get one; and a clean result is weak evidence of
 anything. Per-rule precision is still unmeasured.

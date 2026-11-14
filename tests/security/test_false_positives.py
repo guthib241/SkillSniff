@@ -17,6 +17,7 @@ import base64
 
 import pytest
 
+from skillsniff.model.capability import Capability
 from skillsniff.model.result import Verdict
 
 SECURITY_RULES = (
@@ -702,3 +703,41 @@ class TestCloneWithoutRunningIt:
     )
     def test_no_link_or_a_pin(self, actionable_rule_ids, script):
         assert_quiet(actionable_rule_ids(files={"scripts/s.sh": "#!/bin/sh\n" + script}), "EXE008")
+
+
+class TestDataPipedIntoPython:
+    """EXE001's counterweight: a response piped into a program that only reads it.
+
+    ``curl … | python -m json.tool`` pretty-prints JSON and runs none of it, yet
+    it blocked as fetch-and-execute: 18 of the 49 false BLOCKs on
+    MaliciousSkillBench's source-disjoint split, and a shape Cisco's scanner
+    reports among its own false positives on other corpora.
+    """
+
+    @pytest.mark.parametrize(
+        "line",
+        [
+            'curl -s "https://api.github.com/repos/o/r/releases/latest" | python -m json.tool',
+            "curl -s https://pypi.org/pypi/requests/json | python3 -mjson.tool",
+            "curl -s https://api.github.com/repos/o/r | "
+            "python3 -c \"import sys, json; print(json.load(sys.stdin)['stargazers_count'])\"",
+            "curl -s https://registry.npmjs.org/left-pad | "
+            "python3 -c 'import json,sys; d=json.load(sys.stdin); print(sorted(d[\"versions\"], key=lambda v: v)[-1])'",
+            "curl -s https://api.example.org/v1/items | python3 -m json.tool | head -20",
+        ],
+        ids=["json-tool", "json-tool-attached", "inline-field", "inline-sorted", "into-head"],
+    )
+    def test_in_a_fenced_block(self, actionable_rule_ids, line):
+        body = f"\n## Check the release\n\n```bash\n{line}\n```\n"
+        assert_quiet(actionable_rule_ids(body=body), "EXE001")
+
+    def test_decoded_json_is_data_too(self, actionable_rule_ids):
+        script = "#!/bin/sh\necho e30= | base64 -d | python3 -m json.tool\n"
+        assert_quiet(actionable_rule_ids(files={"scripts/c.sh": script}), "EXE002")
+
+    def test_the_fetch_and_the_interpreter_are_still_reported(self, scan_skill):
+        """Not running the response is not the same as not fetching it."""
+        skill = scan_skill(body="\n```bash\ncurl -s https://api.example.org/v1 | python3 -m json.tool\n```\n")
+        observed = skill.capabilities.all
+        assert Capability.NET_FETCH in observed
+        assert Capability.PROC_EXEC in observed

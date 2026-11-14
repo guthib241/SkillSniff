@@ -172,6 +172,22 @@ Cisco's figures are cited from `cisco-ai-defense/skill-scanner`,
 | Cisco's scanner declares 23 runtime dependencies | DERIVED | `[project].dependencies` in its `pyproject.toml` at `c558c42` |
 | Cisco's CLI has no lock, verify, diff or baseline command | DERIVED | subcommands registered in `skill_scanner/cli/cli.py` at `c558c42` |
 
+## ClawHub development split — the EXE001 wrapper and data-pipe change, not a measurement
+
+All 57,338 development rows scanned before the change (`src/` of `1b6f5ec`) and
+after it, with `python scripts/clawhub_dev_scan.py --src … --jsonl train.jsonl
+validation.jsonl --out … --evidence EXE001,EXE002`, then
+`python scripts/clawhub_dev_scan.py --compare before.jsonl after.jsonl`. The
+change was made against these rows, so none of this is a measurement.
+
+| Claim | Kind | Source |
+|---|---|---|
+| `EXE001` fired on 739 rows before | MEASURED | the `--compare` output |
+| `EXE001` lost on 9 rows, every one a data pipe (8 `python3 -m json.tool`, 1 inline `json.load`) | MEASURED | same, with each lost excerpt listed |
+| `EXE001` gained on 2 rows, both `curl … \| sudo bash` | MEASURED | same |
+| `EXE008` gained on 3 rows and lost on 1 (a heredoc `ExecStart=` line) | MEASURED | rule sets of the two runs, compared per row |
+| Verdict changed on 8 of 57,338 rows; no scan raised in either run | MEASURED | the `--compare` output |
+
 ## ClawHub development split (train + validation) — not a measurement
 
 Rows bundling JavaScript, TypeScript, Python or a shebang script: 4,806

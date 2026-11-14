@@ -21,7 +21,9 @@ Working, tested, and covered by the benchmark corpus.
   network calls, sockets and shelled-out `curl` (`EXF001`), credential-file reads
   (`CRE001`), and the capability surface
 - **Shell analysis** — quote-aware tokenising, pipeline analysis, comment
-  stripping, and clone-then-run (`EXE008`)
+  stripping, clone-then-run (`EXE008`), wrappers resolved to the command they
+  run (`sudo`, `env`, `nohup` and others), versioned interpreter names, and a
+  pipe counted as execution only where the receiving program runs its input
 - **Unicode threat analysis** — zero-width, bidi, tag characters, variation
   selectors, private-use, mixed-script homoglyphs
 - **Recursive decoding** — base64, base32, hex, percent, escapes, Unicode tags,
@@ -81,15 +83,6 @@ Designed and intended, not yet built.
   number. It must be developed on other data: any change to `EXE001` made
   with that split's false BLOCKs in view makes the split contaminated for
   SkillSniff.
-- **Fix `EXE001` on data piped into a program that does not execute it.**
-  `curl … | python -m json.tool` pretty-prints JSON and runs nothing remote,
-  yet it blocks. It was found as 18 false BLOCKs on MaliciousSkillBench's test
-  split, and Cisco's write-up names the same shape among its false positives
-  on other corpora. Piping into an interpreter that reads its *program* from
-  stdin is execution; piping into `-m module`, `-c CODE` or a script path is
-  data. Develop and validate the fix on development data, with a test that a
-  bare `| python` still blocks. Once it lands, that split is contaminated for
-  SkillSniff and no later figure on it is reported as independent.
 - **A measured provider for the semantic layer.** On the same split, Cisco's
   LLM judge is what separates its 33.7% recall from its rules' 7.7%, and most
   of what SkillSniff misses there is malicious instruction, not code. The

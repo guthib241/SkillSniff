@@ -12,9 +12,11 @@ false positives on documentation that *warns* about an attack.
 
 from __future__ import annotations
 
+import ast
 import re
 import shlex
 from dataclasses import dataclass, field
+from functools import cached_property
 
 from skillsniff.model.capability import Capability, Observation, Source
 from skillsniff.model.finding import Confidence, Evidence
@@ -46,6 +48,217 @@ SECRET_ENV = re.compile(
     re.IGNORECASE,
 )
 
+#: Commands that run another command given in their arguments, each with the
+#: options that consume a value. ``sudo -E bash -`` runs ``bash -`` exactly as
+#: the bare command would, so analysing the wrapper instead of what it runs
+#: made ``curl … | sudo bash`` invisible.
+WRAPPERS: dict[str, frozenset[str]] = {
+    "sudo": frozenset({"-C", "-D", "-g", "-h", "-p", "-R", "-T", "-u", "-U", "-r", "-t", "--chdir",
+                       "--close-from", "--group", "--host", "--prompt", "--role", "--type", "--user",
+                       "--other-user", "--command-timeout"}),
+    "doas": frozenset({"-C", "-u"}),
+    "env": frozenset({"-u", "-C", "--unset", "--chdir"}),
+    "nohup": frozenset(),
+    "time": frozenset({"-f", "-o", "--format", "--output"}),
+    "command": frozenset(),
+    "exec": frozenset({"-a"}),
+    "nice": frozenset({"-n", "--adjustment"}),
+    "stdbuf": frozenset({"-i", "-o", "-e", "--input", "--output", "--error"}),
+    "timeout": frozenset({"-s", "-k", "--signal", "--kill-after"}),
+}
+_ASSIGNMENT = re.compile(r"[A-Za-z_][A-Za-z0-9_]*=")
+_VERSIONED = re.compile(r"(python|pypy|ruby|perl|php)(\d+(?:\.\d+)*)?")
+
+
+def unwrap(argv: list[str]) -> list[str]:
+    """The command that actually runs: ``sudo -E env X=1 nohup bash -`` runs ``bash -``.
+
+    A wrapper with nothing after it stays itself — bare ``env`` prints the
+    environment — except ``sudo -s`` and ``sudo -i``, which start a shell, and
+    ``command -v``, which only looks a name up and runs nothing.
+    """
+    current = argv
+    for _ in range(8):  # wrappers nest, but not without bound
+        rest = current
+        while rest and _ASSIGNMENT.match(rest[0]):
+            rest = rest[1:]  # `FOO=1 bash`: an environment assignment, then the command
+        if not rest:
+            return current
+        name = rest[0].rsplit("/", 1)[-1].removesuffix(".exe")
+        takes_value = WRAPPERS.get(name)
+        if takes_value is None:
+            return rest
+        inner = rest[1:]
+        starts_shell = False
+        while inner and inner[0].startswith("-") and inner[0] != "-":
+            option = inner[0]
+            if option == "--":
+                inner = inner[1:]
+                break
+            if name == "command" and option in ("-v", "-V"):
+                return []
+            if name in ("sudo", "doas") and option in ("-s", "-i", "--shell", "--login"):
+                starts_shell = True
+            if name == "env" and option in ("-S", "--split-string") and len(inner) > 1:
+                try:
+                    inner = shlex.split(inner[1]) + inner[2:]
+                except ValueError:
+                    inner = inner[1].split() + inner[2:]
+                continue
+            consumes = option.split("=", 1)[0] in takes_value and "=" not in option
+            inner = inner[2:] if consumes else inner[1:]
+        if name == "timeout" and inner:
+            inner = inner[1:]  # its first operand is the duration
+        while name == "env" and inner and _ASSIGNMENT.match(inner[0]):
+            inner = inner[1:]
+        if not inner:
+            return ["sh"] if starts_shell else rest
+        current = inner
+    return current
+
+
+def interpreter_name(program: str) -> str:
+    """``python3.12`` is ``python3``, ``ruby3.2`` is ``ruby``, ``nodejs`` is ``node``."""
+    if program == "nodejs":
+        return "node"
+    match = _VERSIONED.fullmatch(program)
+    if match is None or match.group(2) is None:
+        return program
+    family, version = match.group(1), match.group(2)
+    if family in ("python", "pypy"):
+        return "python3" if version.startswith("3") else "python"
+    return family
+
+
+#: Python modules whose command-line entry point parses its input and prints
+#: it, running none of it: ``curl … | python3 -m json.tool`` pretty-prints JSON.
+DATA_MODULES = frozenset({"json.tool", "json"})
+#: Paths through which an interpreter reads its program from standard input.
+_STDIN_PATHS = frozenset({"-", "/dev/stdin", "/dev/fd/0", "/proc/self/fd/0"})
+_PYTHON_VALUE_OPTIONS = frozenset({"-W", "-X", "--check-hash-based-pycs"})
+#: What inline Python may use and still count as reading its input as data:
+#: two modules, builtins that cannot reach code execution, and attribute names
+#: that exist on files, strings, lists and dicts. Anything else — ``exec``,
+#: ``__import__``, ``getattr``, ``os``, a dunder — keeps the pipe an execution.
+_SAFE_IMPORTS = frozenset({"json", "sys"})
+_SAFE_NAMES = frozenset({
+    "print", "len", "str", "int", "float", "bool", "list", "dict", "tuple", "set", "sorted",
+    "reversed", "enumerate", "zip", "range", "min", "max", "sum", "any", "all", "round", "abs",
+    "isinstance", "repr", "map", "filter", "next", "iter", "chr", "ord", "hex", "format",
+    "KeyError", "IndexError", "ValueError", "TypeError", "Exception", "StopIteration",
+})
+_SAFE_ATTRIBUTES = frozenset({
+    "load", "loads", "dump", "dumps", "stdin", "stdout", "stderr", "argv", "exit", "read",
+    "readline", "readlines", "write", "flush", "get", "keys", "values", "items", "join", "split",
+    "rsplit", "splitlines", "strip", "lstrip", "rstrip", "lower", "upper", "title", "replace",
+    "startswith", "endswith", "format", "append", "extend", "count", "index", "find", "rfind",
+    "sort", "copy", "isdigit", "isalpha", "isalnum", "isspace", "encode", "decode", "partition",
+    "rpartition", "zfill", "setdefault", "update", "pop",
+})
+_UNSAFE_NODES = (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Global, ast.Nonlocal,
+                 ast.Await, ast.Yield, ast.YieldFrom, ast.AsyncFor, ast.AsyncWith, ast.With, ast.Delete)
+#: Things in the same text that can make an interpreter's name, or its
+#: interactive mode, mean something else: a function or alias named after
+#: Python, ``PYTHONINSPECT`` (interactive after the program, reading stdin),
+#: or a changed ``PATH``. Where any appears, no pipe into Python is exempt.
+#: Horizontal whitespace only: ``^\s*`` under MULTILINE crosses newlines and
+#: turns a file of blank lines into quadratic work (see test_performance.py).
+_SHADOWING = re.compile(
+    r"(?m)^[ \t]*(?:function[ \t]+)?(?:python[\d.]*|pypy[\d.]*)[ \t]*(?:\([ \t]*\)|\{)"
+    r"|\bfunction[ \t]+(?:python[\d.]*|pypy[\d.]*)\b"
+    r"|\balias[ \t]+(?:python[\d.]*|pypy[\d.]*)="
+    r"|\bPYTHONINSPECT\b|\bPATH="
+)
+
+
+def shadows_interpreters(text: str) -> bool:
+    """Whether ``text`` could make a pipe into ``python`` run something else."""
+    return _SHADOWING.search(text) is not None
+
+
+def _reads_as_data(code: str) -> bool:
+    """Whether inline Python provably treats its input as data and executes none of it."""
+    if len(code) > 2000:
+        return False
+    try:
+        tree = ast.parse(code)
+    except (SyntaxError, ValueError):
+        return False
+    bound: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, _UNSAFE_NODES):
+            return False
+        if isinstance(node, ast.Import):
+            if any(alias.name not in _SAFE_IMPORTS for alias in node.names):
+                return False
+            bound.update(alias.asname or alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            if node.module not in _SAFE_IMPORTS or node.level:
+                return False
+            if any(alias.name == "*" for alias in node.names):
+                return False
+            bound.update(alias.asname or alias.name for alias in node.names)
+        elif isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store):
+            bound.add(node.id)
+        elif isinstance(node, ast.arg):
+            bound.add(node.arg)
+        elif isinstance(node, ast.ExceptHandler) and node.name:
+            bound.add(node.name)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+            if node.id not in _SAFE_NAMES and node.id not in bound:
+                return False
+        elif isinstance(node, ast.Attribute):
+            if node.attr.startswith("_") or node.attr not in _SAFE_ATTRIBUTES:
+                return False
+    return True
+
+
+def _python_reads_data(args: list[str]) -> bool:
+    """Whether ``python ARGS``, fed a pipe, treats it as data rather than a program."""
+    index = 0
+    while index < len(args):
+        arg = args[index]
+        if arg == "--" or not arg.startswith("-") or arg in _STDIN_PATHS:
+            return False  # the program is a script, or standard input itself
+        if arg.startswith("--"):
+            index += 2 if arg in _PYTHON_VALUE_OPTIONS else 1
+            continue
+        letters = arg[1:]
+        for position, letter in enumerate(letters):
+            if letter == "i":
+                return False  # interactive after the program: it then runs its input
+            if letter in "cm":
+                value = letters[position + 1:]
+                if not value:
+                    value = args[index + 1] if index + 1 < len(args) else ""
+                return value in DATA_MODULES if letter == "m" else _reads_as_data(value)
+            if letter in "WX":
+                index += 1 if letters[position + 1:] else 2
+                break
+        else:
+            index += 1
+    return False  # no program given: it reads one from standard input
+
+
+def executes_stdin(command: ShellCommand, *, trust_names: bool = True) -> bool:
+    """Whether ``command`` runs what is piped into it as a program.
+
+    Every shell does, and so does any interpreter given no program of its own:
+    ``| python3``, ``| python3 -``, ``| node /dev/stdin``. One given a program —
+    a module, inline code, a script — receives the input as data, but whether
+    that program then executes it can rarely be known statically, so only two
+    Python cases are exempt: a module from ``DATA_MODULES``, and inline code
+    that ``_reads_as_data`` accepts. A script path is still treated as running
+    its input, because what the script does with it is not visible here.
+    """
+    program = command.program
+    if program not in INTERPRETERS:
+        return False
+    if program in ("python", "python3") and trust_names:
+        return not _python_reads_data(command.args)
+    return True
+
 
 @dataclass
 class ShellCommand:
@@ -55,16 +268,21 @@ class ShellCommand:
     raw: str
     line: int
 
+    @cached_property
+    def effective(self) -> list[str]:
+        """``argv`` with wrappers and leading assignments removed: what actually runs."""
+        return unwrap(self.argv)
+
     @property
     def program(self) -> str:
-        if not self.argv:
+        if not self.effective:
             return ""
-        name = self.argv[0].rsplit("/", 1)[-1]
-        return name.removesuffix(".exe")
+        name = self.effective[0].rsplit("/", 1)[-1].removesuffix(".exe")
+        return interpreter_name(name)
 
     @property
     def args(self) -> list[str]:
-        return self.argv[1:]
+        return self.effective[1:]
 
 
 @dataclass
@@ -194,7 +412,7 @@ def find_clone_runs(commands: list[ShellCommand]) -> list[CloneRun]:
 
 def _executed_clone(command: ShellCommand, clones: dict[str, tuple[str, int]], here: str | None) -> str | None:
     """The cloned directory whose code ``command`` runs, if any."""
-    argv = command.argv
+    argv = command.effective
     program, args = command.program, command.args
     if not argv:
         return None
@@ -342,10 +560,25 @@ def _strip_comments(text: str) -> str:
     return "\n".join(out)
 
 
-def parse_shell(text: str, path: str, *, start_line: int = 1, strip_comments: bool = True) -> ShellAnalysis:
-    """Tokenise shell text and extract capability observations."""
+def parse_shell(
+    text: str,
+    path: str,
+    *,
+    start_line: int = 1,
+    strip_comments: bool = True,
+    trust_names: bool | None = None,
+) -> ShellAnalysis:
+    """Tokenise shell text and extract capability observations.
+
+    ``trust_names`` says whether ``python`` here means Python; by default it is
+    decided from ``text`` itself (see ``shadows_interpreters``). A caller
+    parsing one block of a larger document passes the answer for the whole
+    document, since a function defined in one block applies in the next.
+    """
     analysis = ShellAnalysis(path=path)
     source = _strip_comments(text) if strip_comments else text
+    if trust_names is None:
+        trust_names = not shadows_interpreters(text)
 
     for offset, raw_line in enumerate(source.splitlines()):
         line_no = start_line + offset
@@ -365,28 +598,33 @@ def parse_shell(text: str, path: str, *, start_line: int = 1, strip_comments: bo
                 parsed.append(ShellCommand(argv=argv, raw=segment, line=line_no))
 
         analysis.commands.extend(parsed)
-        _analyse_pipeline(analysis, parsed, raw_line, line_no)
+        _analyse_pipeline(analysis, parsed, raw_line, line_no, trust_names)
 
     analysis.clone_runs = find_clone_runs(analysis.commands)
     return analysis
 
 
 def _analyse_pipeline(
-    analysis: ShellAnalysis, commands: list[ShellCommand], raw_line: str, line_no: int
+    analysis: ShellAnalysis,
+    commands: list[ShellCommand],
+    raw_line: str,
+    line_no: int,
+    trust_names: bool = True,
 ) -> None:
-    programs = [c.program for c in commands]
-
-    # curl … | bash  (and the wget/nc equivalents)
-    for index, program in enumerate(programs):
-        piped = has_unquoted_pipe(raw_line)
-        if program in NETWORK_FETCHERS and piped:
-            downstream = programs[index + 1 :]
-            if any(p in INTERPRETERS for p in downstream):
-                analysis.fetch_to_interpreter.append((raw_line.strip()[:160], line_no))
-        if program in ("base64", "xxd", "openssl", "uudecode") and piped:
-            downstream = programs[index + 1 :]
-            if any(p in INTERPRETERS for p in downstream):
-                analysis.decode_to_interpreter.append((raw_line.strip()[:160], line_no))
+    # curl … | bash  (and the wget/nc equivalents). Only a downstream command
+    # that runs its input counts: `curl … | python3 -m json.tool` prints it.
+    piped = has_unquoted_pipe(raw_line)
+    for index, command in enumerate(commands):
+        program = command.program
+        if not piped or program not in NETWORK_FETCHERS | {"base64", "xxd", "openssl", "uudecode"}:
+            continue
+        downstream = commands[index + 1 :]
+        if not any(executes_stdin(c, trust_names=trust_names) for c in downstream):
+            continue
+        if program in NETWORK_FETCHERS:
+            analysis.fetch_to_interpreter.append((raw_line.strip()[:160], line_no))
+        else:
+            analysis.decode_to_interpreter.append((raw_line.strip()[:160], line_no))
 
     for command in commands:
         program = command.program

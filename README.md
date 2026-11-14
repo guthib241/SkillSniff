@@ -441,7 +441,10 @@ more.** SkillSniff's verdicts barely separate the two halves of the split. It
 blocked more benign skills (49) than malicious ones (25). Fifteen of those
 were vendor install scripts piped to a shell, which it blocks by design.
 Eighteen were a defect: `curl … | python -m json.tool`, which only
-pretty-prints JSON, mistaken for running remote code. Most of the malicious
+pretty-prints JSON, mistaken for running remote code. That defect is now
+fixed, and `curl … | sudo bash`, which the same code path missed, is now
+caught; the figures here are as measured and are not re-scored, because the
+defect was found on this split. Most of the malicious
 half is SkillHarm's automatically built attacks, written as instructions
 rather than code, and SkillSniff blocks 1 of those 728.
 

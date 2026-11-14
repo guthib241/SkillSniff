@@ -1008,6 +1008,15 @@ dataset's card asks that source-disjoint results not be presented as
 universal out-of-distribution generalisation: they describe a shift between
 sources, and that is all this does.
 
+**After this measurement**, the `python -m json.tool` defect was fixed,
+developed on ClawHub's development rows, where it removed `EXE001` from 9
+rows, each a data pipe. The same change makes wrappers such as `sudo`
+transparent, so `curl … | sudo bash` is now caught in scripts and fenced
+blocks. Both change what SkillSniff would report here, and the first was
+found here, so **from that change on, this split is contaminated for
+SkillSniff.** The figures above are as measured and are not re-scored, and
+no later figure on this split will be reported as independent.
+
 Every malicious identity SkillSniff did not block is in
 [`predictions.jsonl`](results/msb-2026-11-14/predictions.jsonl) with its
 verdict and rules. The 301 it left CLEAR are also in

@@ -24,7 +24,7 @@ from skillsniff.analysis.instructions import (
 )
 from skillsniff.analysis.jsscan import JS_SUFFIXES, JsAnalysis, analyze_javascript
 from skillsniff.analysis.pyast import PyAnalysis, analyze_python
-from skillsniff.analysis.shell import ShellAnalysis, parse_shell, shell_blocks
+from skillsniff.analysis.shell import ShellAnalysis, parse_shell, shadows_interpreters, shell_blocks
 from skillsniff.core.config import Config
 from skillsniff.core.fs import FileKind, ScannedFile
 from skillsniff.core.limits import Budget, CoverageReason
@@ -209,11 +209,12 @@ def _derive(context: AnalysisContext, file_context: FileContext) -> None:
         from skillsniff.rules._scan import documentation_framed
 
         merged = ShellAnalysis(path=scanned.display)
+        trust_names = not shadows_interpreters(scanned.text)
         for code, start_line, _language in shell_blocks(scanned.text):
             offset = _offset_of_line(scanned.text, start_line)
             if documentation_framed(scanned.text, offset):
                 continue
-            block = parse_shell(code, scanned.display, start_line=start_line)
+            block = parse_shell(code, scanned.display, start_line=start_line, trust_names=trust_names)
             merged.commands.extend(block.commands)
             merged.observations.extend(block.observations)
             merged.fetch_to_interpreter.extend(block.fetch_to_interpreter)

@@ -7,6 +7,22 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Security
 
+- **`curl … | sudo bash` was invisible in scripts and fenced blocks.** The
+  shell tokeniser analysed a wrapper instead of the command it runs, so
+  `| sudo bash`, `| sudo -E bash -`, `| env python3`, a leading
+  `VAR=value`, and a versioned name such as `python3.12` reached no
+  fetch-and-execute check unless they sat in markdown prose. Wrappers —
+  `sudo`, `doas`, `env`, `nohup`, `time`, `command`, `exec`, `nice`, `stdbuf`,
+  `timeout` — now resolve to what they run, with their own options skipped,
+  for every shell detection: pipes into an interpreter, package installs,
+  destructive commands, network sends and clone-then-run. On ClawHub's
+  development rows, `EXE001` now fires on 2 more (both `curl … | sudo bash`)
+  and `EXE008` on 3 more (an unpinned clone, then `sudo bash install.sh` or
+  `sudo make install`). One `EXE008` match is lost: a systemd `ExecStart=`
+  line inside a heredoc, which the old parser read as a command. It did
+  describe running the clone's code later, so the match was right by
+  accident; heredocs are still not understood.
+
 - **One malformed URL aborted a whole scan.** URL classification passed a URL
   with an unbalanced IPv6 bracket, or full-width punctuation inside its host,
   to `urlparse`, which raises; nothing caught it, so the skill was never
@@ -35,6 +51,10 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **`scripts/clawhub_dev_scan.py`**, for developing a rule change against
+  ClawHub's development rows reproducibly: it scans all 57,338 of them, each
+  in a temporary directory that is deleted after, against any source tree,
+  and compares two runs by verdict and by the evidence of chosen rules.
 - **Measured against Cisco's skill-scanner on the split it publishes
   against, and lost.** Pre-registration 3, committed before any sample was
   downloaded, measured SkillSniff once on MaliciousSkillBench's
@@ -136,6 +156,25 @@ project uses [Semantic Versioning](https://semver.org/).
   pre-registered and committed before the measurement ran.
 
 ### Fixed
+
+- **`curl … | python -m json.tool` no longer blocks as fetch-and-execute.**
+  `EXE001` and `EXE002` counted any interpreter downstream of a fetch as
+  running it, so pretty-printing a JSON response was CRITICAL. A pipe now
+  counts only where the receiving program runs its input: every shell, and
+  any interpreter given no program of its own (`| python3`, `| python3 -`,
+  `/dev/stdin`, `-i`). Two Python cases are exempt, because only they can be
+  checked: the `json.tool` module, and inline code whose syntax tree imports
+  only `json` and `sys` and uses only allowlisted names and attributes.
+  `exec`, `eval`, `__import__`, any other module and any dunder keep the pipe
+  CRITICAL, as does a script path, since what a script does with its input is
+  not visible. The exemptions are withdrawn wherever the same text defines a
+  function or alias named after Python, sets `PYTHONINSPECT`, or changes
+  `PATH`. On ClawHub's development rows `EXE001` disappears from 9 rows, every
+  one a data pipe. The defect was found on MaliciousSkillBench's
+  source-disjoint test split, so from this change that split is contaminated
+  for SkillSniff; the pre-registration 3 figures stand as measured and are not
+  re-scored. A first version of the guard used `^\s*` under `MULTILINE` and
+  was quadratic in blank lines; the existing performance test caught it.
 
 False positives found on ClawHub's development split (`train` and
 `validation`, rows ClawScan judged clean), each with a regression test and a
