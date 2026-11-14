@@ -671,6 +671,84 @@ The roadmap records it as work to be developed on other data and measured on a
 fresh holdout. From this commit on, any rule changed with these misses in view
 makes SkillTrustBench contaminated for recall, and it will be labelled so.
 
+## Pre-registration 3: the split Cisco's skill-scanner publishes against
+
+**Committed 2026-11-14, before any MaliciousSkillBench sample was downloaded.**
+Only the dataset card and Cisco's published documentation were read.
+
+Cisco AI Defense's `skill-scanner` publishes detection figures on
+MaliciousSkillBench's frozen source-disjoint test split. Figures on different
+corpora cannot be compared, and a comparison circulating at the time set
+Cisco's LLM-assisted result against SkillSniff's old 19-sample static one.
+The same split can be compared.
+
+### Corpus
+
+[`ProtectSkills/MaliciousSkillBench`](https://huggingface.co/datasets/ProtectSkills/MaliciousSkillBench)
+at revision `d4b42ce5766a6e0359c987cf59c1007cb3795a90`, the revision Cisco
+pins. CC-BY-4.0 for the benchmark's own metadata; third-party skill artifacts
+keep their upstream terms. Split `source_disjoint`, members marked `test`:
+1,384 identities, 839 malicious (label 1) and 545 benign (label 0), from the
+held-out sources `SRC009`, `SRC011` and `SRC012`.
+
+Each identity's `skill_text` is written as a skill's `SKILL.md`: the static
+representation the Hugging Face release provides, from the same Parquet files
+Cisco's harness materialises. Where exact text is withheld, the provided
+`public_skill_text` is used and the count is reported. Nothing is executed,
+and no URL in a sample is followed.
+
+### Independence
+
+SkillSniff has never been run on MaliciousSkillBench, and no rule was written
+with it in view. It is scanned once, at the commit carrying this section,
+whose `src/` is identical to `a27142e`. The dataset prohibits tuning on its
+frozen test members; no rule is changed in response to the result.
+
+### Operating points and metrics
+
+A malicious identity counts as detected at:
+
+1. **BLOCK**;
+2. **BLOCK or REVIEW**;
+3. **BLOCK, REVIEW or CAUTION**.
+
+INCONCLUSIVE and a scan that raises count as not detected. At each point:
+recall on malicious, false-positive rate on benign, precision and F1, with
+Wilson 95% intervals.
+
+### The comparison, fixed now
+
+Cisco's figures on the same split, from `docs/reference/measured-results.md`
+at commit `c558c42`:
+
+| Cisco configuration | MEDIUM+ recall / FPR | HIGH+ recall / FPR |
+|---|---|---|
+| Rules only, `balanced` | 8.0% / 4.2% | 7.7% / 4.0% |
+| Rules + Gemma 4 26B judge, `balanced` | 66.7% / 15.4% | 33.7% / 6.4% |
+
+Cisco's thresholds are finding severities and SkillSniff's are verdicts, so
+neither scale maps onto the other. The comparison is made at matched
+false-positive rate: each Cisco figure is set against the SkillSniff operating
+point whose false-positive rate is closest, on recall, and both rates are
+always shown.
+
+### Expected outcome
+
+The split is `SKILL.md` text alone, with no bundled scripts, which is where
+most of SkillSniff's high-confidence detections live. Expect BLOCK recall
+below SkillTrustBench's 0.271, plausibly 0.10–0.25, at a false-positive rate
+near SkillTrustBench's 0.04; and expect BLOCK or REVIEW to flag most malicious
+skills and a large share of benign ones, as it did there. Relative to Cisco:
+higher recall than its rules-only pack at a similar false-positive rate, lower
+than Cisco with its LLM judge.
+
+### What the result would mean, fixed now
+
+- If SkillSniff's recall at its operating point nearest 6.4% FPR is below
+  33.7%, the README says plainly that an LLM-assisted scanner catches more.
+- If its recall at the point nearest 4.0% FPR is below Cisco's rules-only
+  7.7%, the README says that too.
+
 ## What this measures, and what it does not
 
 **Measured.** The false-positive side. `anthropics/skills` is a public,
