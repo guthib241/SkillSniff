@@ -43,7 +43,10 @@ project uses [Semantic Versioning](https://semver.org/).
   false-positive rate; BLOCK or REVIEW, 43.3% at 46.2%. Cisco publishes 7.7%
   at 4.0% for its rules alone and 33.7% at 6.4% with an LLM judge, so
   SkillSniff is worse in every configuration Cisco reports. 49 of its 74
-  blocks were benign, 33 of them `EXE001` on installer lines in real skills.
+  blocks were benign: 15 were `EXE001` on vendor install scripts, which it
+  blocks by design, and 18 were `EXE001` on `curl … | python -m json.tool`,
+  a defect, since that pipe executes nothing. The defect is recorded in the
+  roadmap and not fixed here: it was found on test members.
   An overlap audit found 527 test skills sharing their opening with ClawHub
   development rows; without them the figures are 5.8% and 9.3%, and the
   conclusion is the same. No rule was changed in response. The harness is

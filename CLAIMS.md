@@ -161,6 +161,7 @@ Cisco's figures are cited from `cisco-ai-defense/skill-scanner`,
 | SkillSniff BLOCK: 9.0% of benign (49 / 545), CI [6.9, 11.7] | MEASURED | `all.operating_points.block.false_positive_rate` |
 | 49 of 74 blocks benign, 25 malicious | MEASURED | `all.operating_points.block`, `fp` and `tp` |
 | BLOCK or REVIEW: 43.3% of malicious (363 / 839), 46.2% of benign (252 / 545) | MEASURED | `all.operating_points.block_or_review` |
+| 33 of the 49 false BLOCKs are `EXE001`: 15 vendor install scripts (ATR), 18 `curl … \| python -m json.tool` (SkillFortifyBench) | DERIVED | rules in `false_blocks.jsonl`; the shapes read from those skills' `SKILL.md` after the measurement, which changed nothing |
 | SkillHarm: 728 malicious skills in the split, 1 blocked | MEASURED | `all.by_source`, `SRC009 SkillHarm`; verdicts in `predictions.jsonl` |
 | 527 test skills overlap ClawHub development rows | MEASURED | `independence.clawhub_development_rows.same_opening` (the 41 exact matches are among them) |
 | 245 of the 527 match rows the ClawHub false-positive work scanned | MEASURED | `python scripts/msb_eval.py --overlap-detail`, recorded in `docs/results/msb-2026-11-14/overlap_detail.json`; computed after the measurement, scans nothing |

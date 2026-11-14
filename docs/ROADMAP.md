@@ -74,13 +74,22 @@ Designed and intended, not yet built.
   spent for that question once its misses have been read.
 - **Decide whether fetch-and-execute is decisive** (`EXE001`). Piping remote
   content into a shell is CRITICAL by design, so it blocks. On
-  MaliciousSkillBench's source-disjoint split, 33 of the 49 false BLOCKs were
-  that rule on installer lines in real published skills, and Cisco's scanner
+  MaliciousSkillBench's source-disjoint split, 15 of the 49 false BLOCKs were
+  that rule on vendor install scripts in real skills, and Cisco's scanner
   reports the same shape among its own false positives. Separating a vendor
   installer from a dropper needs evidence about the destination, not a lower
   number. It must be developed on other data: any change to `EXE001` made
   with that split's false BLOCKs in view makes the split contaminated for
   SkillSniff.
+- **Fix `EXE001` on data piped into a program that does not execute it.**
+  `curl … | python -m json.tool` pretty-prints JSON and runs nothing remote,
+  yet it blocks. It was found as 18 false BLOCKs on MaliciousSkillBench's test
+  split, and Cisco's write-up names the same shape among its false positives
+  on other corpora. Piping into an interpreter that reads its *program* from
+  stdin is execution; piping into `-m module`, `-c CODE` or a script path is
+  data. Develop and validate the fix on development data, with a test that a
+  bare `| python` still blocks. Once it lands, that split is contaminated for
+  SkillSniff and no later figure on it is reported as independent.
 - **A measured provider for the semantic layer.** On the same split, Cisco's
   LLM judge is what separates its 33.7% recall from its rules' 7.7%, and most
   of what SkillSniff misses there is malicious instruction, not code. The

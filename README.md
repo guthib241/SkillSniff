@@ -438,11 +438,12 @@ Cisco rows are Cisco's published figures.
 **On this benchmark Cisco's scanner is better in every configuration it
 reports, its rules alone included, and with an LLM judge it catches far
 more.** SkillSniff's verdicts barely separate the two halves of the split. It
-blocked more benign skills (49) than malicious ones (25), mostly for
-`curl … | bash` installer lines in real published skills, which it treats as
-decisive by design. Most of the malicious half is SkillHarm's automatically
-built attacks, written as instructions rather than code, and SkillSniff
-blocks 1 of those 728.
+blocked more benign skills (49) than malicious ones (25). Fifteen of those
+were vendor install scripts piped to a shell, which it blocks by design.
+Eighteen were a defect: `curl … | python -m json.tool`, which only
+pretty-prints JSON, mistaken for running remote code. Most of the malicious
+half is SkillHarm's automatically built attacks, written as instructions
+rather than code, and SkillSniff blocks 1 of those 728.
 
 One thing favours Cisco, and is stated rather than leaned on: its rules were
 tuned on this dataset's development data, which SkillSniff had never seen.

@@ -905,14 +905,23 @@ REVIEWs are not detections of the attacks either: 249 of them rest only on
 description does not account for), the same two rules behind 118 of the 203
 benign REVIEWs.
 
-**The false BLOCKs are mostly installer lines.** Each of the 49 carries
-exactly one critical finding: `EXE001`, remote content piped into an
-interpreter, on 33 — all 18 from SkillFortifyBench and 15 of ATR's 31 — then
-`MCP001` (7), `INJ001` (5), `PRV001` (3) and `CRE001` (1). SkillSniff treats
-piping remote content into a shell as decisive by design. Cisco reports the
-same shape: 13 of the 25 benign records its rules still flag on this split
-at MEDIUM or above are vendor installers such as
-`curl -fsSL https://cli.tavily.com/install.sh | bash`.
+**The false BLOCKs come mostly from one rule, for two different reasons.**
+Each of the 49 carries exactly one critical finding, and 33 are `EXE001`,
+remote content piped into an interpreter. In the 15 from ATR's benign skills
+it is mostly a vendor's install script piped to a shell, from hosts such as
+`cli.tavily.com`, `bun.sh` and `raw.githubusercontent.com`. SkillSniff
+treats that as decisive by design, and Cisco reports the same shape: 13 of
+the 25 benign records its rules still flag on this split at MEDIUM or above
+are vendor installers such as
+`curl -fsSL https://cli.tavily.com/install.sh | bash`. **All 18 from
+SkillFortifyBench are a defect:** each is `curl -s "<API URL>" | python -m
+json.tool`, against `api.github.com`, `pypi.org` or `registry.npmjs.org`.
+That pretty-prints JSON and executes nothing, and `EXE001` mistakes it for
+running remote code. Cisco's write-up names the same shape among its own
+false positives on other corpora. The other 16 false BLOCKs, all ATR, are
+`MCP001` (7), `INJ001` (5), `PRV001` (3) and `CRE001` (1). These shapes were
+read from the blocked skills' text after the measurement; nothing was
+changed because of them.
 
 **What it does catch is narrow:** 25 true blocks, 12 of them `OBS005` (an
 encoded payload with executable or credential content), 7 `EXE001` and 5
@@ -989,9 +998,11 @@ recall at a similar false-positive rate.
 ### What this does not license
 
 No rule was changed in response, as pre-registered; the dataset's terms
-forbid tuning on its frozen test members. Whether fetch-and-execute should be
-decisive is a real question, recorded in the roadmap, and must be settled on
-other data. From this commit on, a change to any rule named in this section
+forbid tuning on its frozen test members. That includes the
+`python -m json.tool` defect: it is recorded in the roadmap, to be fixed and
+validated on development data. Whether fetch-and-execute should be decisive
+is a real question, also recorded there, and must be settled on other
+data. From this commit on, a change to any rule named in this section
 makes this split contaminated for SkillSniff, and it will be labelled so. The
 dataset's card asks that source-disjoint results not be presented as
 universal out-of-distribution generalisation: they describe a shift between
