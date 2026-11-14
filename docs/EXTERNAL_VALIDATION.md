@@ -12,6 +12,15 @@ SkillSniff does what its authors intended on inputs its authors chose.
 This document is the counterweight. It runs the scanner over skills written by
 other people and reports what happened, including the parts that look bad.
 
+**The current independent figures** come from pre-registration 2, measured once
+on 13 November 2026 on 5,516 expert-labelled SkillTrustBench cases the rules
+had never seen: **malicious recall 0.271, Wilson 95% CI [0.255, 0.288]**, and
+a **false BLOCK rate of 0.040 [0.031, 0.050]** on normal cases. By the rule
+fixed before the measurement, that is not fit to be a blocking gate. See
+[Results of pre-registration 2](#results-of-pre-registration-2). The sections
+below record how the project got there, in order, including the measurements
+that turned out to be contaminated.
+
 ## Pre-registration: recall against externally-authored malicious skills
 
 **Committed 2026-09-11, before any result was computed.** The thresholds below
@@ -293,6 +302,375 @@ exhausts the scan.
   `re.MULTILINE`; 100,000 blank lines now cost single-digit milliseconds
   rather than minutes, and `csv-summarizer` scans in 301 ms instead of 224 s.
 
+## Pre-registration 2: an independent measurement on SkillTrustBench and ClawHub
+
+**Committed 2026-11-13, before any sample from either dataset was downloaded.**
+Only the dataset cards and the official evaluator's source were read; the
+evaluator was read, not executed. This section is in its own commit so git
+history shows it predates every result.
+
+The previous figure, 0.316, is now spent: its corpus shaped the rules. This
+measurement exists to replace it with one taken on skills the rules have never
+seen.
+
+### Corpora
+
+| Dataset | Pin | Licence | Labels |
+|---|---|---|---|
+| [`cuhk-zhuque/SkillTrustBench`](https://huggingface.co/datasets/cuhk-zhuque/SkillTrustBench) v1.0, 5,520 cases | `ef338a55117c6039de7f408c24b3f05eedf0a6e3` | CC-BY-NC-SA-4.0 | **expert-generated** judgments: normal, suspicious, malicious |
+| [`OpenClaw/clawhub-security-signals`](https://huggingface.co/datasets/OpenClaw/clawhub-security-signals), 67,453 rows | `69dcbd323c155312fb000ec89ea0b1efdf6a5757` | MIT | **silver**: ClawScan's automated, LLM-produced verdict |
+
+SkillTrustBench is non-commercial and share-alike. It is downloaded at measure
+time and **never committed** to this repository; only aggregate results and
+case identifiers with this tool's verdicts are published.
+
+The two are not equivalent and are reported separately, never pooled.
+SkillTrustBench measures **recall against expert ground truth**. ClawHub
+measures **agreement with another automated scanner**: its own card calls the
+label silver-standard, its content is sanitized with secrets and runnable
+artifacts removed, and 72.8% of its 206 malicious rows were flagged by
+VirusTotal, i.e. by malware evidence a text scanner may never be shown.
+
+### Holdout and development
+
+- **Holdout, scanned exactly once:** all of SkillTrustBench, plus ClawHub's
+  `test` and `eval_holdout` splits. Not downloaded, opened, or scanned until
+  the rule work in this change is committed. The commit that is scanned is
+  recorded with the results.
+- **Development, used freely:** ClawHub's `train` and `validation` splits. New
+  rules may be checked against them, chiefly for false positives on rows
+  ClawScan judged clean.
+- **Excluded as contaminated:** SkillTrustBench's 4
+  `external_overtly_malicious_skills` cases are the Trail of Bits samples this
+  project already tuned against. They are scanned and reported on their own,
+  and excluded from every headline figure.
+
+### Metrics
+
+Mirrors the official evaluator (`tools/scanner_benchmark/evaluate_predictions.py`
+at the pin), so the figures are comparable with other scanners' published runs.
+
+Verdict mapping: `BLOCK` to malicious, `REVIEW` to suspicious, `CAUTION` and
+`CLEAR` to normal. **`INCONCLUSIVE` maps to normal**, meaning not detected, so
+it can never count toward any recall. It is reported separately as a coverage
+figure.
+
+- **Primary — malicious recall:** malicious cases predicted malicious, i.e.
+  blocked. Wilson 95% CI.
+- **Non-normal recall:** malicious or suspicious cases predicted anything but
+  normal.
+- **False BLOCK rate on normal cases**, with a Wilson CI.
+- Per-source (`injected`, `injected_d11`, `wild`, …) and per-risk-label
+  (`T01`–`T09`) breakdowns, the confusion matrix, macro-F1, and the **complete
+  list of missed malicious cases** as data.
+
+### Expected outcome
+
+Lower than the contaminated 0.526, and plausibly close to the old 0.316.
+Expect `injected_d11` — built to resist evaluation — and the `wild` families
+to score lowest. Expect the false BLOCK rate on normal cases to be low, below
+0.05, given 0 / 20 on Anthropic's skills; if it is not, that is the more
+important finding.
+
+### Interpretation rules, fixed now
+
+| Malicious recall on SkillTrustBench | Conclusion |
+|---|---|
+| ≥ 0.70 | Fit to block. The advisory default may be revisited. |
+| 0.40 – 0.69 | Advisory only. Default stays advisory. |
+| < 0.40 | Not fit as a gate. Default stays advisory, and the README says so. |
+
+**Falsification of the precision claim:** the README says a finding is
+usually right. If the false BLOCK rate on SkillTrustBench `normal` cases
+exceeds 0.05, that claim is withdrawn and rewritten to the measured rate.
+
+### Anti-tuning commitment
+
+No rule is added or changed in response to holdout results inside this change.
+Anything they reveal becomes a documented miss and, at most, a roadmap entry.
+
+---
+
+## Development work on ClawHub, before the holdout
+
+Pre-registration 2 set ClawHub's `train` and `validation` splits aside for
+development, "chiefly for false positives on rows ClawScan judged clean". This
+is what that work found and changed. Everything here happened before any
+holdout sample was downloaded, and every figure in it is on the development
+split, which the changes were made against. **None of it is a measurement.**
+
+Scope: the 4,806 development rows whose bundle contains JavaScript, TypeScript
+or Python, or an extensionless script with a shebang — the rows the new
+JavaScript analysis and the Python changes could affect. ClawScan labels them
+2,589 clean, 2,196 suspicious and 21 malicious.
+
+### A property of the dataset: every SKILL.md is one line
+
+ClawHub stores `skill_md_content` with its newlines removed: 3,000 of the
+first 3,000 training rows are a single line. Bundled files keep theirs. For
+this dataset, then, every rule reading `SKILL.md` sees one line: code fences
+cannot be found, frontmatter cannot be parsed, and a per-line window runs
+across what were separate sections. That is not a property of real skills, so
+ClawHub agreement figures say less about SkillSniff's handling of `SKILL.md`
+than they appear to, in both directions. The protocol is unchanged — the rows
+are scanned as published — and the holdout result carries this caveat.
+
+### False BLOCKs on rows ClawScan judged clean
+
+When this work began, SkillSniff blocked **443 of 2,589** clean development
+rows (17.1%). In 291 of them a blocking finding sat in a bundled file, where
+the line structure is intact, so the cause was not only the flattening.
+Reading the findings showed mostly matching defects. For `MEM001` and
+`PER001` the match was right and the severity was the question: they blocked
+on a capability, and now block only when what is written is an attack
+(a judgement, stated as one in the CHANGELOG):
+
+| Rule | Clean rows it blocked | What it was actually matching |
+|---|---|---|
+| `CRE001` | 105 | `.env` inside `os.environ`, `.kube` inside `.Kubernetes-…`, "credentials" in docstrings and regular expressions, and a skill reading its own `.env` |
+| `EXF002` | 111 | `nc` inside `async`, "curl … API_KEY" in a sentence, and tokens in `Authorization` headers |
+| `MEM001` | 77 | integration guides saying "add this to your `AGENTS.md`" |
+| `PER002` | 75 | the bare words `crontab`, `.service` (a CSS class), `.plist` (an iOS `Info.plist`) |
+| `PER001` | 64 | documented `export` lines for `~/.bashrc` |
+| `PRV001` | 35 | Chromium's `--no-sandbox`, the YOLO model's `--yolo`, prompts inside scripts |
+
+A row can carry several. The fixes are listed in the CHANGELOG; each has a
+regression test and a counterweight showing the attack it exists for still
+fires at full severity.
+
+### After the fixes, on the same rows
+
+| ClawScan label | Rows | Blocked before | Blocked after | Flagged before | Flagged after |
+|---|---|---|---|---|---|
+| clean | 2,589 | 443 (17.1%) | **118 (4.6%)** | 1,597 (61.7%) | 1,574 (60.8%) |
+| suspicious | 2,196 | 622 | 234 | 1,748 | 1,759 |
+| malicious | 21 | 3 | **0** | 14 | 14 |
+
+"Flagged" is BLOCK or REVIEW. Most of what stopped blocking moved to REVIEW,
+where a person still decides: the capability rules — credential access with
+network egress, shell execution, persistence — ask for that by design, which is
+also why roughly 60% of rows ClawScan calls clean are still flagged. That is
+disagreement with another scanner's threshold, not a measured error rate.
+
+**The three malicious rows that stopped blocking were blocked for the wrong
+reason.** One by a reference document mentioning `LaunchAgents`, one by
+Chromium's `--no-sandbox`, one by a code comment containing "credentials" —
+each a false-positive class removed here. All three are still flagged, now on
+the findings that bear on them: code run from an unpinned clone, obfuscation,
+and supply-chain findings. Reporting 3 → 0 without that would hide the cause;
+reporting it as a recall loss would misstate it.
+
+What still blocks clean rows: a credential sent in a request body or query
+string (`EXF001` 22 rows, `EXF002` 21) — an IndexNow key, a maps key, an OAuth
+client secret, indistinguishable from exfiltration without knowing the
+service; `curl … | sh` installers (`EXE001`, 16); credential-store reads
+(`CRE001`, 21); injection phrasing (`INJ001`, 14); agent flags and
+instruction-level bypasses (`PRV001`, 12); MCP configuration writes (`MCP001`,
+10). These are left as they are: each is the shape its rule exists for, and
+loosening them on development data is how a benchmark gets bought.
+
+### What the new JavaScript analysis added
+
+On the same rows, the JavaScript analysis added CRITICAL `EXF001` findings on
+seven clean rows before the fixes above. Three were authentication shapes it
+did not yet recognise (an SMTP transport's `auth`, a request built from a
+`URL` object) and are fixed. The rest send a credential to its own service in
+a request body or query string — an IndexNow key, a maps API key, an OAuth
+client secret — which the Python rule also reports, by design: a secret in a
+payload is not distinguishable from exfiltration without knowing the service.
+They are left as they are and counted.
+
+## Results of pre-registration 2
+
+Measured once, as pre-registered. The tables below are generated by
+`scripts/render_holdout.py` from the recorded
+[`summary.json`](results/holdout-2026-11-13/summary.json); the per-case data
+and every miss are in [`docs/results/holdout-2026-11-13/`](results/holdout-2026-11-13/).
+The scanned commit's tree is identical to `3eecf1d`, which carries the rule
+work; the merge on top of it only records the previous branch tip.
+
+Scanned commit `7d1d388f5bdc4c420e80580522d9477fb22fe48a`, 2026-11-13T15:41:22Z to 2026-11-13T15:46:17Z.
+
+### SkillTrustBench — `cuhk-zhuque/SkillTrustBench@ef338a55117c6039de7f408c24b3f05eedf0a6e3`
+
+Headline figures exclude 4 external_overtly_malicious_skills cases.
+
+| Metric | Value, Wilson 95% CI |
+| --- | --- |
+| **Malicious recall** (blocked) | **0.271 (775/2859) [0.255, 0.288]** |
+| Non-normal recall (blocked or flagged) | 0.926 (3587/3873) [0.917, 0.934] |
+| False BLOCK rate on normal cases | 0.040 (65/1643) [0.031, 0.050] |
+| Normal cases flagged (BLOCK or REVIEW) | 0.739 (1214/1643) [0.717, 0.760] |
+| Accuracy (three-way) | 0.361 |
+| Macro-F1 (three-way) | 0.366 |
+| Cases | 5516 |
+
+Verdicts by expert label:
+
+| gold | BLOCK | REVIEW | CAUTION | CLEAR | INCONCLUSIVE | ERROR | NO_SKILL |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| normal | 65 | 1149 | 226 | 198 | 0 | 5 | 0 |
+| suspicious | 53 | 787 | 123 | 48 | 0 | 3 | 0 |
+| malicious | 775 | 1972 | 90 | 12 | 0 | 10 | 0 |
+
+Confusion matrix (official evaluator mapping):
+
+| gold \ predicted | normal | suspicious | malicious |
+| --- | --- | --- | --- |
+| normal | 429 | 1149 | 65 |
+| suspicious | 174 | 787 | 53 |
+| malicious | 112 | 1972 | 775 |
+
+By source:
+
+| Group | Cases | Malicious recall | Non-normal recall | False BLOCK on normal |
+| --- | --- | --- | --- | --- |
+| `injected` | 3359 | 0.219 (508/2323) [0.202, 0.236] | 0.928 (3084/3324) [0.918, 0.936] | 0.029 (1/35) [0.005, 0.145] |
+| `injected_d11` | 290 | 0.348 (101/290) [0.296, 0.405] | 0.948 (275/290) [0.916, 0.968] | — |
+| `injected_d8` | 119 | — | 1.000 (1/1) [0.206, 1.000] | 0.178 (21/118) [0.119, 0.257] |
+| `injected_p0_normal_base` | 6 | 0.167 (1/6) [0.030, 0.564] | 1.000 (6/6) [0.610, 1.000] | — |
+| `safe_pool` | 1500 | — | 0.900 (9/10) [0.596, 0.982] | 0.029 (43/1490) [0.021, 0.039] |
+| `wild` | 37 | 0.600 (21/35) [0.436, 0.745] | 0.946 (35/37) [0.823, 0.985] | — |
+| `wild_diffused` | 159 | 0.755 (120/159) [0.682, 0.815] | 0.837 (133/159) [0.771, 0.886] | — |
+| `wild_expanded` | 46 | 0.522 (24/46) [0.381, 0.659] | 0.957 (44/46) [0.855, 0.988] | — |
+
+By risk label (a case can carry several):
+
+| Group | Cases | Malicious recall | Non-normal recall | False BLOCK on normal |
+| --- | --- | --- | --- | --- |
+| `T01` Skill instruction hijacking | 1424 | 0.252 (285/1130) [0.228, 0.278] | 0.947 (1348/1424) [0.934, 0.957] | — |
+| `T02` Agent memory poisoning | 164 | 0.335 (55/164) [0.268, 0.411] | 0.878 (144/164) [0.819, 0.920] | — |
+| `T03` Remote payload retrieval and execution | 811 | 0.304 (239/787) [0.273, 0.337] | 0.941 (763/811) [0.922, 0.955] | — |
+| `T04` Embedded malicious code | 2856 | 0.264 (646/2446) [0.247, 0.282] | 0.954 (2724/2856) [0.946, 0.961] | — |
+| `T05` Unauthorized access and privilege escalation | 1074 | 0.349 (242/693) [0.315, 0.385] | 0.885 (951/1074) [0.865, 0.903] | — |
+| `T06` System persistence | 96 | 0.271 (26/96) [0.192, 0.367] | 0.844 (81/96) [0.758, 0.903] | — |
+| `T07` Tool hijacking and spoofing | 124 | 0.161 (20/124) [0.107, 0.236] | 0.935 (116/124) [0.878, 0.967] | — |
+| `T08` Insecure dependencies | 239 | 0.016 (2/128) [0.004, 0.055] | 0.887 (212/239) [0.841, 0.921] | — |
+| `T09` Insecure skill coding practices | 1118 | 0.161 (49/304) [0.124, 0.207] | 0.861 (963/1118) [0.840, 0.880] | — |
+| `none` | 1643 | — | — | 0.040 (65/1643) [0.031, 0.050] |
+
+Contaminated cases, reported on their own:
+
+- `case_05503` (malicious): BLOCK
+- `case_05502` (malicious): BLOCK
+- `case_05504` (malicious): REVIEW
+- `case_05506` (malicious): REVIEW
+
+### ClawHub — `OpenClaw/clawhub-security-signals@69dcbd323c155312fb000ec89ea0b1efdf6a5757`
+
+Measures agreement with ClawScan's automated verdict (silver labels), not ground truth.
+
+| Metric | Value, Wilson 95% CI |
+| --- | --- |
+| **Malicious recall** (blocked) | **0.083 (2/24) [0.023, 0.259]** |
+| Non-normal recall (blocked or flagged) | 0.588 (2281/3878) [0.573, 0.604] |
+| False BLOCK rate on normal cases | 0.037 (233/6237) [0.033, 0.042] |
+| Normal cases flagged (BLOCK or REVIEW) | 0.389 (2425/6237) [0.377, 0.401] |
+| Accuracy (three-way) | 0.578 |
+| Macro-F1 (three-way) | 0.388 |
+| Cases | 10115 |
+
+Verdicts by ClawScan label:
+
+| gold | BLOCK | REVIEW | CAUTION | CLEAR | INCONCLUSIVE | ERROR | NO_SKILL |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| normal | 233 | 2192 | 738 | 3067 | 0 | 7 | 0 |
+| suspicious | 241 | 2030 | 348 | 1223 | 0 | 12 | 0 |
+| malicious | 2 | 8 | 5 | 8 | 0 | 1 | 0 |
+
+`test`: malicious recall 0.062 (1/16) [0.011, 0.283]; false BLOCK on clean 0.036 (149/4118) [0.031, 0.042]; 6747 rows.
+
+`eval_holdout`: malicious recall 0.125 (1/8) [0.022, 0.471]; false BLOCK on clean 0.040 (84/2119) [0.032, 0.049]; 3368 rows.
+
+### The pre-registered conclusions, applied
+
+**Malicious recall on SkillTrustBench is 0.271, CI [0.255, 0.288]. That is
+below 0.40, so by the rule fixed in advance SkillSniff is not fit as a gate.**
+The default stays advisory, and the README says so. It agrees with the old
+estimate, 0.316 on 19 samples, whose interval [0.154, 0.540] contains it; the
+contaminated 0.526 did not survive contact with unseen skills.
+
+**The precision claim survives, narrowly, and only as a claim about BLOCK.**
+The false BLOCK rate on SkillTrustBench's normal cases is 0.040, below the
+0.05 that would have withdrawn it — but its upper bound is 0.050. Of 893
+blocks, 828 were malicious or suspicious (0.927) and 775 malicious (0.868).
+**REVIEW is not evidence of much:** it fell on 1,149 of 1,643 normal cases,
+and 73.9% of normal cases were flagged one way or the other, against 92.6% of
+malicious-or-suspicious ones. The README's "when it fires it is usually
+right" is rewritten to say BLOCK.
+
+### Predictions made in advance, checked
+
+| Prediction (committed in `4827b20`) | Outcome |
+|---|---|
+| Lower than the contaminated 0.526, plausibly close to 0.316 | **Held.** 0.271, inside the old interval |
+| `injected_d11` and the `wild` families score lowest | **Wrong.** The wild families scored *highest* (0.522–0.755) and plain `injected` lowest (0.219); `injected_d11`, built to resist evaluation, sat between at 0.348 |
+| False BLOCK rate on normal cases below 0.05 | **Held**, at 0.040 — but on the hard negatives (`injected_d8`: security tools, test fixtures) it is 0.178, CI [0.119, 0.257] |
+
+The wrong prediction is informative: the wild-style families carry the
+installers, droppers and exfiltration that the critical rules exist for,
+while most injected cases express their harm in ways the rules see only at
+HIGH.
+
+### Every miss
+
+All 2,084 malicious cases that were not blocked are listed, by case id, with
+this tool's verdict and rules, in
+[`skilltrustbench_missed_malicious.jsonl`](results/holdout-2026-11-13/skilltrustbench_missed_malicious.jsonl).
+In aggregate:
+
+- **1,972 (94.6%) were flagged REVIEW.** The gap is mostly severity, not
+  visibility: 1,887 of them carry at least one HIGH security finding —
+  dynamic evaluation (`EXE004`, 1,157), obfuscation (`OBS001`, 768),
+  supply-chain (`SUP004`, 705) — that the verdict gate does not treat as
+  decisive. 85 carry only capability, specification or quality findings.
+- **102 were neither blocked nor flagged** (90 CAUTION, 12 CLEAR): by source
+  `injected` 57, `wild_diffused` 26, `injected_d11` 15, `wild` 2,
+  `wild_expanded` 2; most often embedded code (`T04`, 58), remote payloads
+  (`T03`, 42) and privilege escalation (`T05`, 41).
+- **10 were never scanned to the end**: see *Coverage*.
+
+By risk label, recall is lowest for insecure dependencies (`T08`, 2 / 128),
+tool hijacking (`T07`, 0.161) and insecure coding practices (`T09`, 0.161).
+The 65 false BLOCKs fall in `safe_pool` (43), `injected_d8` (21) and
+`injected` (1).
+
+### Coverage
+
+No case returned INCONCLUSIVE. **18 SkillTrustBench scans and 20 ClawHub scans
+raised instead of finishing**, all at one call site: URL classification
+passed a malformed URL — an unbalanced IPv6 bracket, or full-width
+punctuation inside a host — to `urlparse`, which raises, and nothing caught
+it. One such URL anywhere in a skill aborted its whole scan, which makes it a
+bypass, not a nuisance. The same defect crashed 31 development rows before
+the holdout was touched and was not fixed then; that was a mistake. As
+pre-registered, the figures above count those scans as not detected (10
+malicious SkillTrustBench cases). The defect is fixed after this measurement,
+in its own commit, and the measurement is not re-run: all 38 inputs that
+raised now scan to the end, and their verdicts are deliberately not reported.
+Behind the fix, any analyser or rule that raises now records an
+`analysis-error` coverage gap, which forbids a clean verdict, rather than
+ending the scan.
+
+### ClawHub: agreement with another scanner
+
+Read with three caveats. ClawScan's verdict is an LLM-produced silver label;
+72.8% of the dataset's malicious rows were flagged by VirusTotal, on evidence
+a text scanner may never be shown; and the content is sanitized, with secrets
+and runnable artifacts removed. In addition, as found on the development
+split, every `SKILL.md` has lost its newlines. Against that: 2 of 24
+malicious rows blocked and 10 flagged; 3.7% of rows ClawScan judged clean
+blocked, CI [3.3%, 4.2%]; 38.9% of them flagged.
+
+### What this does not license
+
+No rule was changed in response to these results. They point at a severity
+question — most misses are already flagged HIGH — but answering it with
+SkillTrustBench in view would spend it the way the first corpus was spent.
+The roadmap records it as work to be developed on other data and measured on a
+fresh holdout. From this commit on, any rule changed with these misses in view
+makes SkillTrustBench contaminated for recall, and it will be labelled so.
+
 ## What this measures, and what it does not
 
 **Measured.** The false-positive side. `anthropics/skills` is a public,
@@ -301,11 +679,12 @@ every blocking finding there is a defect in SkillSniff. That makes the false
 BLOCK rate a well-defined quantity, and it is the number that decides whether
 anyone leaves this tool switched on.
 
-**Not measured.** Recall, precision, and per-rule agreement. Doing that
-honestly needs per-skill ground-truth labels produced independently of the
-tool, against a written codebook, ideally by two labellers. No such labelled
-corpus of agent skills is public, and this project has not built one. Nothing
-below should be read as a detection rate.
+**Not measured, in this first evaluation.** Recall, precision, and per-rule
+agreement. Doing that honestly needs per-skill ground-truth labels produced
+independently of the tool. When this section was written no such corpus had
+been obtained, and nothing in it should be read as a detection rate. One has
+since: SkillTrustBench's expert labels, in *Results of pre-registration 2*
+above.
 
 **Sample size is small.** 29 skills across two corpora. The intervals are
 wide and are reported as such. Treat every figure here as a smoke test that

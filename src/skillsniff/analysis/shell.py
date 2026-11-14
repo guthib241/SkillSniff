@@ -81,6 +81,165 @@ class ShellAnalysis:
     network_sends: list[tuple[str, int]] = field(default_factory=list)
     installers: list[tuple[str, int]] = field(default_factory=list)
     destructive: list[tuple[str, int]] = field(default_factory=list)
+    #: Code run from a repository cloned at an unpinned revision.
+    clone_runs: list[CloneRun] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class CloneRun:
+    """``git clone URL dir`` followed by running something inside ``dir``."""
+
+    url: str
+    clone_line: int
+    run: str
+    run_line: int
+
+
+#: ``git clone`` options that take a value, so the value is not the URL.
+_CLONE_VALUE_OPTIONS = frozenset(
+    {"-b", "--branch", "--depth", "-c", "--config", "-o", "--origin", "-j", "--jobs",
+     "--reference", "--reference-if-able", "--template", "--separate-git-dir", "-u",
+     "--upload-pack", "--filter", "--shallow-since", "--shallow-exclude", "--server-option",
+     "--bundle-uri", "--revision"}
+)
+_REMOTE_URL = re.compile(r"^(?:https?|git|ssh)://|^[\w.-]+@[\w.-]+:")
+_FULL_SHA = re.compile(r"^[0-9a-f]{40}$")
+#: Commands that run the project in the current directory: its build file,
+#: install hooks, or test runner execute code from the checkout.
+_PROJECT_RUNNERS = frozenset(
+    {("make", ""), ("npm", "install"), ("npm", "i"), ("npm", "ci"), ("npm", "run"),
+     ("npm", "start"), ("npm", "test"), ("yarn", ""), ("yarn", "install"), ("yarn", "run"),
+     ("pnpm", "install"), ("pnpm", "i"), ("pnpm", "run"), ("bun", "install"), ("bun", "run"),
+     ("cargo", "run"), ("cargo", "build"), ("cargo", "install"), ("go", "run"),
+     ("bundle", "install"), ("bundle", "exec"), ("rake", ""), ("gradle", ""), ("mvn", "")}
+)
+_PIP = frozenset({"pip", "pip3", "uv", "pipx"})
+
+
+def _clone_target(args: list[str]) -> tuple[str, str] | None:
+    """(url, directory) for ``git clone`` arguments, or None for a local clone."""
+    positional: list[str] = []
+    skip = False
+    for arg in args[1:]:
+        if skip:
+            skip = False
+            continue
+        if arg.startswith("-"):
+            skip = arg in _CLONE_VALUE_OPTIONS
+            continue
+        positional.append(arg)
+    if not positional or not _REMOTE_URL.search(positional[0]):
+        return None
+    url = positional[0]
+    if len(positional) > 1:
+        directory = positional[1]
+    else:
+        directory = url.rstrip("/").rsplit("/", 1)[-1].rsplit(":", 1)[-1].removesuffix(".git")
+    return url, _norm(directory)
+
+
+def _norm(path: str) -> str:
+    path = path.strip()
+    while path.startswith("./"):
+        path = path[2:]
+    return path.rstrip("/")
+
+
+def _inside(path: str, directory: str) -> bool:
+    path = _norm(path)
+    return bool(directory) and (path == directory or path.startswith(directory + "/"))
+
+
+def find_clone_runs(commands: list[ShellCommand]) -> list[CloneRun]:
+    """Code from a fresh, unpinned clone that is then executed.
+
+    The link is followed, not guessed: the command must run a path inside the
+    cloned directory, or run the project after ``cd`` into it. A clone followed
+    by an unrelated command is ordinary and is not reported, and neither is a
+    clone pinned to a full commit hash before anything runs.
+    """
+    clones: dict[str, tuple[str, int]] = {}
+    pinned: set[str] = set()
+    here: str | None = None  # the clone the working directory is inside, if any
+    found: list[CloneRun] = []
+    for command in commands:
+        program, args = command.program, command.args
+        if program == "git" and args:
+            target_dir = here
+            if args[0] == "-C" and len(args) > 2:
+                target_dir = next((d for d in clones if _inside(args[1], d)), None)
+                args = args[2:]
+            if args[0] == "clone":
+                target = _clone_target(args)
+                if target is not None:
+                    clones[target[1]] = (target[0], command.line)
+                    pinned.discard(target[1])
+                    if any(a.startswith("--revision") and _FULL_SHA.match(a.split("=", 1)[-1])
+                           for a in args):
+                        pinned.add(target[1])
+            elif args[0] in ("checkout", "switch", "reset") and target_dir is not None \
+                    and any(_FULL_SHA.match(a) for a in args[1:]):
+                pinned.add(target_dir)
+            continue
+        if program in ("cd", "pushd"):
+            destination = args[0] if args else ""
+            here = next((d for d in clones if _inside(destination, d)), None)
+            continue
+        directory = _executed_clone(command, clones, here)
+        if directory is not None and directory not in pinned:
+            url, clone_line = clones[directory]
+            found.append(CloneRun(url, clone_line, command.raw[:160], command.line))
+    return found
+
+
+def _executed_clone(command: ShellCommand, clones: dict[str, tuple[str, int]], here: str | None) -> str | None:
+    """The cloned directory whose code ``command`` runs, if any."""
+    argv = command.argv
+    program, args = command.program, command.args
+    if not argv:
+        return None
+
+    def clone_of(path: str) -> str | None:
+        return next((d for d in clones if _inside(path, d)), None)
+
+    # A path to a file inside the clone, run directly, sourced, or handed to an interpreter.
+    direct = clone_of(argv[0]) if "/" in argv[0] else None
+    if direct is not None:
+        return direct
+    if program in INTERPRETERS or program in ("source", "."):
+        script = next((a for a in args if not a.startswith("-")), "")
+        if script and clone_of(script) is not None:
+            return clone_of(script)
+        if here is not None and script and not script.startswith("/") and (
+            "." in script.rsplit("/", 1)[-1] or "/" in script
+        ):
+            return here
+        return None
+    # make -C dir, npm --prefix dir, pip install ./dir
+    for flag in ("-C", "--prefix", "--cwd", "--manifest-path"):
+        if flag in args:
+            index = args.index(flag)
+            if index + 1 < len(args) and clone_of(args[index + 1]) is not None:
+                return clone_of(args[index + 1])
+    if program in _PIP and "install" in args:
+        for arg in args[args.index("install") + 1 :]:
+            if arg.startswith("-"):
+                continue
+            if clone_of(arg) is not None:
+                return clone_of(arg)
+            if here is not None and _norm(arg) in ("", "."):
+                return here
+        return None
+    if here is None:
+        return None
+    if argv[0].startswith("./"):
+        return here
+    first = args[0] if args else ""
+    if (program, first) in _PROJECT_RUNNERS or (program, "") in _PROJECT_RUNNERS:
+        return here
+    if program in ("python", "python3") and first == "setup.py":
+        return here
+    return None
 
 
 #: Operators that separate one command from the next. Splitting must respect
@@ -208,6 +367,7 @@ def parse_shell(text: str, path: str, *, start_line: int = 1, strip_comments: bo
         analysis.commands.extend(parsed)
         _analyse_pipeline(analysis, parsed, raw_line, line_no)
 
+    analysis.clone_runs = find_clone_runs(analysis.commands)
     return analysis
 
 

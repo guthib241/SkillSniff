@@ -96,6 +96,13 @@ def run_rules(context: AnalysisContext) -> tuple[list[Finding], list[str], int]:
             errors.append(f"rule {rule_id} raised {type(exc).__name__}: {exc}")
             if context.config.strict:
                 errors.append(traceback.format_exc(limit=3))
+            # Same reasoning as the time budget above: a rule that raised never
+            # looked, so the scan must not be able to return a clean verdict.
+            context.budget.note_gap(
+                context.entry_path,
+                CoverageReason.ANALYSIS_ERROR,
+                f"rule {rule_id} raised {type(exc).__name__}"[:240],
+            )
             continue
         # A rule may implement several ids; filter its output by what is enabled.
         findings.extend(f for f in produced if context.config.is_enabled(f.rule_id))

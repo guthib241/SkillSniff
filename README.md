@@ -156,7 +156,8 @@ broken scanner cannot show up as a passing build.
 Not just `SKILL.md`. Every artifact that reaches the agent:
 
 - **Instructions** — the body, and every referenced document under `references/`
-- **Bundled code** — Python via AST (not regex), shell via a quote-aware tokeniser
+- **Bundled code** — Python via AST (not regex), JavaScript and TypeScript via a tokeniser that knows
+  strings, templates, comments and regexes from code, shell via a quote-aware tokeniser
 - **Dependencies** — `requirements.txt`, `package.json`, `pyproject.toml`, and npm install hooks
 - **External references** — every URL, classified by how much it can change after review
 - **Archives** — inside `.zip` and `.tar.*`, recursively, in memory, never extracted
@@ -278,7 +279,7 @@ inspect.**
 
 ## Rule taxonomy
 
-93 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
+94 rules in 16 families. `skillsniff explain <RULE>` gives the full entry for any
 of them, including what it *cannot* detect.
 
 | | | | |
@@ -324,7 +325,7 @@ Every decision names the clause that produced it. See
 
 ## Measured results
 
-On **SkillSniffBench**, the 52-case corpus in `src/skillsniff/bench/corpus`:
+On **SkillSniffBench**, the 56-case corpus in `src/skillsniff/bench/corpus`:
 
 | Metric | Value |
 | --- | --- |
@@ -365,44 +366,43 @@ alongside the rules cannot contain the shapes its author did not think of.
 
 ### Recall: measured, and poor
 
-Against 19 labelled malicious skills written by other people — Trail of Bits'
-scanner-subversion corpus and the adversarial cases from the retired
-`kurtpayne/skillscan-security`:
+Measured once, on skills the rules had never seen: **SkillTrustBench v1.0**,
+5,516 cases with expert labels, under a protocol committed before any sample
+was downloaded ([results](docs/EXTERNAL_VALIDATION.md#results-of-pre-registration-2)):
 
 | Metric | Value |
 | --- | --- |
-| Blocked | 6 / 19 |
-| **Recall** | **0.316**, Wilson 95% CI [0.154, 0.540] |
-| Flagged for a human (BLOCK or REVIEW) | 9 / 19 |
-| False BLOCKs on benign controls | 0 |
+| **Malicious recall** (blocked) | **0.271**, Wilson 95% CI [0.255, 0.288] |
+| Malicious or suspicious, flagged for a human (BLOCK or REVIEW) | 0.926 |
+| False BLOCK rate on normal cases | 0.040, CI [0.031, 0.050] |
+| Normal cases flagged for a human | 0.739 |
 
-**Two thirds of known-malicious skills are not blocked.** The threshold for
-"fit to be a blocking gate" was pre-registered at 0.70, and 0.40 was
-pre-registered as the floor below which the tool is not a gate at all. 0.316
-is below that floor, and the commit that set those numbers predates the one
-that measured them.
+**Nearly three in four malicious skills are not blocked.** The bar for "fit
+to be a blocking gate" was pre-registered at 0.70, with 0.40 as the floor
+below which the tool is not a gate at all, and 0.271 is below the floor. An
+earlier measurement on 19 malicious skills by other authors gave 0.316, CI
+[0.154, 0.540], which agrees.
 
 So **`skillsniff scan` is advisory by default** and exits 0. Gating is opt-in
 via `--fail-on`, `--strict`, or `fail_on` in a config file; the GitHub Action
 and pre-commit hook pass a severity explicitly, so both still gate.
 
-Read a finding, not a silence. When SkillSniff fires it is usually right — no
-false blocks on Anthropic's skills or on either benign control. When it is
-quiet, that is weak evidence of anything. This is consistent with the
-published literature: *Cloak and Detonate* ([arXiv:2607.02357](https://arxiv.org/abs/2607.02357))
-reports over 90% evasion across eight scanners, and
-`kurtpayne/skillscan-security` was retired in July 2026 with the conclusion
-that static scanning of AI skills does not work as a security boundary.
+Read a block, not a silence. **When SkillSniff blocks, it is usually right**:
+828 of its 893 blocks on SkillTrustBench were malicious or suspicious, and it
+blocked none of Anthropic's skills. **A REVIEW is weak evidence**: three in
+four of SkillTrustBench's normal cases get one. Most missed malicious skills
+are among them — 1,972 of the 2,084 misses were flagged REVIEW, usually for
+dynamic evaluation, obfuscation or a supply-chain finding the gate does not
+treat as decisive. When it is quiet, that is weak evidence of anything. This
+is consistent with the published literature: *Cloak and Detonate*
+([arXiv:2607.02357](https://arxiv.org/abs/2607.02357)) reports over 90%
+evasion across eight scanners, and `kurtpayne/skillscan-security` was retired
+in July 2026 with the conclusion that static scanning of AI skills does not
+work as a security boundary.
 
-Since that measurement, the general gaps it exposed have been closed — a bug
-that hid `curl … | bash` written in prose, plus rules for disabling host
-security controls, running files a search turns up, DNS and mail
-exfiltration, bytecode poisoning, and defanged URLs. Re-run on the same
-corpus, recall is 0.526 (CI [0.317, 0.727]) with still no false blocks. **That
-is not an independent figure**: the rules were written after seeing which
-samples were missed, so the corpus is contaminated and 0.316 remains the
-honest estimate. Even 0.526 is below the 0.70 bar for "fit to block", so the
-advisory default stands either way.
+The 19-sample corpus that produced 0.316 is now contaminated: rules were
+written after seeing its misses, and re-run on it recall is 0.526 — a figure
+that did not survive contact with unseen skills.
 
 [docs/EXTERNAL_VALIDATION.md](docs/EXTERNAL_VALIDATION.md) lists **every**
 missed sample with its technique, the corpora that could not be obtained, and
@@ -452,8 +452,10 @@ because it is exactly what a self-authored corpus structurally cannot surface.
   executes them. It cannot tell you what a skill does at runtime.
 - **English-centric.** Injection and instruction detection match English
   phrasing. The same attack in another language is largely undetected.
-- **Python-only dataflow.** The taint analysis behind EXF001 is intraprocedural
-  and Python-only. JavaScript, Ruby and shell get weaker, pattern-based coverage.
+- **Intraprocedural dataflow, two languages.** The taint analysis behind EXF001
+  covers Python (from the AST) and JavaScript/TypeScript (from a tokeniser, not a
+  parser), within one function's reach and one file. Ruby, Go and shell get
+  weaker, pattern-based coverage.
 - **No network, no model.** External references are classified structurally, not
   fetched. There is no LLM in the loop: the optional semantic and behavioural
   layers exist as tested *contracts* with no provider and no runner behind them

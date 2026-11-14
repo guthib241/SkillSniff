@@ -1,0 +1,22 @@
+{"id": "7fee298c8eaccca17fe5a0cadbe1f0fbe96966d88b8ea07cec4177fe1fb3658e", "split": "test", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "8895b36f5a88c86e96bc51323053e20a1793ed697b27692de3d0fdcc314e961e", "split": "test", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "d022be853577d201017e8132d3ca09b737e7afab74719f4b2895ae7224381208", "split": "test", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "f1ea4ba752d274bfa72dbb569a766bf9a256f075dbf1b77df0f3252193ef89ad", "split": "test", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "eec55493e01a27032ae7f18e46aac3603d8b444dbe61ab6d50ef6ebc53e45ff0", "split": "test", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "5bee2a5e1640fe399da301f5b63998866ba77b41dae26813c97aada3878e6c97", "split": "test", "verdict": "ERROR", "rules": []}
+{"id": "e16f33c904e2ce14796b0160655ca38b10c450434e22840a580d48743f8439ab", "split": "test", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "74663a799142a405b8677ed3fd16bf5cf9758cc196a5f74702e62040c6e12e30", "split": "test", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "ef325bff619559b036a8eda0a1627f08fdda3e6daae9accc836a06488bae08cd", "split": "test", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "031279c848d3885b1226da25c52e3f41a1e22f92cb2dfdbe87762964b5debc35", "split": "test", "verdict": "REVIEW", "rules": ["OBS001", "SPEC001"]}
+{"id": "9d6ab99b0d06379f9ae213504615becda378398ba1929e2092b10c780e382ecb", "split": "test", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "bad58bae1bfc9e90befe327d16ba82f2931b660b97a54c265b1601b9532e29aa", "split": "test", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "54c421382feedf4283ae8420640be7cf155273b4f388522350576afae103fc51", "split": "test", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "58cf7292616732f88e97338c970614f15a07ad9f46b27fca53d4af78bae9e5e5", "split": "test", "verdict": "CAUTION", "rules": ["SPEC001"]}
+{"id": "6b566b8c5d7286c88f0596e8993e21f3f9fada9eb2b50a39d44ba03b763b392d", "split": "test", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "866ee9731a8b7c392a2d3c7517519cb81e563d1b2db2309837488b68c8a0c081", "split": "eval_holdout", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "9e09e18407af7ba8f2cf31207bb2b6f73de583ff50315fbd164dd3888d9b38a4", "split": "eval_holdout", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}
+{"id": "473d67174d5f540e25cc707d9bc065b49501f1cbec328385dfeaf5c618bc1b50", "split": "eval_holdout", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "d23b095a15d077cf629ae94ee5d1e8b8ed7a2d6e840241fbfdc1de9d1a1a6e2d", "split": "eval_holdout", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "fb44f2e9d391ba5de6b99bcc90a274b8fcabd697786e37f7504f45c37442ee93", "split": "eval_holdout", "verdict": "REVIEW", "rules": ["MEM001", "SPEC001", "SUP004"]}
+{"id": "f576fe84ab45be1c1a77984d81f37f23b5d49b216c13407e08f9669c401de924", "split": "eval_holdout", "verdict": "CLEAR", "rules": ["SPEC001"]}
+{"id": "fffbb179e191c3134dfd86ba643b3232e5f0b347ae627b384376032166abd486", "split": "eval_holdout", "verdict": "REVIEW", "rules": ["SPEC001", "SUP004"]}

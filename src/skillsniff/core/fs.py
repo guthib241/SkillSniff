@@ -30,7 +30,7 @@ TEXT_SUFFIXES = frozenset(
     {
         ".md", ".markdown", ".txt", ".rst", ".adoc",
         ".py", ".pyi", ".sh", ".bash", ".zsh", ".fish", ".ps1", ".bat", ".cmd",
-        ".js", ".mjs", ".cjs", ".ts", ".tsx", ".jsx",
+        ".js", ".mjs", ".cjs", ".ts", ".mts", ".cts", ".tsx", ".jsx",
         ".rb", ".pl", ".php", ".lua", ".r", ".go", ".rs", ".java", ".kt",
         ".yaml", ".yml", ".json", ".jsonc", ".toml", ".ini", ".cfg", ".conf",
         ".env", ".properties", ".xml", ".html", ".htm", ".css", ".svg",
@@ -146,6 +146,20 @@ def classify(name: str) -> str:
     if suffix in TEXT_SUFFIXES or pure.name in TEXT_FILENAMES:
         return FileKind.TEXT
     return FileKind.BINARY
+
+
+def classify_content(name: str, data: bytes) -> str:
+    """Classify a file by name, then by content where the name says nothing.
+
+    An extensionless file is opaque by name alone, but one that opens with a
+    shebang is a script: ``bin/run`` starting ``#!/bin/sh`` or
+    ``#!/usr/bin/env node``. Classifying it as binary left the most direct way
+    to ship executable code in a skill outside every lexical rule.
+    """
+    kind = classify(name)
+    if kind == FileKind.BINARY and not PurePosixPath(name).suffix and data.startswith(b"#!"):
+        return FileKind.TEXT
+    return kind
 
 
 def looks_binary(data: bytes) -> bool:
@@ -301,7 +315,7 @@ def read_file(path: Path, root: Path, budget: Budget) -> ScannedFile | None:
         budget.note_gap(relpath, CoverageReason.UNREADABLE, str(exc))
         return None
 
-    kind = classify(relpath)
+    kind = classify_content(relpath, data)
     text: str | None = None
     if kind == FileKind.TEXT and not looks_binary(data):
         text = data.decode("utf-8", errors="replace")

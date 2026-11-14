@@ -81,13 +81,17 @@ registry.define_all(
             severity=Severity.HIGH,
             confidence=Confidence.HIGH,
             explanation=(
-                "A subprocess is created with shell=True, or via os.system/os.popen. Detected "
-                "from the Python AST, so the keyword appearing in a comment or string does not "
-                "match."
+                "A subprocess is created with shell=True, or via os.system/os.popen; in "
+                "JavaScript or TypeScript, through child_process.exec/execSync, spawn or execFile "
+                "with shell: true or sh -c, shelljs, or a zx/execa/Bun $`…` template. Detected "
+                "from the Python AST and the JavaScript token stream, so the call appearing in a "
+                "comment, string, or regular expression does not match."
             ),
             limitations=(
-                "Python only, from the AST. The equivalent in JavaScript, Ruby, or a shell "
-                "wrapper is not detected by this rule."
+                "Python and JavaScript/TypeScript only. JavaScript is tokenised, not parsed: a "
+                "callee reached through a wrapper function, a re-export from another file, or a "
+                "computed property is missed. Ruby, Perl, and shell wrappers are not covered by "
+                "this rule."
             ),
             impact=(
                 "Any value interpolated into the command string is interpreted by the shell. If "
@@ -109,11 +113,16 @@ registry.define_all(
             confidence=Confidence.HIGH,
             explanation=(
                 "eval, exec, compile, or an equivalent is called on a non-literal value; or "
-                "pickle/marshal is used to load data. Detected from the AST."
+                "pickle/marshal is used to load data. In JavaScript or TypeScript: eval, "
+                "new Function, the vm module, or setTimeout/setInterval given a string built at "
+                "runtime. Detected from the Python AST and the JavaScript token stream; a call "
+                "on a plain string literal is not reported."
             ),
             limitations=(
-                "Python only, from the AST. Dynamic execution in another language, or via a "
-                "library that evaluates strings internally, is not detected."
+                "Python and JavaScript/TypeScript only. Dynamic execution in another language, "
+                "or via a library that evaluates strings internally, is not detected. Bundled "
+                "third-party code that compiles code at runtime (schema validators, template "
+                "engines) is reported, because it does."
             ),
             impact=(
                 "Whatever the value evaluates to becomes executable code. pickle.loads on "
@@ -288,6 +297,37 @@ registry.define_all(
             ),
             taxonomy=("CWE-829",),
         ),
+        RuleMeta(
+            id="EXE008",
+            title="Code from an unpinned clone is executed",
+            family=Family.EXE,
+            severity=Severity.HIGH,
+            confidence=Confidence.MEDIUM,
+            explanation=(
+                "A repository is cloned and code inside it is then run: a script in the "
+                "checkout, the project's build or install hooks after changing into it, or a "
+                "pip install of the checkout. The link is followed from the clone's directory "
+                "to what runs, so a clone followed by unrelated commands is not reported, and "
+                "neither is one pinned to a full commit hash first."
+            ),
+            impact=(
+                "Whatever the repository holds at install time runs with the agent's "
+                "privileges. It is 'curl | sh' over git: the repository's owner, or anyone who "
+                "compromises it, decides what executes, and it can change after review."
+            ),
+            remediation=(
+                "Pin the clone to a full commit hash ('git checkout <40-hex sha>') before "
+                "running anything from it, or ship the code inside the skill where it can be "
+                "reviewed."
+            ),
+            limitations=(
+                "Shell scripts and fenced shell blocks only, followed across one file. A clone "
+                "made by code, or a directory held in a variable, is not followed. A tag or "
+                "branch is not treated as a pin, because either can be moved. Ordinary setup "
+                "instructions take this shape too; the finding asks for a pin, not removal."
+            ),
+            taxonomy=("CWE-494",),
+        ),
     ]
 )
 
@@ -426,6 +466,16 @@ def check_pipe_to_interpreter(context: AnalysisContext) -> Iterator[Finding]:
 
 @registry.implement("EXE003")
 def check_shell_true(context: AnalysisContext) -> Iterator[Finding]:
+    for file in context.js_files():
+        js = file.js
+        assert js is not None
+        for callee, line in js.shell_exec:
+            yield emit(
+                "EXE003",
+                context.name,
+                message=f"{file.path}: {callee} runs its command through a shell",
+                evidence=[file.evidence(line=line, excerpt=callee)],
+            )
     for file in context.python_files():
         analysis = file.python
         assert analysis is not None
@@ -446,8 +496,39 @@ def check_shell_true(context: AnalysisContext) -> Iterator[Finding]:
                 )
 
 
+@registry.implement("EXE008")
+def check_clone_then_run(context: AnalysisContext) -> Iterator[Finding]:
+    for file in context.shell_files():
+        shell = file.shell
+        assert shell is not None
+        for run in shell.clone_runs:
+            yield emit(
+                "EXE008",
+                context.name,
+                message=(
+                    f"{file.path}: runs code from {run.url}, cloned at line {run.clone_line} "
+                    "without pinning a commit"
+                ),
+                evidence=[
+                    file.evidence(line=run.clone_line, excerpt=f"git clone {run.url}"[:160],
+                                  note="unpinned clone"),
+                    file.evidence(line=run.run_line, excerpt=run.run, note="runs code from the checkout"),
+                ],
+            )
+
+
 @registry.implement("EXE004")
 def check_dynamic_eval(context: AnalysisContext) -> Iterator[Finding]:
+    for file in context.js_files():
+        js = file.js
+        assert js is not None
+        for name, line in js.dynamic_eval:
+            yield emit(
+                "EXE004",
+                context.name,
+                message=f"{file.path}: {name} evaluates code built at runtime",
+                evidence=[file.evidence(line=line, excerpt=f"{name}(<dynamic>)")],
+            )
     for file in context.python_files():
         analysis = file.python
         assert analysis is not None
@@ -530,23 +611,41 @@ def check_remote_script_execution(context: AnalysisContext) -> Iterator[Finding]
             )
 
 
+#: Agent command-line tools, for flags whose meaning depends on the program.
+_AGENT_CLI = (
+    r"\b(?:claude|codex|gemini|qwen|aider|cursor-agent|amp|opencode|goose|crush|droid|"
+    r"cline|kiro|auggie)\b[^\n|;&]{0,120}"
+)
+
 PERMISSION_BYPASS = re.compile(
     r"--dangerously-skip-permissions\b"
-    r"|--yolo\b"
-    r"|--no-sandbox\b"
-    r"|--disable-sandbox\b"
-    r"|\bautoApprove\b"
+    r"|--dangerously-bypass-approvals-and-sandbox\b"
+    # ``--no-sandbox`` is above all Chromium's flag for running headless in a
+    # container, and ``--yolo`` names the YOLO object-detection model. PRV001
+    # blocked 35 rows of ClawHub's development split that ClawScan judged
+    # clean, most on a Puppeteer launch or a tracker's argparse flag. They
+    # switch off an *agent's* controls only when passed to an agent.
+    # (Parenthesised: adjacent string literals join before ``+`` applies.)
+    + (r"|" + _AGENT_CLI + r"--(?:yolo|no-sandbox|disable-sandbox)\b")
+    + r"|\bautoApprove\b"
     r"|\bauto[_-]?approve\s*[:=]\s*(?:true|1|yes)"
     r"|[\"']?bypassPermissions[\"']?"
     r"|--allow-all\b"
     r"|--trust-all\b"
     r"|skip[_-]?(?:permission|confirmation|approval)s?\s*[:=]\s*(?:true|1|yes)"
-    r"|--accept-all-risks\b"
+    r"|--accept-all-risks\b",
+    re.IGNORECASE,
+)
+
+#: Instruction-level permission bypass, read only in files the agent takes as
+#: instructions. The same words inside a script are a prompt that script sends
+#: to some other model, or a comment; neither is addressed to the agent.
+PERMISSION_BYPASS_PROSE = re.compile(
     # Instruction-level permission bypass: the skill tells the agent to take an
     # action without seeking confirmation. Requires an imperative action verb
     # immediately before, because a bare "without asking" is ordinary English
     # and matching it produced false positives on authoring advice.
-    r"|\b(?:proceed|continue|do\s+it|act|apply|execute|run|delete|deploy|push|install|"
+    r"\b(?:proceed|continue|do\s+it|act|apply|execute|run|delete|deploy|push|install|"
     r"overwrite|commit|merge|send)\b[^.\n]{0,40}"
     r"without\s+(?:asking|confirming|confirmation|permission|prompting|approval|"
     r"waiting\s+for)\b"
@@ -591,6 +690,10 @@ PRIVILEGE_ESCALATION = re.compile(
 )
 
 
+#: Files whose prose the agent reads as instructions.
+INSTRUCTION_SUFFIXES = frozenset({".md", ".markdown", ".mdx", ".txt", ".rst", ".adoc", ""})
+
+
 @registry.implement("PRV001", "PRV002", "PRV003")
 def check_privilege(context: AnalysisContext) -> Iterator[Finding]:
     for rule_id, pattern in (
@@ -600,6 +703,10 @@ def check_privilege(context: AnalysisContext) -> Iterator[Finding]:
     ):
         for match in _scan.scan(context, pattern, limit_per_file=4):
             yield _scan.emit_match(rule_id, context.name, match)
+    for match in _scan.scan(
+        context, PERMISSION_BYPASS_PROSE, limit_per_file=4, suffixes=INSTRUCTION_SUFFIXES
+    ):
+        yield _scan.emit_match("PRV001", context.name, match)
 
 
 @registry.implement("PRV004")

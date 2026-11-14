@@ -41,17 +41,35 @@ language is largely undetected. This is the single largest gap in coverage.
 | Language | Analysis |
 | --- | --- |
 | Python | AST: capabilities, `shell=True`, dynamic eval, and taint-lite dataflow |
-| Shell (`sh`/`bash`/`zsh`) | Quote-aware tokenising, pipeline analysis, comment stripping |
+| JavaScript / TypeScript | Tokeniser, not a parser: shell execution, dynamic eval, taint-lite dataflow into network calls, credential-file reads, capabilities |
+| Shell (`sh`/`bash`/`zsh`) | Quote-aware tokenising, pipeline analysis, comment stripping, clone-then-run |
 | Everything else | Pattern matching over text only |
 
-JavaScript, TypeScript, Ruby, Go and Rust get no structural analysis. A
-`child_process.exec` with an injected variable in a bundled `.js` file is caught
-only if it matches a text pattern.
+JavaScript and TypeScript (`.js .mjs .cjs .jsx .ts .mts .cts .tsx`, and
+extensionless scripts with a `node`, `deno`, `bun` or `zx` shebang) are
+**tokenised, not parsed**. The tokeniser knows where strings, template
+literals, comments and regular expressions begin and end, so a call written
+inside one is text, not code. Names are followed through assignments,
+destructuring, template literals, object literals and containers, within one
+file and in source order. Values are **not** followed through function calls,
+across files or re-exports, or through computed properties, and types are not
+understood. Every stage is linear in the file's size, and a file that exhausts
+the analyser's work budget is recorded as an `analysis-truncated` coverage gap
+rather than skipped silently. An analyser or rule that raises on any input is
+recorded as an `analysis-error` gap, which forbids a `CLEAR` verdict.
 
-The Python dataflow is **intraprocedural**. A credential that crosses a function
-boundary, passes through a class attribute, or is stored in a module-level
-mutable is not tracked. `EXF002` provides weaker, pattern-based coverage for
-those cases.
+Ruby, Go, Rust, PHP and Perl get no structural analysis. A
+`system("curl … | sh")` in a bundled `.rb` file is caught only if it matches a
+text pattern.
+
+Both dataflows are **intraprocedural**. A credential that crosses a function
+boundary, passes through a class attribute (other than `this.x` in
+JavaScript), or is stored in a module-level mutable is not tracked. `EXF002`
+provides weaker, pattern-based coverage for those cases. An environment
+variable counts as a secret only when its name says so (`TOKEN`, `SECRET`,
+`API_KEY`, `PASSWORD`, a `KEY` or `PASS` word…); one stored under a neutral
+name is not recognised, and one whose name ends in `_URL`, `_HOST`, `_NAME`
+and similar is treated as configuration.
 
 ## Binary and compiled content
 
@@ -132,16 +150,19 @@ benchmark last reported a false-positive rate of 0.000, the external corpus
 was simultaneously producing nine CRITICAL false positives on Anthropic's own
 published skills.
 
-**Measured recall is 0.316** (6 of 19 labelled malicious skills blocked, 95% CI
-[0.154, 0.540]). Two thirds of known-malicious skills were not blocked, which
-is why gating is opt-in rather than the default. Read a finding, not a
-silence: the false-positive rate is low, so a finding is worth acting on, but
-a clean result is weak evidence. Per-rule precision is still unmeasured.
+**Measured recall is 0.271** (775 of 2,859 malicious SkillTrustBench cases
+blocked, 95% CI [0.255, 0.288]), on expert-labelled skills the rules had never
+seen, measured once under a pre-registered protocol. Nearly three in four
+known-malicious skills are not blocked, which is why gating is opt-in rather
+than the default. Read a block, not a silence: 0.040 of normal cases were
+blocked, so a BLOCK is worth acting on; a REVIEW is weak evidence, since three
+in four normal cases get one; and a clean result is weak evidence of anything.
+Per-rule precision is still unmeasured.
 
-The gaps that measurement exposed have since been closed, and the same corpus
-now gives 0.526 — but that corpus shaped the rules, so it can no longer
-measure them. **0.316 is the last independent figure.** A fresh, unseen
-labelled corpus is what would replace it.
+Two earlier figures are superseded. 0.316, on 19 samples, agrees with 0.271.
+0.526, on the same 19 after closing their gaps, measured a corpus that had
+shaped the rules. SkillTrustBench is now spent the same way for any rule
+written with its misses in view.
 
 ## Reserved documentation domains are treated as benign
 
@@ -168,22 +189,26 @@ silently.
 
 ## Performance
 
-Measured on 2026-09-09, Python 3.11.15, one core. Median of 7 runs. The
-benchmark-corpus row was re-measured on 2026-11-13 after the corpus grew to
-52 cases; the other rows are unchanged from 2026-09-09. The large-file rows
-predate the fix for quadratic line-count cost and are conservative.
+Measured on 2026-11-13, Python 3.11.18, x86_64, one core, median of 7 runs.
+Every row is generated and re-measured by `python scripts/perf_table.py`, so
+the table can be reproduced on any machine; absolute times depend on that
+machine. (The previous table, dated 2026-09-09, had no script behind it and its
+inputs are not recoverable, so its rows are not comparable with these; timing
+the code before and after this change on identical inputs shows no regression.)
 
 | Input shape | Median | Files |
 | --- | --- | --- |
-| Minimal skill (1 file) | 1.8 ms | 1 |
-| Typical skill (10 files, references + script) | 43 ms | 11 |
-| Large skill (70 files, ~2 MB) | 1.2 s | 71 |
-| Archive with 200 entries | 417 ms | 2 |
-| One 1 MB line (padding / minified) | 1.7 s | 2 |
-| 100 encoded regions | 5 ms | 2 |
-| Whole 52-case benchmark corpus | 3.5 ms per skill | — |
+| Minimal skill (1 file) | 3.4 ms | 1 |
+| Typical skill (10 files, references + script) | 134 ms | 11 |
+| Large skill (70 files, ~2 MB) | 4.9 s | 71 |
+| Archive with 200 entries | 252 ms | 2 |
+| One 1 MB line (padding / minified) | 1.6 s | 2 |
+| 100 encoded regions | 44 ms | 2 |
+| One 1 MB JavaScript file (minified) | 2.8 s | 2 |
+| Script padded with 100,000 blank lines | 205 ms | 2 |
+| Whole 56-case benchmark corpus | 3.4 ms per skill | — |
 
-Peak RSS across all of the above: ~111 MB.
+Peak RSS across all of the above: ~115 MB.
 
 Cost scales with total *bytes of text*, not file count: the dominant work is
 Unicode normalisation and pattern matching over each file's projections. A 1 MB
@@ -206,7 +231,8 @@ Named honestly, because a roadmap item described in the present tense is a lie:
   than returning an empty report
 - **Live external resolution** — deliberately absent (local-first, offline)
 - **Cross-platform behavioural differences** between agent ecosystems — not modelled
-- **Non-Python AST analysis** — not implemented
+- **Ruby, Go and Rust analysis** — not implemented; JavaScript and TypeScript
+  are tokenised rather than parsed (see *Code analysis coverage*)
 - **Attestation / signing** — not implemented
 
 See [ROADMAP.md](ROADMAP.md), which separates IMPLEMENTED, PLANNED, EXPERIMENTAL

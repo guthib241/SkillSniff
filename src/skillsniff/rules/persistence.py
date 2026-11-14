@@ -43,14 +43,54 @@ AGENT_INSTRUCTION_FILE = re.compile(
 )
 
 AUTOSTART = re.compile(
-    r"\bcrontab\b|/etc/cron|\bat\s+now\b"
-    r"|LaunchAgents|LaunchDaemons|\.plist\b"
-    r"|systemd/(?:user|system)|\.service\b|systemctl\s+(?:enable|start)"
-    r"|/etc/rc\.local|/etc/init\.d"
+    # Each alternative is an act of registration, not a name. The bare words
+    # "crontab", ".service" and ".plist" matched a heading ("Editing Crontab"),
+    # a CSS class (".services{…}"), an iOS app's Info.plist, and a scanner's own
+    # table of persistence techniques. It was a blocking finding on 75 rows of
+    # ClawHub's development split that ClawScan judged clean.
+    #
+    # crontab given a file or stdin; ``crontab -e`` / ``-l`` is a person at an
+    # editor, which an agent cannot drive.
+    r"\|\s*crontab(?:\s+-u\s+\S+)?\s*(?:-(?=[\s;&)]|$)|(?=[;&)]|$))"
+    r"|\bcrontab\s+(?:-u\s+\S+\s+)?(?:-(?=\s|$)|[A-Za-z0-9_~$-]*[./$][A-Za-z0-9_./~${}-]*)"
+    r"|(?:>>?|\btee\b(?:\s+-a)?|\bcp\b|\bmv\b|\binstall\b)[^\n|;]{0,80}"
+    r"(?:/etc/cron(?:tab|\.d|\.daily|\.hourly|\.weekly|\.monthly)?\b|/var/spool/cron)"
+    r"|\bat\s+now\b"
+    r"|(?:LaunchAgents|LaunchDaemons)/[^\s'\"]*\.plist\b"
+    r"|\blaunchctl\s+(?:load|bootstrap|enable|submit)\b"
+    r"|systemd/(?:user|system)/[\w@.-]+\.(?:service|timer)\b"
+    r"|\bsystemctl\s+(?:--user\s+)?enable\b"
+    r"|(?:>>?|\btee\b|\bcp\b)[^\n|;]{0,80}(?:/etc/rc\.local|/etc/init\.d/)"
     r"|(?:HKCU|HKLM)\\\\?Software\\\\?Microsoft\\\\?Windows\\\\?CurrentVersion\\\\?Run"
     r"|schtasks\s+/create|Register-ScheduledTask"
-    r"|\.git/hooks/(?:pre|post|commit|prepare)"
+    r"|(?:>>?|\btee\b|\bcp\b|\bln\b|\bmv\b|write|open)[^\n]{0,80}\.git/hooks/(?:pre|post|commit|prepare)"
     r"|core\.hooksPath",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+#: What a persistence write must carry to be an attack rather than setup: a
+#: remote payload piped to an interpreter, a decoded blob run as code, a
+#: reverse shell, execution out of a world-writable directory, or a command
+#: shadowed by an alias. Each is a published persistence payload shape.
+PERSISTED_PAYLOAD = re.compile(
+    r"\b(?:curl|wget)\b[^\n|]{0,200}\|\s*(?:sudo\s+)?(?:ba|z|da|k)?sh\b"
+    r"|\b(?:curl|wget)\b[^\n|]{0,200}\|\s*(?:python[23]?|perl|ruby|node)\b"
+    r"|\bbase64\s+(?:-d|--decode|-D)\b[^\n]{0,80}\|\s*(?:ba)?sh\b"
+    r"|/dev/tcp/|\b(?:nc|ncat|netcat)\b[^\n]{0,60}\s-[ec]\b|\bmkfifo\b"
+    r"|(?:^|[\s'\"=;:(])/(?:tmp|dev/shm|var/tmp)/[\w.-]+"
+    r"|\balias\s+(?:sudo|su|ssh|git|ls|cd|cat)=",
+    re.IGNORECASE,
+)
+
+#: Standing instructions that remove the user's oversight, written into a file
+#: every future session loads as trusted.
+HOSTILE_INSTRUCTION = re.compile(
+    r"without\s+(?:asking|confirm\w*|permission|approval|review)"
+    r"|\balways\s+(?:approve|allow|accept|trust)\b"
+    r"|\bauto[-\s]?approve\b"
+    r"|\bignore\s+(?:all\s+)?(?:previous|prior|above|earlier|other)\s+instructions\b"
+    r"|\b(?:do\s*n[o']?t|never)\s+(?:tell|inform|show|mention)\b[^.\n]{0,30}\buser\b"
+    r"|\bbypass\w*\s+(?:the\s+)?(?:permission|confirmation|review|approval)s?\b",
     re.IGNORECASE,
 )
 
@@ -73,11 +113,14 @@ registry.define_all(
             id="PER001",
             title="Shell profile modification",
             family=Family.PER,
-            severity=Severity.CRITICAL,
+            severity=Severity.HIGH,
             confidence=Confidence.MEDIUM,
             explanation=(
                 "The skill writes to a shell startup file (.bashrc, .zshrc, .profile and "
-                "similar). Requires both a profile path and a write verb nearby."
+                "similar). Requires both a profile path and a write verb nearby. Reported "
+                "CRITICAL when the line written is itself a payload — a fetch piped to a "
+                "shell, a decoded blob, a reverse shell, a program in /tmp, an alias over "
+                "sudo or ssh — and HIGH otherwise: adding an export line is ordinary setup."
             ),
             impact=(
                 "Anything added there executes on every future shell the user opens, "
@@ -95,15 +138,21 @@ registry.define_all(
             id="PER002",
             title="Scheduled task or autostart registration",
             family=Family.PER,
-            severity=Severity.CRITICAL,
+            severity=Severity.HIGH,
             confidence=Confidence.MEDIUM,
             explanation=(
                 "The skill registers a cron job, systemd unit, launch agent, Windows Run key, "
-                "scheduled task, or Git hook."
+                "scheduled task, or Git hook: crontab fed a file or stdin, a write into a cron "
+                "or autostart directory, systemctl enable, launchctl load, schtasks /create. "
+                "Naming a mechanism is not registering one. Reported CRITICAL when the "
+                "registered command is itself a payload (a fetch piped to a shell, a program "
+                "in /tmp, a reverse shell), HIGH otherwise: a scheduled report is ordinary."
             ),
             limitations=(
                 "Matches known scheduler and autostart mechanisms across Linux, macOS and "
-                "Windows. A platform-specific mechanism outside that set is not detected."
+                "Windows. A platform-specific mechanism outside that set is not detected, and "
+                "neither is a payload that is assembled on a different line from the "
+                "registration."
             ),
             impact=(
                 "Code runs on a schedule or on an event, independent of the agent and outside "
@@ -116,11 +165,15 @@ registry.define_all(
             id="MEM001",
             title="Agent instruction file modification",
             family=Family.MEM,
-            severity=Severity.CRITICAL,
+            severity=Severity.HIGH,
             confidence=Confidence.MEDIUM,
             explanation=(
                 "The skill writes to a file that provides standing instructions to the agent — "
-                "CLAUDE.md, AGENTS.md, .cursorrules, a memory file, or an agent settings file."
+                "CLAUDE.md, AGENTS.md, .cursorrules, a memory file, or an agent settings file. "
+                "Reported CRITICAL when what is written removes the user's oversight "
+                "('without asking', 'always approve', 'ignore previous instructions') or is a "
+                "payload; HIGH otherwise, because integration guides routinely say 'add this "
+                "to your AGENTS.md'."
             ),
             impact=(
                 "The skill is rewriting the agent's own instructions. Content placed there is "
@@ -249,8 +302,10 @@ def _inside_url(text: str, start: int) -> bool:
     return bool(_URL_BEFORE.search(text[line_start:start]))
 
 
-def _targeted(context: AnalysisContext, pattern: re.Pattern[str]) -> Iterator[tuple[str, int, str]]:
-    """Yield (path, line, excerpt) where ``pattern`` matches near a write verb."""
+def _targeted(
+    context: AnalysisContext, pattern: re.Pattern[str]
+) -> Iterator[tuple[str, int, str, str]]:
+    """Yield (path, line, excerpt, line text) where ``pattern`` matches near a write verb."""
     for match in _scan.scan(context, pattern, limit_per_file=6):
         view = match.file.view
         if view is None:
@@ -258,39 +313,62 @@ def _targeted(context: AnalysisContext, pattern: re.Pattern[str]) -> Iterator[tu
         if _inside_url(view.raw, match.start):
             continue
         if _write_near(view.raw, match.line):
-            yield match.path, match.line, match.excerpt
+            yield match.path, match.line, match.excerpt, _line_text(view.raw, match.start)
+
+
+def _line_text(text: str, offset: int) -> str:
+    start = text.rfind("\n", 0, offset) + 1
+    end = text.find("\n", offset)
+    return text[start : end if end != -1 else len(text)][:2000]
 
 
 @registry.implement("PER001")
 def check_shell_profile(context: AnalysisContext) -> Iterator[Finding]:
-    for path, line, excerpt in _targeted(context, SHELL_PROFILE):
+    for path, line, excerpt, text in _targeted(context, SHELL_PROFILE):
+        payload = PERSISTED_PAYLOAD.search(text)
         yield emit(
             "PER001",
             context.name,
-            message=f"{path}: writes to a shell startup file — {excerpt!r}",
-            evidence=[Evidence(path=path, line=line, excerpt=excerpt)],
+            message=(
+                f"{path}: writes to a shell startup file — {excerpt!r}"
+                + (f", and what it writes is a payload ({payload.group(0).strip()!r})" if payload else "")
+            ),
+            evidence=[Evidence(path=path, line=line, excerpt=text.strip()[:160] or excerpt)],
+            severity=Severity.CRITICAL if payload else None,
         )
 
 
 @registry.implement("PER002")
 def check_autostart(context: AnalysisContext) -> Iterator[Finding]:
     for match in _scan.scan(context, AUTOSTART, limit_per_file=5):
+        view = match.file.view
+        text = _line_text(view.raw, match.start) if view is not None else match.excerpt
+        payload = PERSISTED_PAYLOAD.search(text)
         yield emit(
             "PER002",
             context.name,
-            message=f"{match.path}: {match.excerpt!r}",
+            message=(
+                f"{match.path}: {match.excerpt!r}"
+                + (f" registers a payload ({payload.group(0).strip()!r})" if payload else "")
+            ),
             evidence=[match.evidence()],
+            severity=Severity.CRITICAL if payload else None,
         )
 
 
 @registry.implement("MEM001")
 def check_agent_instruction_write(context: AnalysisContext) -> Iterator[Finding]:
-    for path, line, excerpt in _targeted(context, AGENT_INSTRUCTION_FILE):
+    for path, line, excerpt, text in _targeted(context, AGENT_INSTRUCTION_FILE):
+        hostile = HOSTILE_INSTRUCTION.search(text) or PERSISTED_PAYLOAD.search(text)
         yield emit(
             "MEM001",
             context.name,
-            message=f"{path}: writes to an agent instruction file — {excerpt!r}",
-            evidence=[Evidence(path=path, line=line, excerpt=excerpt)],
+            message=(
+                f"{path}: writes to an agent instruction file — {excerpt!r}"
+                + (f", and what it writes removes oversight ({hostile.group(0)!r})" if hostile else "")
+            ),
+            evidence=[Evidence(path=path, line=line, excerpt=text.strip()[:160] or excerpt)],
+            severity=Severity.CRITICAL if hostile else None,
         )
 
 
@@ -315,7 +393,7 @@ def check_persist_instruction(context: AnalysisContext) -> Iterator[Finding]:
 
 @registry.implement("MCP001")
 def check_mcp_config(context: AnalysisContext) -> Iterator[Finding]:
-    for path, line, excerpt in _targeted(context, MCP_CONFIG):
+    for path, line, excerpt, _text in _targeted(context, MCP_CONFIG):
         yield emit(
             "MCP001",
             context.name,

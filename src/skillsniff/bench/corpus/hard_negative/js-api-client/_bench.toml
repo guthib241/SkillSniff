@@ -1,0 +1,7 @@
+name = "js-api-client"
+label = "benign"
+category = "hard-negative-credentials"
+source = "internal"
+description = "JavaScript sends a token as an auth header to a fixed host and runs git without a shell."
+expect_rules = []
+forbid_rules = ["EXE003", "EXE004", "CRE001"]

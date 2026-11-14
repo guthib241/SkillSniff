@@ -185,13 +185,33 @@ def _strip_trailing_punctuation(url: str) -> str:
     return url
 
 
+def _parse(url: str) -> tuple[str, str, str, bool]:
+    """(scheme, host, path, parsed cleanly) for ``url``; never raises.
+
+    ``urlparse`` raises ``ValueError`` on an unbalanced IPv6 bracket and on a
+    host containing characters that change under NFKC, such as full-width
+    punctuation glued to a URL in Chinese prose. Uncaught, one such URL
+    anywhere in a skill aborted its whole scan: 18 of SkillTrustBench's 5,520
+    cases and 20 of ClawHub's holdout rows were never scanned to the end, and
+    a crash anyone can trigger is a way past the scanner, not a nuisance.
+    """
+    try:
+        parsed = urlparse(url)
+        return parsed.scheme, (parsed.hostname or "").lower(), parsed.path or "", True
+    except ValueError:
+        scheme, _, rest = url.partition("://")
+        authority, _, tail = rest.partition("/")
+        host = authority.rsplit("@", 1)[-1].lstrip("[").split("]", 1)[0]
+        if host.count(":") == 1:  # host:port, not an IPv6 literal
+            host = host.split(":", 1)[0]
+        return scheme.lower(), host.lower(), "/" + tail.split("?", 1)[0].split("#", 1)[0], False
+
+
 def classify_url(url: str, evidence: Evidence | None = None) -> ExternalResource:
     """Classify a single URL structurally."""
     url = _strip_trailing_punctuation(url.strip())
-    parsed = urlparse(url)
-    host = (parsed.hostname or "").lower()
-    path = parsed.path or ""
-    reasons: list[str] = []
+    scheme, host, path, clean = _parse(url)
+    reasons: list[str] = [] if clean else ["malformed URL; its host was read without a parser"]
 
     kind = ResourceKind.URL
     trust = TrustLevel.MUTABLE
@@ -249,7 +269,7 @@ def classify_url(url: str, evidence: Evidence | None = None) -> ExternalResource
         kind = ResourceKind.REMOTE_SCRIPT
         reasons.append("points at an executable script")
 
-    if parsed.scheme == "http":
+    if scheme == "http":
         # Plaintext to a loopback or documentation host is not a transit risk,
         # so it must not pull the trust level back down to mutable.
         if not (PRIVATE_HOST_RE.match(host) or EXAMPLE_HOST_RE.match(host)):
@@ -265,7 +285,7 @@ def classify_url(url: str, evidence: Evidence | None = None) -> ExternalResource
         kind=kind,
         trust=trust,
         host=host,
-        scheme=parsed.scheme,
+        scheme=scheme,
         ecosystem=ecosystem,
         pinned_to=pinned_to,
         reasons=reasons,

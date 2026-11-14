@@ -1,0 +1,7 @@
+name = "pinned-clone"
+label = "benign"
+category = "hard-negative-supply-chain"
+source = "internal"
+description = "Clones a repository but pins it to a full commit hash before building it."
+expect_rules = []
+forbid_rules = ["EXE008"]

@@ -7,6 +7,24 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Security
 
+- **One malformed URL aborted a whole scan.** URL classification passed a URL
+  with an unbalanced IPv6 bracket, or full-width punctuation inside its host,
+  to `urlparse`, which raises; nothing caught it, so the skill was never
+  scanned to the end — 18 of SkillTrustBench's cases and 20 of ClawHub's
+  holdout rows, which the holdout figures count as not detected. A crash
+  anyone can trigger is a way past the scanner. URLs are now parsed
+  defensively, and as a guard behind that, an analyser or rule that raises
+  records an `analysis-error` coverage gap, which forbids a `CLEAR` verdict,
+  instead of ending the scan or being logged and ignored. A rule that raised
+  could previously leave the verdict `CLEAR` with that rule never having run.
+
+- **Extensionless scripts were never read.** A file with no extension was
+  classified by its name alone, as binary, so `bin/run` opening `#!/bin/sh` or
+  `#!/usr/bin/env node` reached no lexical or structural rule: the most
+  ordinary place to ship an executable script was the easiest place to hide
+  one. A shebang now makes the file text, and JavaScript when the interpreter
+  is `node`, `deno`, `bun` or `zx`.
+
 - **Line count is no longer an attack surface.** Four patterns used `^\s*`
   under `re.MULTILINE`, so a file of blank lines cost O(n²): 100,000 of them
   took a scan to 224 s, and before the coverage fix that stall forced a
@@ -16,6 +34,45 @@ project uses [Semantic Versioning](https://semver.org/).
   the environment dump hidden after its padding is now reported.
 
 ### Added
+
+- **Measured once on skills the rules had never seen, as pre-registered.**
+  SkillTrustBench v1.0, 5,516 expert-labelled cases: malicious recall
+  **0.271**, CI [0.255, 0.288] — below the pre-registered 0.40 floor, so the
+  tool is not fit as a gate and stays advisory by default. False BLOCK rate on
+  normal cases 0.040, CI [0.031, 0.050], so the precision claim stands, for
+  BLOCK only; 73.9% of normal cases get a REVIEW, so a REVIEW is weak
+  evidence. One advance prediction failed: the wild-style families scored
+  highest, not lowest. ClawHub's holdout, as agreement with another scanner:
+  2 of 24 malicious rows blocked, 3.7% of clean rows blocked. Every miss is
+  published by case id in `docs/results/holdout-2026-11-13/`; no rule was
+  changed in response.
+
+- **JavaScript and TypeScript analysis** (`analysis/jsscan.py`): a tokeniser,
+  not a parser, so it adds no dependency, and it knows strings, template
+  literals, comments and regular expressions from code. It feeds `EXE003`
+  (`child_process.exec`, `spawn` with `shell: true` or `sh -c`, shelljs, zx),
+  `EXE004` (`eval`, `new Function`, `vm` on runtime values), `EXF001` (a
+  secret-named variable, the whole environment or a credential file reaching
+  `fetch`, axios, `http(s)`, a socket, a mail transport, a DNS lookup or a
+  shelled-out `curl`) and `CRE001`, plus the capability surface. The Python
+  rule's authentication exception carries over, extended to a destination
+  whose host is fixed even when its path is built at runtime. Every stage is
+  linear; a megabyte of crafted input takes under 3 s, and running out of the
+  work budget is recorded as an `analysis-truncated` coverage gap.
+- **`EXE008` code run from an unpinned clone.** `git clone` followed by
+  running something inside the checkout (a script in it, its build or install
+  hooks after `cd`, a `pip install` of it). The link from the clone's directory
+  to what runs is followed, not guessed; a clone that is only read, or one
+  pinned to a full commit hash first, is not reported. HIGH. 94 rules.
+- **DNS and mail exfiltration block when both halves are shown.** `EXF006` and
+  `EXF007` stay HIGH for the shape alone, and become CRITICAL when the data is
+  shown to be a secret (a secret-named variable, a credential file, the
+  environment) and the destination is a real domain or recipient.
+- **`scripts/perf_table.py`** regenerates the performance table in
+  `docs/LIMITATIONS.md`; no script produced it before.
+- **`scripts/holdout_eval.py`** implements pre-registration 2, and refuses to
+  run with uncommitted changes under `src/`, so the code measured is the code
+  committed.
 
 - **Five rules for gaps the external corpora exposed**, each justified by its
   technique and tested on inputs written separately: `PRV004` host security
@@ -32,6 +89,23 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **A persistence capability is HIGH; a persistence payload is CRITICAL.**
+  `PER001` (shell profile), `PER002` (scheduled task or autostart) and `MEM001`
+  (agent instruction file) blocked on the capability alone, which a daily
+  report, a documented `export` line or "add this to your AGENTS.md" all have.
+  They now report HIGH, and CRITICAL when what is written is itself an attack:
+  a fetch piped to a shell, a decoded blob, a reverse shell, a program run
+  from `/tmp`, an alias over `sudo`, or, for instruction files, text that
+  removes oversight ("without asking", "always approve", "ignore previous
+  instructions"). The self-authored malicious persistence cases still block.
+- **An environment variable is a secret only when its name says so**, in both
+  languages, through one shared definition. The Python pass treated every
+  environment read as a secret source, so a skill reading its endpoint from
+  `API_URL` and calling it was reported as credential exfiltration and
+  blocked. Names ending in `_URL`, `_HOST`, `_NAME`, `_PATH` and similar are
+  configuration; `AUTH` counts as a word, not inside `UNAUTHORIZED`, `OAUTH`
+  or `AUTHOR`. A variable chosen at runtime is still treated as a secret.
+
 - **`skillsniff scan` is advisory by default and exits 0.** Measured recall
   against externally-authored malicious skills is **0.316** — two in three are
   not blocked — so an exit code of 0 must not be read as "this skill is safe".
@@ -41,6 +115,33 @@ project uses [Semantic Versioning](https://semver.org/).
   pre-registered and committed before the measurement ran.
 
 ### Fixed
+
+False positives found on ClawHub's development split (`train` and
+`validation`, rows ClawScan judged clean), each with a regression test and a
+counterweight showing the attack shape still fires:
+
+- `PER002` matched names, not registrations: the bare words `crontab`,
+  `.service` and `.plist`, so a heading, a CSS class (`.services{…}`), an iOS
+  `Info.plist` and a scanner's own table of techniques all read as
+  persistence. It now requires an act of registration: `crontab` fed a file or
+  stdin, a write into a cron or autostart directory, `systemctl enable`,
+  `launchctl load`, `schtasks /create`, a Run key, a Git hook written.
+- `PRV001` read Chromium's `--no-sandbox` and the YOLO model's `--yolo` as an
+  agent's safety controls switched off. They count only when passed to an
+  agent CLI. Its instruction-level phrases ("don't ask the user") now count
+  only in files the agent reads as instructions, not in a prompt string a
+  script sends to some other model.
+- `EXF002` matched `nc` inside `sync`, `async` and `func` (no leading word
+  boundary), read "use curl … with your API_KEY" in a sentence as a request,
+  and treated a token in an `Authorization` header as payload. It now
+  requires a command shape, and a secret carried only in a header or `-u` is
+  reported at LOW, as `EXF001` already did.
+- `CRE001` matched path markers as substrings, so `os\.environ` contained
+  `.env` and `.Kubernetes-Encyclopedia` contained `.kube`, and a docstring
+  saying "Load credentials" was a read of a credential store. Paths are now
+  matched by component; prose and regular expressions are not paths; and a
+  skill's own `.env` or `credentials.json` is MEDIUM, while the user's stores
+  (`~/.ssh`, `~/.aws`, kubeconfig, `.netrc`, keychains) stay CRITICAL.
 
 - `EXE001` missed `curl … | bash` written as markdown prose or inline code. Its
   regex pass skipped every raw match assuming the shell tokeniser had covered

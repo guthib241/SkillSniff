@@ -108,7 +108,9 @@ def _projections(file: FileContext, view) -> tuple[str, str]:
     # numbers stay correct). A commented-out `rm -rf $HOME` in a script that
     # warns against it is documentation, and reporting it as a destructive
     # operation is the single noisiest false positive this tool can produce.
-    if file.scanned.suffix in _SHELL_SUFFIXES or raw.startswith("#!"):
+    # A JavaScript file with a shebang is not a shell script: ``#`` starts a
+    # private class member there, not a comment.
+    if (file.scanned.suffix in _SHELL_SUFFIXES or raw.startswith("#!")) and file.js is None:
         raw = _blank_shell_comments(raw)
 
     result = (raw, normalize(raw)[:MAX_SCAN_BYTES])
