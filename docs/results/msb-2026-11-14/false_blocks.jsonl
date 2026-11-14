@@ -1,0 +1,49 @@
+{"benchmark_id": "ASB04_007508", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["MCP001"], "high": ["SUP004"], "medium": ["CON013"]}}
+{"benchmark_id": "ASB04_007596", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_007645", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["MCP001"], "high": ["SUP004"]}}
+{"benchmark_id": "ASB04_007680", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006"]}}
+{"benchmark_id": "ASB04_007693", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_007786", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["MCP001"], "high": ["OBS001", "SUP004"]}}
+{"benchmark_id": "ASB04_007791", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006"]}}
+{"benchmark_id": "ASB04_007816", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["MCP001"], "high": ["SUP004"]}}
+{"benchmark_id": "ASB04_007835", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["PRV001"], "high": ["CON001", "OBS001", "SUP004"], "medium": ["CON013"]}}
+{"benchmark_id": "ASB04_008010", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["INJ001"]}}
+{"benchmark_id": "ASB04_008063", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["INJ001"], "high": ["CON001", "SUP004"], "medium": ["MEM002"]}}
+{"benchmark_id": "ASB04_008101", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_008118", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_008125", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006"], "medium": ["CON013"]}}
+{"benchmark_id": "ASB04_008134", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["INJ001"], "high": ["OBS001", "SUP004"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_008205", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["INJ001"], "high": ["CRE002"], "medium": ["CON002", "CRE001"]}}
+{"benchmark_id": "ASB04_008228", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006", "SUP004"], "medium": ["CON013"]}}
+{"benchmark_id": "ASB04_008269", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_008306", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["MCP001"], "high": ["SUP004"], "medium": ["CON002", "CON013"]}}
+{"benchmark_id": "ASB04_008331", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006"]}}
+{"benchmark_id": "ASB04_008349", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "CON010", "CON011", "EXE006"]}}
+{"benchmark_id": "ASB04_008351", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_008362", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_008400", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_008429", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_008467", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["PRV001"], "high": ["OBS001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_008528", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_008852", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_008870", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["INJ001"], "high": ["CON001", "CON011", "SUP004"], "medium": ["EVA001"]}}
+{"benchmark_id": "ASB04_008888", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["MCP001"], "high": ["SUP004"]}}
+{"benchmark_id": "ASB04_008910", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_008965", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["EXE006", "SUP004"], "medium": ["CON002", "CON013"]}}
+{"benchmark_id": "ASB04_009034", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_009097", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_009156", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006"]}}
+{"benchmark_id": "ASB04_009190", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_009222", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["MCP001"], "high": ["SUP004"]}}
+{"benchmark_id": "ASB04_009226", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["SUP004"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_009271", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "CON004", "SUP004"], "medium": ["CON013"]}}
+{"benchmark_id": "ASB04_009308", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_009320", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_009341", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006"]}}
+{"benchmark_id": "ASB04_009440", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["EXF005", "SUP004"]}}
+{"benchmark_id": "ASB04_009444", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006", "SUP004"], "medium": ["CON013"]}}
+{"benchmark_id": "ASB04_009472", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001", "EXE006"]}}
+{"benchmark_id": "ASB04_009543", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["CRE001"], "high": ["CON001", "CON004", "CON014", "SUP004"], "medium": ["CON013", "CRE001"]}}
+{"benchmark_id": "ASB04_009566", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["PRV001"], "medium": ["CON002"]}}
+{"benchmark_id": "ASB04_009569", "label": "0", "source_id": "SRC012", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "high": ["CON001"]}}
+{"benchmark_id": "ASB04_009659", "label": "0", "source_id": "SRC011", "verdict": "BLOCK", "coverage": "HIGH", "rules": {"critical": ["EXE001"], "medium": ["CON002", "MCP003"]}}

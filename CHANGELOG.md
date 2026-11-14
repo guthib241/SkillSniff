@@ -35,6 +35,23 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **Measured against Cisco's skill-scanner on the split it publishes
+  against, and lost.** Pre-registration 3, committed before any sample was
+  downloaded, measured SkillSniff once on MaliciousSkillBench's
+  source-disjoint test split (839 malicious, 545 benign), each skill's text
+  as its `SKILL.md`. BLOCK caught **3.0%** of malicious skills at a **9.0%**
+  false-positive rate; BLOCK or REVIEW, 43.3% at 46.2%. Cisco publishes 7.7%
+  at 4.0% for its rules alone and 33.7% at 6.4% with an LLM judge, so
+  SkillSniff is worse in every configuration Cisco reports. 49 of its 74
+  blocks were benign: 15 were `EXE001` on vendor install scripts, which it
+  blocks by design, and 18 were `EXE001` on `curl … | python -m json.tool`,
+  a defect, since that pipe executes nothing. The defect is recorded in the
+  roadmap and not fixed here: it was found on test members.
+  An overlap audit found 527 test skills sharing their opening with ClawHub
+  development rows; without them the figures are 5.8% and 9.3%, and the
+  conclusion is the same. No rule was changed in response. The harness is
+  `scripts/msb_eval.py`; the results, with every identity's verdict, are in
+  `docs/results/msb-2026-11-14/`.
 - **Measured once on skills the rules had never seen, as pre-registered.**
   SkillTrustBench v1.0, 5,516 expert-labelled cases: malicious recall
   **0.271**, CI [0.255, 0.288] — below the pre-registered 0.40 floor, so the
@@ -89,6 +106,10 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **"When SkillSniff blocks, it is usually right" now says where.** It held on
+  SkillTrustBench, 828 of 893 blocks, and did not hold on MaliciousSkillBench's
+  split, where 49 of 74 blocks were benign. The README and LIMITATIONS say
+  both.
 - **A persistence capability is HIGH; a persistence payload is CRITICAL.**
   `PER001` (shell profile), `PER002` (scheduled task or autostart) and `MEM001`
   (agent instruction file) blocked on the capability alone, which a daily
